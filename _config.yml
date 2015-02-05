@@ -21,6 +21,6 @@ github:
   repo:           https://github.com/brideau
 pages_list:       
   About: 'http://www.citizenscode.org'
-  Forum: 'http://ideas.citizenscode.org'
+  Ideas Board: 'http://ideas.citizenscode.org'
   Archive: '/archive'
   Feed: '/atom.xml'
