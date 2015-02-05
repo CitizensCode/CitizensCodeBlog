@@ -1,0 +1,26 @@
+# Dependencies
+markdown:         redcarpet
+pygments:         true
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            Whack Data
+tagline:          Ryan Brideau
+url:              http://www.whackdata.com
+paginate:         1
+baseurl:          /
+author:
+  name:           Ryan Brideau
+  url:            https://twitter.com/Brideau
+  email:          ryan dot brideau at google mail
+
+# Custom vars
+version:          1.0.0
+github:
+  repo:           https://github.com/brideau
+pages_list:       
+  About: '/about'
+  Archive: '/archive'
+  Feed: '/atom.xml'
