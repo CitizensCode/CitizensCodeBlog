@@ -6,21 +6,21 @@ pygments:         true
 permalink:        pretty
 
 # Setup
-title:            Whack Data
-tagline:          Ryan Brideau
-url:              http://www.whackdata.com
+title:            Citizens Code Blog
+tagline:          Citizens Code is a creative outlet for technical citizens. We work with open data to advance public policy, raise the level of civic dialog, and to improve our cities.
+url:              http://blog.citizenscode.org
 paginate:         1
 baseurl:          /
 author:
-  name:           Ryan Brideau
-  url:            https://twitter.com/Brideau
-  email:          ryan dot brideau at google mail
+  name:           Citizens Code
+  url:            https://twitter.com/CitizensCode
 
 # Custom vars
 version:          1.0.0
 github:
   repo:           https://github.com/brideau
 pages_list:       
-  About: '/about'
+  About: 'http://www.citizenscode.org'
+  Forum: 'http://ideas.citizenscode.org'
   Archive: '/archive'
   Feed: '/atom.xml'
