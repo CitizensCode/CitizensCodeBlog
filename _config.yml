@@ -20,7 +20,7 @@ version:          1.0.0
 github:
   repo:           https://github.com/brideau
 pages_list:       
-  About: 'http://www.citizenscode.org'
-  Ideas Board: 'http://ideas.citizenscode.org'
   Archive: '/archive'
+  Ideas Board: 'http://ideas.citizenscode.org'
+  About: 'http://www.citizenscode.org'
   Feed: '/atom.xml'
