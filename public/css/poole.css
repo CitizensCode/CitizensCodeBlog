@@ -428,3 +428,11 @@ a.pagination-item:hover {
     border-bottom-right-radius: 4px;
   }
 }
+
+#mc_embed_signup form {
+  padding: 0 !important;
+}
+
+#mc_embed_signup input.email, #mc_embed_signup input.button {
+  width: 50% !important;
+}

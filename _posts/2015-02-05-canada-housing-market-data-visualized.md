@@ -49,13 +49,13 @@ And a few more for your viewing pleasure:
 
 ![Calgary Property Prices](/images/201502/CalgaryPropertyPrices.png)
 
-### Toronto _(~45,000 Listings)_:
-
-![Toronto Property Prices](/images/201502/TorontoPropertyPrices.png)
-
 ### St. John's _(~2,600 Listings)_:
 
 ![St. John's Property Prices](/images/201502/StJohnsPropertyPrices.png)
+
+### Toronto _(~45,000 Listings)_:
+
+![Toronto Property Prices](/images/201502/TorontoPropertyPrices.png)
 
 ### Ottawa _(~16,000 Listings)_:
 
