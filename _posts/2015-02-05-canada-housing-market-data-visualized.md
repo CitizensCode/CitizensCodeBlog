@@ -45,10 +45,6 @@ A few things stick out to me right away:
 
 And a few more for your viewing pleasure:
 
-### Calgary _(~27,000 Listings)_:
-
-![Calgary Property Prices](/images/201502/CalgaryPropertyPrices.png)
-
 ### St. John's _(~2,600 Listings)_:
 
 ![St. John's Property Prices](/images/201502/StJohnsPropertyPrices.png)
@@ -56,10 +52,6 @@ And a few more for your viewing pleasure:
 ### Toronto _(~45,000 Listings)_:
 
 ![Toronto Property Prices](/images/201502/TorontoPropertyPrices.png)
-
-### Ottawa _(~16,000 Listings)_:
-
-![Ottawa Property Prices](/images/201502/OttawaPropertyPrices.png)
 
 Now this approach isn't without its drawbacks. I could have used final price (though there is no guarantee the final listed price was the real final price), you can't see the trends over time, and there is an inherent bias in comparing stacked lines of 1,400 to 45,000, since the latter is much more squished and misses a lot of detail. I'll be trying my hand at a few other ways to looking at this data in the future to flush out other aspects of it, so stay tuned.
 
