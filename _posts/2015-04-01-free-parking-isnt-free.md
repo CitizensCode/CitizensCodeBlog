@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Good Call GNB, Free Parking Isn't Free."
+title: "Good Call GNB, Free Parking Isn't Free"
 ---
 
 Ask your local jaded economist how to get more or less of something, and they’re give you a simple answer: change the price. If you want more, subsidize; if you want less, tax. Well, until yesterday, the Government of New Brunswick was casting a huge dollar-vote in favour of one of their favourite job-creating commodities: asphalt. Not the “making roads makes work” kind though (that’s a different story), but the kind that paves over the limited amount of land the province’s cities have at their disposal. Yes, we’re talking about boring, old surface parking.
