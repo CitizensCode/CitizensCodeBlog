@@ -28,4 +28,4 @@ The plain fact is that you can’t design something you don’t truly understand
 
 __
 
-_Ryan Brideau, Connor Jay and Gracen Johnson_
+_Ryan Brideau & Connor Jay_
