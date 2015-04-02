@@ -5,7 +5,7 @@ title: "Good Call GNB, Free Parking Isn't Free"
 
 Ask your local jaded economist how to get more or less of something, and they’ll give you a simple answer: change the price. If you want more, subsidize; if you want less, tax. Well, until yesterday, the Government of New Brunswick was casting a huge dollar-vote in favour of one of their favourite job-creating commodities: asphalt. Not the “making roads makes work” kind though (that’s a different story), but the kind that paves over the limited amount of land the province’s cities have at their disposal. Yes, we’re talking about boring, old surface parking.
 
-By allowing government employees - who make up more than half of the employed population in the province - to park for free, we were knowingly or not transforming our cities and dramatically reducing their ability to pay for themselves in the long-run. You don’t need to look much further than a simple map of the surface parking available in the province’s capital city to see the kind of impact that this approach has had:
+By allowing government employees to park for free, we were knowingly or not transforming our cities and dramatically reducing their ability to pay for themselves in the long-run. You don’t need to look much further than a simple map of the surface parking available in the province’s capital city to see the kind of impact that this approach has had:
 
 <iframe width="100%" height="500px" frameBorder="0" src="https://a.tiles.mapbox.com/v4/brideau.a2c0cffb.html?access_token=pk.eyJ1IjoiYnJpZGVhdSIsImEiOiJIazVVNG1FIn0.MTzqTSVYYBaTXC885WRF1Q"></iframe>
 
