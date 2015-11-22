@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Citizens Code Blog</title>
+ <link href="http://blog.citizenscode.org/atom.xml" rel="self"/>
+ <link href="http://blog.citizenscode.org/"/>
+ <updated>2015-04-01T22:06:21-03:00</updated>
+ <id>http://blog.citizenscode.org</id>
+ <author>
+   <name>Citizens Code</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Good Call GNB, Free Parking Isn't Free</title>
+   <link href="http://blog.citizenscode.org//2015/04/01/free-parking-isnt-free/"/>
+   <updated>2015-04-01T00:00:00-03:00</updated>
+   <id>http://blog.citizenscode.org/2015/04/01/free-parking-isnt-free</id>
+   <content type="html">&lt;p&gt;Ask your local jaded economist how to get more or less of something, and they’ll give you a simple answer: change the price. If you want more, subsidize; if you want less, tax. Well, until yesterday, the Government of New Brunswick was casting a huge dollar-vote in favour of one of their favourite job-creating commodities: asphalt. Not the “making roads makes work” kind though (that’s a different story), but the kind that paves over the limited amount of land the province’s cities have at their disposal. Yes, we’re talking about boring, old surface parking.&lt;/p&gt;
+
+&lt;p&gt;By allowing government employees - who make up more than half of the employed population in the province - to park for free, we were knowingly or not transforming our cities and dramatically reducing their ability to pay for themselves in the long-run. You don’t need to look much further than a simple map of the surface parking available in the province’s capital city to see the kind of impact that this approach has had:&lt;/p&gt;
+
+&lt;iframe width=&quot;100%&quot; height=&quot;500px&quot; frameBorder=&quot;0&quot; src=&quot;https://a.tiles.mapbox.com/v4/brideau.a2c0cffb.html?access_token=pk.eyJ1IjoiYnJpZGVhdSIsImEiOiJIazVVNG1FIn0.MTzqTSVYYBaTXC885WRF1Q&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Every red block of parking you see is a space that could be something that actually improves the vibrancy and economic sustainability of the city. Where surface parking lots exist, we forgo the opportunity to fill that land with things we enjoy: people, parks, buildings, businesses, etc. And when you don’t even charge for it, you imply that it is practically worthless. In fact, our urban centres represent the most valuable and productive land in the region (economically, culturally, socially), so it’s important not to waste it.&lt;/p&gt;
+
+&lt;p&gt;Consider instead if we took the total square footage of parking you see on that map, stacked it vertically in the form of paid parking garages distributed throughout the city, and gradually replaced those parking lots with amenities or buildings which could house people, businesses, and storefronts. Not only would you be generating a lot more tax revenue for the limited downtown space that you have, you’d start to approach a density of activity downtown that would keep the doors of local businesses open and the streets humming with life all year long. You’d also stem some of the demand for parking, because when we build great urban areas, walking and biking become so much more appealing and accessible. So in reality, you wouldn’t even need as much parking as we have today. This shift has to start somewhere, and the government should be congratulated for getting the ball rolling by example.&lt;/p&gt;
+
+&lt;p&gt;So far we haven’t even talked about the social and health impacts of reducing our dependency on cars. A &lt;a href=&quot;http://www.unb.ca/research/institutes/urban/_resources/usci_roadworriers.pdf&quot;&gt;2014 study by the province’s Urban &amp;amp; Community Studies Institute&lt;/a&gt; found that 9 in 10 people in the province commute by car - something that is &lt;a href=&quot;http://www.slate.com/articles/business/moneybox/2011/05/your_commute_is_killing_you.html&quot;&gt;widely recognized to be one of the most mentally stressful acts a human can perform&lt;/a&gt;. And the trend doesn’t look like it’s getting any better. One of the few stats that is going up in the province is the number of vehicle registrations. In fact, it’s slowly by surely converging with the total adult population:&lt;/p&gt;
+
+&lt;div&gt;
+    &lt;a href=&quot;https://plot.ly/~Brideau/55/&quot; target=&quot;_blank&quot; title=&quot;Vehicle Registrations vs. Adult Population in NB&quot; style=&quot;display: block; text-align: center;&quot;&gt;&lt;img src=&quot;https://plot.ly/~Brideau/55.png&quot; alt=&quot;Vehicle Registrations vs. Adult Population in NB&quot; style=&quot;max-width: 100%;width: 792px;&quot;  width=&quot;792&quot; onerror=&quot;this.onerror=null;this.src='https://plot.ly/404.png';&quot; /&gt;&lt;/a&gt;
+    &lt;script data-plotly=&quot;Brideau:55&quot; src=&quot;https://plot.ly/embed.js&quot; async&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Think about that. That isn’t the number of vehicles compared to the number of households. That’s the number of cars compared to the &lt;em&gt;total adult population of the province&lt;/em&gt;. All in, the average cost of owning a mid-sized car for a year is about $8000. This means that the population of NB is spending about &lt;strong&gt;$4.2 Billion&lt;/strong&gt; dollars per year just to get around day-to-day. That’s money that could be spent in much more effective and rewarding ways. Imagine if every household in New Brunswick had an extra $8000 to their name each year, and the opportunity to walk or bike on a daily basis. Which of our socioeconomic challenges would &lt;em&gt;not&lt;/em&gt; be positively impacted by such a change?&lt;/p&gt;
+
+&lt;p&gt;Finally, consider the positive impact this may have on the way the province’s cities are actually designed. Consider the last time you went for a casual walk when the weather was nice. Where did you go? Did you go for a nice stroll next to your local parking lot, or along a nearby 4-lane road? I can almost guarantee you didn’t. The human brain is wired to hate those environments. They’re noisy, dangerous and boring. Still, for some reason the province’s capital has three roads cutting directly through the economic heart of it that are classified as provincial highways. (Ever notice on Google Maps that Queen, Brunswick and Regent are coloured yellow? That’s why.)  Some, like Regent St, are being prepped for expansion and high-speed throughput. Brunswick has already met that fate. Try reading &lt;a href=&quot;https://github.com/CitizensCode/OSMSurfaceParking/raw/SurfaceParking/CapitalCityTrafficStudyUpdate.pdf&quot;&gt;just page 70 of this traffic engineer report&lt;/a&gt; to learn about how making Regent 4-lanes in downtown is supposedly ‘vital to the local economy and quality of life’.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/cuoGrN3.png&quot; alt=&quot;Highways through Fredericton&amp;#39;s Downtown&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;The plain fact is that you can’t design something you don’t truly understand or relate to. If what you relate to is being annoyed by not being able to park within a 15 second walk of wherever your destination is or being able to get home in 7 minutes instead of 9, I can guarantee you that you’ll know how to design a fine parking lot and high-speed road. If your daily experience involves avoiding cars in crosswalks, waiting for the next bus in -30 degree weather, or generally enjoying the public space provided by your city (that’s why you live there, right?), you’ll start considering ways to improve each of those. And if you happen to be a civil servant that has the power to change how we build our cities, towns, and neighbourhoods, engaging directly in any of those activities will only improve your decision making. While a small step in that direction, phasing out free parking for all GNB employees is a great way to get that started.&lt;/p&gt;
+
+&lt;p&gt;__&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Ryan Brideau, Gracen Johnson and Connor Jay&lt;/em&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Canada's Housing Market Visualized</title>
+   <link href="http://blog.citizenscode.org//2015/02/05/canada-housing-market-data-visualized/"/>
+   <updated>2015-02-05T00:00:00-04:00</updated>
+   <id>http://blog.citizenscode.org/2015/02/05/canada-housing-market-data-visualized</id>
+   <content type="html">&lt;p&gt;A couple months ago I bumped into an old friend at a Christmas party and we got chatting about what we&amp;#39;re working on these days. He mentioned that he&amp;#39;s been looking after the technology at a Y-Combinator funded startup called &lt;a href=&quot;http://priceonomics.com/&quot;&gt;Priceonomics&lt;/a&gt; that crawls and gathers information available on the web. And as a side project, he&amp;#39;d been gathering the housing prices for a number of Canadian cities for the last 9 months or so. Of course, I asked if there was any chance I take a look at some of this data, and luckily, he obliged!&lt;/p&gt;
+
+&lt;p&gt;The data itself tracked individual house prices over time for each city, which opened up a number of possible ways to visualize it. My first attempt looked something like this (mouse over to zoom a bit):&lt;/p&gt;
+
+&lt;h4&gt;Fredericton Property Prices Over Time&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/201502/FrederictonPropertyPricesLines.png&quot; alt=&quot;Fredericton Property Prices&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;The idea here was to be able to watch the trajectory of home price over time. The trouble was, this worked OK (not great) for a city with 1,400 listings, but as soon as you got to 20,000 plus, it was just spagghetti.&lt;/p&gt;
+
+&lt;p&gt;Eventually, though, I setted on the following for a first iteration. While I have some ideas on how to visualize the housing trends &lt;em&gt;over time&lt;/em&gt; better, I think this one captures another interesting aspect of housing prices and time.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;The idea is this:&lt;/em&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Take every listing a city had that we recorded over the last 9 months, and find out how long it was listed for.&lt;/li&gt;
+&lt;li&gt;Sort all of the listings by the length of time listed.&lt;/li&gt;
+&lt;li&gt;Draw a single horizontal line for every listing, starting with the ones listed the longest at the bottom and go up. Space them all evenly by 1 unit.&lt;/li&gt;
+&lt;li&gt;Color those lines by the starting price, corresponding to the gradient as shown below, with values over $2,000,000 being shaded the darkest shade.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/201502/PriceScale.png&quot; alt=&quot;Price Scale&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;What you end up with is this:&lt;/p&gt;
+
+&lt;h3&gt;Vancouver &lt;em&gt;(~15,000 Listings)&lt;/em&gt;:&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/201502/VancouverPropertyPrices.png&quot; alt=&quot;Vancouver Property Prices&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Now what makes this interesting is when you compare it to other cities. For example, compare Vancouver above to Fredericton here:&lt;/p&gt;
+
+&lt;h3&gt;Fredericton &lt;em&gt;(~1,400 Listings)&lt;/em&gt;:&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/201502/FrederictonPropertyPrices.png&quot; alt=&quot;Fredericton Property Prices&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;A few things stick out to me right away:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The overal color of the graph gives an indication of how expensive the real-estate market is in that city (the darker the more expensive).&lt;/li&gt;
+&lt;li&gt;The slope of the graph gives you a good idea of how fast the houses are being bought (long thin graphs are packed with listings that enter and leave the market quickly)&lt;/li&gt;
+&lt;li&gt;If you look at the top and bottom of the graph, and look at the bands of colors, you can see which kinds of houses sell quickly, and which stick around for a while.&lt;/li&gt;
+&lt;li&gt;Fredericton&amp;#39;s market is so slow that a big chunk of houses got truncated at the right and are still listed (hence the big flat end on the right).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;And a few more for your viewing pleasure:&lt;/p&gt;
+
+&lt;h3&gt;St. John&amp;#39;s &lt;em&gt;(~2,600 Listings)&lt;/em&gt;:&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/201502/StJohnsPropertyPrices.png&quot; alt=&quot;St. John&amp;#39;s Property Prices&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;Toronto &lt;em&gt;(~45,000 Listings)&lt;/em&gt;:&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/201502/TorontoPropertyPrices.png&quot; alt=&quot;Toronto Property Prices&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Now this approach isn&amp;#39;t without its drawbacks. I could have used final price (though there is no guarantee the final listed price was the real final price), you can&amp;#39;t see the trends over time, and there is an inherent bias in comparing stacked lines of 1,400 to 45,000, since the latter is much more squished and misses a lot of detail. I&amp;#39;ll be trying my hand at a few other ways to looking at this data in the future to flush out other aspects of it, so stay tuned.&lt;/p&gt;
+
+&lt;p&gt;Also, ff you&amp;#39;re interested in learning how to do this kind of visualization, enter your e-mail below - I&amp;#39;ll be putting together a tutorial shortly that goes step-by-step and I&amp;#39;ll send out an update when I do. (Don&amp;#39;t worry, this won&amp;#39;t be one of &lt;em&gt;those&lt;/em&gt; kinds of e-mail lists. You&amp;#39;ll get max 1 - 2 messages a month and only when we have something worth sharing.)&lt;/p&gt;
+
+&lt;p&gt;__&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Created by Ryan Brideau &amp;amp; Brendan Wood&lt;/em&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

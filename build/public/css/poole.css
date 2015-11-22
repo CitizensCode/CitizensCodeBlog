@@ -230,12 +230,11 @@ blockquote p:last-child {
 img {
   display: block;
   max-width: 100%;
-  margin: 0 0 0.2rem;
+  margin: 0 0 1rem;
   border-radius: 5px;
 }
 
 /* Tables */
-/*
 table {
   margin-bottom: 1rem;
   width: 100%;
@@ -251,7 +250,6 @@ tbody tr:nth-child(odd) td,
 tbody tr:nth-child(odd) th {
   background-color: #f9f9f9;
 }
-*/
 
 
 /*
@@ -437,9 +435,4 @@ a.pagination-item:hover {
 
 #mc_embed_signup input.email, #mc_embed_signup input.button {
   width: 50% !important;
-}
-
-span.imagecaption {
-  font-size: 0.7em;
-  font-style: italic;
 }

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Citizens Code Blog &middot; Citizens Code
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="/public/js/okzoom.js"></script>
+  <script>
+  $( document ).ready(function() {
+    $('.post img[src$=".png"]').okzoom({
+      width: 250,
+      height: 250,
+      round: true,
+      background: "#fff",
+      shadow: "0 0 5px #ccc"
+    });
+  });
+  </script>
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+  
+</head>
+
+
+  <body>
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home"><img src="/images/CitizensCodeLogo.png" alt="Citizens Code: A Creative Outlet for Technical Citizens." style="display:inline-block;margin:0;"></a>
+
+          <div style="display:inline-block;float: right;margin-top: 10px;">
+          
+            &nbsp;&nbsp;&nbsp;
+            <small><a href="/archive">Archive</a></small>
+          
+            &nbsp;&nbsp;&nbsp;
+            <small><a href="http://ideas.citizenscode.org">Ideas Board</a></small>
+          
+            &nbsp;&nbsp;&nbsp;
+            <small><a href="http://www.citizenscode.org">About</a></small>
+          
+            &nbsp;&nbsp;&nbsp;
+            <small><a href="/atom.xml">Feed</a></small>
+          
+          </div>
+
+        </h3>
+      </div>
+
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2015/02/05/canada-housing-market-data-visualized/">
+        Canada's Housing Market Visualized
+      </a>
+    </h1>
+
+    <span class="post-date">05 Feb 2015</span>
+
+    <p>A couple months ago I bumped into an old friend at a Christmas party and we got chatting about what we&#39;re working on these days. He mentioned that he&#39;s been looking after the technology at a Y-Combinator funded startup called <a href="http://priceonomics.com/">Priceonomics</a> that crawls and gathers information available on the web. And as a side project, he&#39;d been gathering the housing prices for a number of Canadian cities for the last 9 months or so. Of course, I asked if there was any chance I take a look at some of this data, and luckily, he obliged!</p>
+
+<p>The data itself tracked individual house prices over time for each city, which opened up a number of possible ways to visualize it. My first attempt looked something like this (mouse over to zoom a bit):</p>
+
+<h4>Fredericton Property Prices Over Time</h4>
+
+<p><img src="/images/201502/FrederictonPropertyPricesLines.png" alt="Fredericton Property Prices"></p>
+
+<p>The idea here was to be able to watch the trajectory of home price over time. The trouble was, this worked OK (not great) for a city with 1,400 listings, but as soon as you got to 20,000 plus, it was just spagghetti.</p>
+
+<p>Eventually, though, I setted on the following for a first iteration. While I have some ideas on how to visualize the housing trends <em>over time</em> better, I think this one captures another interesting aspect of housing prices and time.</p>
+
+<p><em>The idea is this:</em></p>
+
+<ol>
+<li>Take every listing a city had that we recorded over the last 9 months, and find out how long it was listed for.</li>
+<li>Sort all of the listings by the length of time listed.</li>
+<li>Draw a single horizontal line for every listing, starting with the ones listed the longest at the bottom and go up. Space them all evenly by 1 unit.</li>
+<li>Color those lines by the starting price, corresponding to the gradient as shown below, with values over $2,000,000 being shaded the darkest shade.</li>
+</ol>
+
+<p><img src="/images/201502/PriceScale.png" alt="Price Scale"></p>
+
+<p>What you end up with is this:</p>
+
+<h3>Vancouver <em>(~15,000 Listings)</em>:</h3>
+
+<p><img src="/images/201502/VancouverPropertyPrices.png" alt="Vancouver Property Prices"></p>
+
+<p>Now what makes this interesting is when you compare it to other cities. For example, compare Vancouver above to Fredericton here:</p>
+
+<h3>Fredericton <em>(~1,400 Listings)</em>:</h3>
+
+<p><img src="/images/201502/FrederictonPropertyPrices.png" alt="Fredericton Property Prices"></p>
+
+<p>A few things stick out to me right away:</p>
+
+<ol>
+<li>The overal color of the graph gives an indication of how expensive the real-estate market is in that city (the darker the more expensive).</li>
+<li>The slope of the graph gives you a good idea of how fast the houses are being bought (long thin graphs are packed with listings that enter and leave the market quickly)</li>
+<li>If you look at the top and bottom of the graph, and look at the bands of colors, you can see which kinds of houses sell quickly, and which stick around for a while.</li>
+<li>Fredericton&#39;s market is so slow that a big chunk of houses got truncated at the right and are still listed (hence the big flat end on the right).</li>
+</ol>
+
+<p>And a few more for your viewing pleasure:</p>
+
+<h3>St. John&#39;s <em>(~2,600 Listings)</em>:</h3>
+
+<p><img src="/images/201502/StJohnsPropertyPrices.png" alt="St. John&#39;s Property Prices"></p>
+
+<h3>Toronto <em>(~45,000 Listings)</em>:</h3>
+
+<p><img src="/images/201502/TorontoPropertyPrices.png" alt="Toronto Property Prices"></p>
+
+<p>Now this approach isn&#39;t without its drawbacks. I could have used final price (though there is no guarantee the final listed price was the real final price), you can&#39;t see the trends over time, and there is an inherent bias in comparing stacked lines of 1,400 to 45,000, since the latter is much more squished and misses a lot of detail. I&#39;ll be trying my hand at a few other ways to looking at this data in the future to flush out other aspects of it, so stay tuned.</p>
+
+<p>Also, ff you&#39;re interested in learning how to do this kind of visualization, enter your e-mail below - I&#39;ll be putting together a tutorial shortly that goes step-by-step and I&#39;ll send out an update when I do. (Don&#39;t worry, this won&#39;t be one of <em>those</em> kinds of e-mail lists. You&#39;ll get max 1 - 2 messages a month and only when we have something worth sharing.)</p>
+
+<p>__</p>
+
+<p><em>Created by Ryan Brideau &amp; Brendan Wood</em></p>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    
+      <a class="pagination-item newer" href="/">Newer</a>
+    
+  
+</div>
+
+
+      <div class="footer" style="font-size: 0.5em;margin-bottom: 20px;">
+      <!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+    #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+    /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+       We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//citizenscode.us10.list-manage.com/subscribe/post?u=f6cc6903b5d937067a76aefd0&amp;id=8537cfd111" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+    <label for="mce-EMAIL">Get updates about new work and tutorials.</label>
+    <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;"><input type="text" name="b_f6cc6903b5d937067a76aefd0_8537cfd111" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Let's do this." name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+
+<!--End mc_embed_signup-->
+
+      <br />
+          This work by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.citizenscode.org" property="cc:attributionName" rel="cc:attributionURL">Citizens Code Ltd.</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+      </div>
+    </div>
+  </body>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56940022-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</html>
