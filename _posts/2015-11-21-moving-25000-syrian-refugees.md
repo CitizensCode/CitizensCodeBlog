@@ -21,7 +21,7 @@ For starters, the Operation Syrian Refugees document mentions:
 
 <blockquote>"The strategic plan envisages 5-6,000 refugees being airlifted from Amman, Jordan, every week, between Dec. 1-31. The plan suggests 900 passengers a day will arrive on three flights to Montreal and Toronto."</blockquote>
 
-The flight path between Amman the Toronto (the further of the two) is about 9,400 kilometres, as shown below:
+The flight path between Amman and Toronto (the further of the two) is about 9,400 kilometres, as shown below:
 
 ![The flight path from Amman, Jordan to Toronto, Canada.](/images/201511/refugeeflightpath.png)
 <span class="imagecaption"><strong>The flight path from Amman, Jordan to Toronto, Canada.</strong> Image courtesy of Google Earth.</span>
