@@ -13,7 +13,7 @@ custom_css:
   {% endfor %}
 {% endif %}
 
-There's been a lot of questions in the last week about the feasability of how it could be possible to move and process 25,000 Syrian refugees by the end of the year. Admittedly, the Canadian government hasn't been the best at communicating the logistics of the operation, but thanks to a leaked document titled ["Operation Syrian Refugees" ](http://news.nationalpost.com/news/canada/500k-federal-ad-campaign-to-tout-refugee-plan-as-a-national-project-document-reveals), we can start to piece together the details.
+There's been a lot of questions in the last week about the feasability of moving and processing 25,000 Syrian refugees by the end of the year. Admittedly, the Canadian government hasn't been the best at communicating the logistics of the operation, but thanks to a leaked document titled ["Operation Syrian Refugees" ](http://news.nationalpost.com/news/canada/500k-federal-ad-campaign-to-tout-refugee-plan-as-a-national-project-document-reveals), we can start to piece together the details.
 
 One of the questions that seems to come up a lot is "how could we possibly move 25,000 people across the world and through our airports in such a short period of time?" Well, the numbers turn out to be pretty simple.
 
@@ -43,7 +43,7 @@ Of course this is one of the peak travel seasons, so there will be days with a l
 
 Finally, the refugees will then be moved to temporary lodgings in Ontario and Quebec "within four or five hours of Toronto and Montreal, most likely on military bases", according to the National Post article.
 
-There are other logistics involved beyond what's been covered here, but at a first glance, this is certainly not an overwhelming number of people to process when broken down day-by-day.
+There are other logistics involved beyond what's been covered here, such as managing the movement of the people to the bases and their care while there, but looking at the first leg of the journey, this is certainly not an overwhelming number of people to process when broken down day-by-day.
 
 
 {% if page.custom_js %}
