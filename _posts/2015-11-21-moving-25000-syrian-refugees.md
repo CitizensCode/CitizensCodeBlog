@@ -5,9 +5,9 @@ custom_js:
 - d3.v3.min.js
 - nv.d3.min.js
 - jquery.min.js
-- 20151121syrianrefugees.js
+- 201511/syrianrefugees.js
 custom_css:
-- 20151121syrianrefugees.css
+- 201511/syrianrefugees.css
 - nv.d3.css
 
 ---
