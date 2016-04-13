@@ -10,7 +10,7 @@ title:            Citizens Code Blog
 tagline:          Citizens Code is a creative outlet for technical citizens. We work with open data to advance public policy, raise the level of civic dialog, and to improve our cities.
 url:              http://blog.citizenscode.org
 paginate:         1
-baseurl:          /
+baseurl:          ""
 author:
   name:           Citizens Code
   url:            https://twitter.com/CitizensCode
@@ -19,8 +19,10 @@ author:
 version:          1.0.0
 github:
   repo:           https://github.com/brideau
-pages_list:       
+pages_list:
   Archive: '/archive'
   Ideas Board: 'http://ideas.citizenscode.org'
   About: 'http://www.citizenscode.org'
   Feed: '/atom.xml'
+gems:
+  - jekyll-paginate

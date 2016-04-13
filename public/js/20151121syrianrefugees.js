@@ -26,11 +26,10 @@ var airportData = [
 var chart;
 nv.addGraph(function(){
     chart = nv.models.multiBarHorizontalChart()
-            .x(function(d) { return d.label })
-            .y(function(d) { return d.value })
+            .x(function(d) { return d.label; })
+            .y(function(d) { return d.value; })
             .barColor(d3.scale.category10().range())
             .duration(250)
-            .margin({left: 150})
             .stacked(true)
             .showControls(false)
             .showValues(true)

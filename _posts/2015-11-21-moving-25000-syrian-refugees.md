@@ -2,14 +2,19 @@
 layout: post
 title: "Moving 25,000 Refugees Isn't That Hard"
 custom_js:
-- 20151121syrianrefugees
+- d3.v3.min.js
+- nv.d3.min.js
+- jquery.min.js
+- 20151121syrianrefugees.js
 custom_css:
-- 20151121syrianrefugees
+- 20151121syrianrefugees.css
+- nv.d3.css
+
 ---
 
 {% if page.custom_css %}
   {% for css_file in page.custom_css %}
-  <script src='/public/css/{{ css_file }}.css' type="text/css"></script>
+  <link rel="stylesheet" href='/public/css/{{ css_file }}'></script>
   {% endfor %}
 {% endif %}
 
@@ -48,7 +53,7 @@ There are other logistics involved beyond what's been covered here, such as mana
 
 {% if page.custom_js %}
   {% for js_file in page.custom_js %}
-  <script src='/public/js/{{ js_file }}.js' type="text/javascript"></script>
+  <script src='/public/js/{{ js_file }}' type="text/javascript"></script>
   {% endfor %}
 {% endif %}
 
