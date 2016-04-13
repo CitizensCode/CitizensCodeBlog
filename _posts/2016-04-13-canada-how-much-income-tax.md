@@ -2,7 +2,11 @@
 layout: post
 title: "Income Tax"
 custom_js:
+- jquery.min.js
 - tabletop.js
+- 201604/ranking.js
+- 201604/flatTax.js
+- 201604/incomeTaxCanada.js
 custom_css:
 ---
 
