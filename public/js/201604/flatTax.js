@@ -36,10 +36,12 @@ flatTax.visualize = function(sheet) {
 
   var xAxis = d3.svg.axis()
     .scale(x)
-    .orient('bottom');
+    .orient('bottom')
+    .tickFormat(d3.format("$s"));
   var yAxis = d3.svg.axis()
     .scale(y)
-    .orient('left');
+    .orient('left')
+    .tickFormat(function(d) { return parseInt(d, 10) + "%"});
 
   var lineGen = d3.svg.line()
     .x(function(d) { return x(d.incomeadjusted); })
@@ -57,7 +59,7 @@ flatTax.visualize = function(sheet) {
 
     var data = chart.data();
     x.domain([0, 500000])
-      .range([0, width]); // ***Do you need this?
+      .range([0, width]);
     y.domain([0, 13])
       .range([height, 0]);
 
@@ -89,9 +91,8 @@ flatTax.visualize = function(sheet) {
   chart.autoResize('both')
     .resizeToFitContainer('full')
     .on('resize', visualize)
-    .on('data', visualize);
-  // Attach the data
-  chart.data(processedData); // *** Can this be combined with above?
+    .on('data', visualize)
+    .data(processedData);
 
   // For reference
   console.log(sheet);
