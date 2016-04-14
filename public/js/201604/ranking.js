@@ -1,7 +1,8 @@
 (function(ranking, undefined){
 
-ranking.visualize = function(data) {
+ranking.visualize = function(sheet) {
   console.log("Ranking");
+  var data = sheet.elements;
   console.log(data);
 };
 

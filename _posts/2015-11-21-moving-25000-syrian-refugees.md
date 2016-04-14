@@ -2,9 +2,9 @@
 layout: post
 title: "Moving 25,000 Refugees Isn't That Hard"
 custom_js:
-- d3.v3.min.js
+- d3-3.5.16.min.js
 - nv.d3.min.js
-- jquery.min.js
+- jquery-2.1.3.min.js
 - 201511/syrianrefugees.js
 custom_css:
 - 201511/syrianrefugees.css

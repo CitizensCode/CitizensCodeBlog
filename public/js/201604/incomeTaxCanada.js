@@ -9,12 +9,14 @@ var spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EFBsT2vTy_93-tnTHv
 var visualizeData = function(data, tabletop) {
   // See ranking.js
   ranking.visualize(tabletop.sheets("Ranking"));
+  // See flattax.js
   flatTax.visualize(tabletop.sheets("FlatTax"));
 };
 
 var init = function() {
   Tabletop.init( { key: spreadsheetUrl,
                    callback: visualizeData,
+  // Grab the spreadsheet sheets we want
                    wanted: [
                      "Ranking",
                      "FlatTax"],
