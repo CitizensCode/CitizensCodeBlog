@@ -102,11 +102,16 @@ flatTax.visualize = function(sheet) {
 
     selection.enter()
       .append('path')
-      .attr('class', function(d) {
+      .attr('class', 'line')
+      .attr('id', function(d) {
         // Add a class for formatting each
-        return "line flat-" + String(d.year);
+        return "flat-" + String(d.year);
       })
       .attr("d", function(d) {
+          return lineGen(d.values);
+      });
+
+    selection.attr("d", function(d) {
           return lineGen(d.values);
       });
 
@@ -122,8 +127,19 @@ flatTax.visualize = function(sheet) {
 
   }, 10); // Debounce at 10 milliseconds
 
-  chart.autoResize('both')
-    .resizeToFitContainer('full')
+  // Line labels
+  layers.get('content')
+   .append("text")
+    .attr("dy", "-3")
+    .attr("class", "curve-text")
+   .append("textPath")
+    .attr("class", "flat-2016-label")
+    .attr("xlink:href", "#flat-2016")
+    .attr("startOffset", "45%")
+    .text("Alberta 2016 (New Tax Brackets Starting at $125,000)");
+
+  chart.resizeToFitContainer('full')
+    .autoResize(true)
     .on('resize', visualize)
     .on('data', visualize)
     .data(processedData);
