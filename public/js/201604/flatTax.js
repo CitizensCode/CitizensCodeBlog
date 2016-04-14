@@ -41,7 +41,9 @@ flatTax.visualize = function(sheet) {
   var yAxis = d3.svg.axis()
     .scale(y)
     .orient('left')
-    .tickFormat(function(d) { return parseInt(d, 10) + "%"});
+    .tickFormat(function(d) {
+      return parseInt(d, 10) + "%";
+    });
 
   var lineGen = d3.svg.line()
     .x(function(d) { return x(d.incomeadjusted); })
@@ -76,12 +78,9 @@ flatTax.visualize = function(sheet) {
     selection.exit().remove();
     selection.enter()
       .append('path')
-      .classed('line', true)
-      .attr("d", function(d) {
-          return lineGen(d.values);
-      });
-
-    selection
+      .attr('class', function(d) {
+        return "line flat-" + String(d.year);
+      })
       .attr("d", function(d) {
           return lineGen(d.values);
       });

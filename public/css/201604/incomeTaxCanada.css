@@ -30,7 +30,6 @@ text {
 }
 .line:hover {
   stroke-width: 2;
-  stroke: steelblue;
 }
 .highlighted, .previous {
   stroke: #267129;
@@ -45,4 +44,11 @@ text {
 }
 .bgline {
     stroke: rgba(103, 103, 103, 0.28);
+}
+
+.flat-2016 {
+  stroke: #2b932a;
+}
+.flat-2005 {
+  stroke: #acb524;
 }
