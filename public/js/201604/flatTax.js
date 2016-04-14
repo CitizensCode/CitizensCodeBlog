@@ -29,10 +29,13 @@ flatTax.visualize = function(sheet) {
      'y-axis']
    );
 
+  var width = chart.getInnerWidth();
+  var height = chart.getInnerHeight();
+
   var x = d3.scale.linear()
-    .range([0, chart.getInnerWidth()]);
+    .range([0, width]);
   var y = d3.scale.linear()
-    .range([chart.getInnerHeight(), 0]);
+    .range([height, 0]);
 
   var xAxis = d3.svg.axis()
     .scale(x)
@@ -45,6 +48,26 @@ flatTax.visualize = function(sheet) {
       return parseInt(d, 10) + "%";
     });
 
+  // X-Axis Label
+  layers.get('x-axis')
+    .append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "middle")
+    .attr("x", width / 2 * 1.1)
+    .attr("y", 45)
+    .text("Income (2016 Dollars)");
+
+  // X-Axis Label
+  layers.get('y-axis')
+    .append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "middle")
+    .attr("y", -55)
+    .attr("x", height / 2 * -1)
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text("Effective Income Tax");
+
   var lineGen = d3.svg.line()
     .x(function(d) { return x(d.incomeadjusted); })
     .y(function(d) { return y(d.effectiveincometax); });
@@ -56,8 +79,8 @@ flatTax.visualize = function(sheet) {
       d3Kit.helper.removeAllChildren(layers.get('content'));
     }
 
-    var width = chart.getInnerWidth();
-    var height = chart.getInnerHeight();
+    width = chart.getInnerWidth();
+    height = chart.getInnerHeight();
 
     var data = chart.data();
     x.domain([0, 500000])
@@ -76,14 +99,26 @@ flatTax.visualize = function(sheet) {
       .data(data);
 
     selection.exit().remove();
+
     selection.enter()
       .append('path')
       .attr('class', function(d) {
+        // Add a class for formatting each
         return "line flat-" + String(d.year);
       })
       .attr("d", function(d) {
           return lineGen(d.values);
       });
+
+    // X-Axis Label
+    layers.get('x-axis')
+      .select('.x')
+      .attr("x", width / 2 * 1.1);
+
+    // X-Axis Label
+    layers.get('y-axis')
+      .select('.y')
+      .attr("x", height / 2 * -1);
 
   }, 10); // Debounce at 10 milliseconds
 

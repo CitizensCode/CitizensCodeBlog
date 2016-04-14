@@ -15,6 +15,11 @@ text {
 #menu, #menu select {
     font-size: 40px;
 }
+
+.label {
+  font-size: 1em;
+}
+
 .axis path, .axis line {
   fill: none;
   stroke: #C2C2C2;
