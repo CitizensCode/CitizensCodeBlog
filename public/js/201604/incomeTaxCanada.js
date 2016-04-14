@@ -1,7 +1,7 @@
 (function(incomeTaxCanada, undefined){
 
-/* I use closures to separate things and jshint gets angry at me */
-/* jshint -W117 */
+/* To get jshint off my case */
+/* globals ranking: true, flatTax: true */
 
 var spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EFBsT2vTy_93-tnTHvjcYrZrw6ZqLb9Pfoi8M_FjQ4Y/pubhtml';
 

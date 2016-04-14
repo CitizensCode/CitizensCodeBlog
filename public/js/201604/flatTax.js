@@ -2,16 +2,26 @@
 
 flatTax.visualize = function(sheet) {
 
+  // Get the data from the Google sheet
+  var rawData = sheet.elements;
+  var processedData = [
+    {"year": 2005, "values": []},
+    {"year": 2016, "values": []},
+  ];
+  processedData[0].values = _.where(rawData, {year: 2005});
+  processedData[0].values = _.filter(processedData[0].values, function(data) {
+    return data.incomeadjusted <= 500000;
+  });
+  processedData[1].values = _.where(rawData, {year: 2016});
+
   // Chart options
   var DEFAULT_OPTIONS = {
-    margin: {top: 0, right: 0, bottom: 0, left: 0}
+    margin: {top: 60, right: 60, bottom: 60, left: 60}
   };
+  // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
+  var chart = new d3Kit.Skeleton('#flattax', DEFAULT_OPTIONS);
 
-  var chart = new d3Kit.Skeleton(
-    '#flattax', DEFAULT_OPTIONS)
-    .autoResize('both')
-    .resizeToFitContainer('full');
-
+  // Create some layers to organize the visualization
   var layers = chart.getLayerOrganizer();
   layers.create(
     ['content',
@@ -19,32 +29,73 @@ flatTax.visualize = function(sheet) {
      'y-axis']
    );
 
-  var rect  = chart.getRootG()
-    .append('rect')
-    .style('fill', '#eee');
+  var x = d3.scale.linear()
+    .range([0, chart.getInnerWidth()]);
+  var y = d3.scale.linear()
+    .range([chart.getInnerHeight(), 0]);
 
-  var circle = chart.getRootG()
-    .append('circle')
-    .attr('fill', 'red');
+  var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient('bottom');
+  var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient('left');
 
-  chart.on('resize', function() {
+  var lineGen = d3.svg.line()
+    .x(function(d) { return x(d.incomeadjusted); })
+    .y(function(d) { return y(d.effectiveincometax); });
+
+  // The main visualization function. Debounce keeps it from rendering too many times per second during updates.
+  var visualize = d3Kit.helper.debounce(function(){
+    if(!chart.hasData()) {
+      // If for some reason the chart doesn't have data, remove all the visual elements
+      d3Kit.helper.removeAllChildren(layers.get('content'));
+    }
+
     var width = chart.getInnerWidth();
     var height = chart.getInnerHeight();
 
-    rect.transition()
-      .duration(1000)
-      .attr('width', width)
-      .attr('height', height);
+    var data = chart.data();
+    x.domain([0, 500000])
+      .range([0, width]); // ***Do you need this?
+    y.domain([0, 13])
+      .range([height, 0]);
 
-    circle.transition()
-      .duration(1000)
-      .attr('cx', width / 2)
-      .attr('cy', height / 2)
-      .attr('r', 3/5/2 * chart.height());
-  });
+    layers.get('x-axis')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(xAxis);
+    layers.get('y-axis')
+      .call(yAxis);
 
-  var data = sheet.elements;
-  console.log(data);
+    var selection = layers.get('content')
+      .selectAll('.line')
+      .data(data);
+
+    selection.exit().remove();
+    selection.enter()
+      .append('path')
+      .classed('line', true)
+      .attr("d", function(d) {
+          return lineGen(d.values);
+      });
+
+    selection
+      .attr("d", function(d) {
+          return lineGen(d.values);
+      });
+
+  }, 10); // Debounce at 10 milliseconds
+
+  chart.autoResize('both')
+    .resizeToFitContainer('full')
+    .on('resize', visualize)
+    .on('data', visualize);
+  // Attach the data
+  chart.data(processedData); // *** Can this be combined with above?
+
+  // For reference
+  console.log(sheet);
+  console.log(processedData);
 };
 
 }(window.flatTax = window.flatTax || {}));

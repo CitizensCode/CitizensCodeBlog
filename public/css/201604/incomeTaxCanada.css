@@ -1,0 +1,48 @@
+text {
+  font-family: 'Anonymous Pro', Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+#menu {
+  text-align: left;
+  line-height: 1.5em;
+}
+#menu select {
+  border: none;
+  background-color: white;
+  background-color: rgba(103, 103, 103, 0.09);
+}
+#menu, #menu select {
+    font-size: 40px;
+}
+.axis path, .axis line {
+  fill: none;
+  stroke: #C2C2C2;
+  stroke-width: .5px;
+  stroke-linejoin: round;
+  shape-rendering: crispEdges;
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+}
+.line:hover {
+  stroke-width: 2;
+  stroke: steelblue;
+}
+.highlighted, .previous {
+  stroke: #267129;
+  stroke-width: 3;
+  stroke-dasharray: 5,5;
+}
+.previous {
+  stroke: red;
+}
+.highlighted {
+  stroke: #267129;
+}
+.bgline {
+    stroke: rgba(103, 103, 103, 0.28);
+}
