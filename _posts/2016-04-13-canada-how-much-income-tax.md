@@ -5,7 +5,7 @@ custom_js:
 - jquery-2.1.3.min.js
 - tabletop-1.4.3.js
 - d3-3.5.16.min.js
-- d3kit-1.1.0.js
+- d3kit-1.1.0mod.js
 - underscore-1.8.3.min.js
 - 201604/ranking.js
 - 201604/flatTax.js

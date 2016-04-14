@@ -16,7 +16,8 @@ flatTax.visualize = function(sheet) {
 
   // Chart options
   var DEFAULT_OPTIONS = {
-    margin: {top: 60, right: 60, bottom: 60, left: 60}
+    margin: {top: 60, right: 60, bottom: 60, left: 60},
+    initialWidth: 'auto'
   };
   // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
   var chart = new d3Kit.Skeleton('#flattax', DEFAULT_OPTIONS);
@@ -138,11 +139,13 @@ flatTax.visualize = function(sheet) {
     .attr("startOffset", "45%")
     .text("Alberta 2016 (New Tax Brackets Starting at $125,000)");
 
-  chart.resizeToFitContainer('full')
+  chart
     .autoResize(true)
+    .autoResizeToAspectRatio(1.5)
     .on('resize', visualize)
     .on('data', visualize)
     .data(processedData);
+    // .resizeToFitContainer('full')
 
   // For reference
   console.log(sheet);
