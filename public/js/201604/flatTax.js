@@ -129,6 +129,7 @@ flatTax.visualize = function(sheet) {
     layers.get('y-axis')
       .call(yAxis);
 
+    // Draw the lines
     var selection = layers.get('content')
       .selectAll('.line')
       .data(data);
@@ -143,12 +144,30 @@ flatTax.visualize = function(sheet) {
         return "flat-" + String(d.year);
       })
       .attr("d", function(d) {
-          return lineGen(d.values);
+        return lineGen(d.values);
       });
 
     selection.attr("d", function(d) {
-          return lineGen(d.values);
+        return lineGen(d.values);
       });
+
+    // Add some invisible points for the tooltips
+    selection = layers.get('content')
+        .selectAll('.tooltip-point')
+        // Use the raw data since it isn't nested. Easier to work with.
+        .data(rawData);
+
+    selection.exit().remove();
+
+    selection.enter()
+      .append('circle')
+      .attr('class', 'tooltip-point')
+      .attr("r", 5)
+      .attr("cx", function(d) { return x(d.incomeadjusted); })
+      .attr("cy", function(d) { return y(d.effectiveincometax); });
+
+    selection.attr("cx", function(d) { return x(d.incomeadjusted); })
+      .attr("cy", function(d) { return y(d.effectiveincometax); });
 
     // X-Axis Label
     layers.get('x-axis')

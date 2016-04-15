@@ -82,3 +82,7 @@ text {
     font-size: 0.9em;
   }
 }
+
+.tooltip-point {
+  opacity: 0;
+}

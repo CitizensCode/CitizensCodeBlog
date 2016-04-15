@@ -10,6 +10,7 @@ custom_js:
 - 201604/ranking.js
 - 201604/flatTax.js
 - 201604/incomeTaxCanada.js
+- kodama-1.4.3.js
 custom_css:
 - d3KitChart.css
 - 201604/incomeTaxCanada.css
