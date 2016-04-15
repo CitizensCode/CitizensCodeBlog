@@ -33,6 +33,30 @@ flatTax.visualize = function(sheet) {
   var width = chart.getInnerWidth();
   var height = chart.getInnerHeight();
 
+  // Scales for the margin sizes and axis-label placement
+  var maxWidthApprox = 750;
+  var minWidthApprox = 320;
+  var xAxisScale = d3.scale.pow()
+    .exponent(0.5)
+    .domain([minWidthApprox, maxWidthApprox])
+    .range([0,15]);
+  var yAxisScale = d3.scale.pow()
+    .exponent(0.5)
+    .domain([minWidthApprox, maxWidthApprox])
+    .range([0,10]);
+
+  chart.margin({
+    top: 10, // Selected by trial and error
+    right: 20, // Same
+    bottom: 40 + yAxisScale(width),
+    left: 40 + xAxisScale(width)
+  }, true); // Do not dispatch the resize event
+
+  // The above impacted the width and height, so we grab the new values here
+  width = chart.getInnerWidth();
+  height = chart.getInnerHeight();
+
+  // Scales for the data
   var x = d3.scale.linear()
     .range([0, width]);
   var y = d3.scale.linear()
@@ -54,17 +78,17 @@ flatTax.visualize = function(sheet) {
     .append("text")
     .attr("class", "x label")
     .attr("text-anchor", "middle")
-    .attr("x", width / 2 * 1.1)
-    .attr("y", 45)
+    .attr("x", width / 2)
+    .attr("y", 30 + yAxisScale(width))
     .text("Income (2016 Dollars)");
 
-  // X-Axis Label
+  // Y-Axis Label
   layers.get('y-axis')
     .append("text")
     .attr("class", "y label")
     .attr("text-anchor", "middle")
-    .attr("y", -55)
-    .attr("x", height / 2 * -1)
+    .attr("y", -40 - xAxisScale(width))
+    .attr("x", height / -2 )
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
     .text("Effective Income Tax");
@@ -80,6 +104,16 @@ flatTax.visualize = function(sheet) {
       d3Kit.helper.removeAllChildren(layers.get('content'));
     }
 
+    // Grab them in case they've changed
+    width = chart.getInnerWidth();
+    height = chart.getInnerHeight();
+    chart.margin({
+      top: 10,
+      right: 20,
+      bottom: 40 + yAxisScale(width),
+      left: 40 + xAxisScale(width)
+    }, true);
+    // Get the new values
     width = chart.getInnerWidth();
     height = chart.getInnerHeight();
 
@@ -119,12 +153,14 @@ flatTax.visualize = function(sheet) {
     // X-Axis Label
     layers.get('x-axis')
       .select('.x')
-      .attr("x", width / 2 * 1.1);
+      .attr("x", width / 2)
+      .attr("y", 30 + yAxisScale(width));
 
-    // X-Axis Label
+    // Y-Axis Label
     layers.get('y-axis')
       .select('.y')
-      .attr("x", height / 2 * -1);
+      .attr("y", -40 - xAxisScale(width))
+      .attr("x", height / -2 );
 
   }, 10); // Debounce at 10 milliseconds
 
@@ -136,8 +172,8 @@ flatTax.visualize = function(sheet) {
    .append("textPath")
     .attr("class", "flat-2016-label")
     .attr("xlink:href", "#flat-2016")
-    .attr("startOffset", "45%")
-    .text("Alberta 2016 (New Tax Brackets Starting at $125,000)");
+    .attr("startOffset", "55%")
+    .text("Alberta 2016 (New Tax Brackets)");
 
   chart
     .autoResize(true)
@@ -145,7 +181,6 @@ flatTax.visualize = function(sheet) {
     .on('resize', visualize)
     .on('data', visualize)
     .data(processedData);
-    // .resizeToFitContainer('full')
 
   // For reference
   console.log(sheet);

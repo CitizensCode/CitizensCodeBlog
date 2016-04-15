@@ -3,6 +3,7 @@ text {
   font-size: 15px;
   font-weight: 700;
 }
+
 #menu {
   text-align: left;
   line-height: 1.5em;
@@ -56,4 +57,28 @@ text {
 }
 #flat-2005 {
   stroke: #acb524;
+}
+
+@media (max-width: 800px) {
+  .chart text  {
+    font-size: 0.7em;
+  }
+  .chart .y.label, .chart .x.label  {
+    font-size: 0.9em;
+  }
+  .flat-2016-label {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 400px) {
+  .chart text  {
+    font-size: 0.55em;
+  }
+  .chart .y.label, .chart .x.label  {
+    font-size: 0.8em;
+  }
+  .flat-2016-label {
+    font-size: 0.9em;
+  }
 }
