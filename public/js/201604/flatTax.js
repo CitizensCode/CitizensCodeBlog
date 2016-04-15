@@ -4,6 +4,8 @@ flatTax.visualize = function(sheet) {
 
   // Get the data from the Google sheet
   var rawData = sheet.elements;
+
+  // This will be use to plot the lines
   var processedData = [
     {"year": 2005, "values": []},
     {"year": 2016, "values": []},
@@ -13,6 +15,21 @@ flatTax.visualize = function(sheet) {
     return data.incomeadjusted <= 500000;
   });
   processedData[1].values = _.where(rawData, {year: 2016});
+
+  // This will be used for the Kodoma tooltips. They need to be in a specific format.
+  var kodomoData = rawData.map(function(data) {
+    return {
+      incomeadjusted: data.incomeadjusted,
+      effectiveincometax: data.effectiveincometax,
+      title: "Alberta - " + data.year,
+      items: [
+        {title: "Income", value: data.incomeadjusted},
+        {title: "Effective Tax", value: data.effectiveincometax}
+      ],
+      distance: 10,
+      theme: 'ccTheme'
+    };
+  });
 
   // Chart options
   var DEFAULT_OPTIONS = {
@@ -155,16 +172,17 @@ flatTax.visualize = function(sheet) {
     selection = layers.get('content')
         .selectAll('.tooltip-point')
         // Use the raw data since it isn't nested. Easier to work with.
-        .data(rawData);
+        .data(kodomoData);
 
     selection.exit().remove();
 
     selection.enter()
       .append('circle')
       .attr('class', 'tooltip-point')
-      .attr("r", 5)
+      .attr("r", 10)
       .attr("cx", function(d) { return x(d.incomeadjusted); })
-      .attr("cy", function(d) { return y(d.effectiveincometax); });
+      .attr("cy", function(d) { return y(d.effectiveincometax); })
+      .call(d3.kodama.tooltip());
 
     selection.attr("cx", function(d) { return x(d.incomeadjusted); })
       .attr("cy", function(d) { return y(d.effectiveincometax); });

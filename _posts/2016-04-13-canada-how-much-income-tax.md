@@ -6,11 +6,11 @@ custom_js:
 - tabletop-1.4.3.js
 - d3-3.5.16.min.js
 - d3kit-1.1.0mod.js
+- kodoma-1.4.3.js
 - underscore-1.8.3.min.js
 - 201604/ranking.js
 - 201604/flatTax.js
 - 201604/incomeTaxCanada.js
-- kodama-1.4.3.js
 custom_css:
 - d3KitChart.css
 - 201604/incomeTaxCanada.css
