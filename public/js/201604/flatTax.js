@@ -21,7 +21,7 @@ flatTax.visualize = function(sheet) {
     return {
       incomeadjusted: data.incomeadjusted,
       effectiveincometax: data.effectiveincometax,
-      title: "Alberta - " + data.year,
+      title: "Alberta " + data.year,
       items: [
         {title: "Income", value: data.incomeadjusted},
         {title: "Effective Tax", value: data.effectiveincometax}
@@ -160,11 +160,13 @@ flatTax.visualize = function(sheet) {
         // Add a class for formatting each
         return "flat-" + String(d.year);
       })
+      .transition()
       .attr("d", function(d) {
         return lineGen(d.values);
       });
 
-    selection.attr("d", function(d) {
+    selection.transition()
+      .attr("d", function(d) {
         return lineGen(d.values);
       });
 
@@ -191,7 +193,7 @@ flatTax.visualize = function(sheet) {
     layers.get('x-axis')
       .select('.x')
       .attr("x", width / 2)
-      .attr("y", 30 + yAxisScale(width));
+      .attr("y", 35 + yAxisScale(width));
 
     // Y-Axis Label
     layers.get('y-axis')
@@ -209,8 +211,18 @@ flatTax.visualize = function(sheet) {
    .append("textPath")
     .attr("class", "flat-2016-label")
     .attr("xlink:href", "#flat-2016")
-    .attr("startOffset", "55%")
+    .attr("startOffset", "60%")
     .text("Alberta 2016 (New Tax Brackets)");
+
+  layers.get('content')
+   .append("text")
+    .attr("dy", "-3")
+    .attr("class", "curve-text")
+   .append("textPath")
+    .attr("class", "flat-2005-label")
+    .attr("xlink:href", "#flat-2005")
+    .attr("startOffset", "60%")
+    .text("Alberta 2005 (Flat 10% Tax)");
 
   chart
     .autoResize(true)
