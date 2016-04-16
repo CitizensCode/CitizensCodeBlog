@@ -35,7 +35,7 @@ ranking.visualize = function(sheet) {
 
   // Chart options
   var DEFAULT_OPTIONS = {
-    margin: {top: 60, right: 60, bottom: 60, left: 60},
+    margin: {top: 60, right: 60, bottom: 90, left: 60},
     initialWidth: 'auto'
   };
   // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
@@ -67,7 +67,7 @@ ranking.visualize = function(sheet) {
   chart.margin({
     top: 10, // Selected by trial and error
     right: 20, // Same
-    bottom: 40 + yAxisScale(width),
+    bottom: 60 + yAxisScale(width),
     left: 40 + xAxisScale(width)
   }, true); // Do not dispatch the resize event
 
@@ -88,6 +88,7 @@ ranking.visualize = function(sheet) {
     .ticks(11, function(d) {
       return "$" + String(d / 1000);
     });
+
   var yAxis = d3.svg.axis()
     .scale(y)
     .orient('left');
@@ -98,7 +99,7 @@ ranking.visualize = function(sheet) {
     .attr("class", "x label")
     .attr("text-anchor", "middle")
     .attr("x", width / 2)
-    .attr("y", 25 + yAxisScale(width))
+    .attr("y", 40 + yAxisScale(width))
     .text("Income (Thousands, 2016 Dollars)");
 
   // Y-Axis Labels
@@ -142,7 +143,7 @@ ranking.visualize = function(sheet) {
     chart.margin({
       top: 20,
       right: 20,
-      bottom: 40 + yAxisScale(width),
+      bottom: 60 + yAxisScale(width),
       left: 40 + xAxisScale(width)
     }, true);
     // Get the new values
@@ -157,7 +158,12 @@ ranking.visualize = function(sheet) {
 
     layers.get('x-axis')
       .attr('transform', 'translate(0,' + height * 1.02 + ')')
-      .call(xAxis);
+        .call(xAxis)
+      .selectAll(".tick text")
+        .attr("y", -4)
+        .attr("x", 0)
+        .style("transform", "rotate(-45deg)")
+        .style("text-anchor", "end");
     layers.get('y-axis')
       .call(yAxis);
 
@@ -218,7 +224,7 @@ ranking.visualize = function(sheet) {
     layers.get('x-axis')
       .select('.x')
       .attr("x", width / 2)
-      .attr("y", 25 + yAxisScale(width));
+      .attr("y", 40 + yAxisScale(width));
 
     // Y-Axis Labels
     layers.get('y-axis')

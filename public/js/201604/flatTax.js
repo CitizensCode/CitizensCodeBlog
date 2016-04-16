@@ -33,7 +33,7 @@ flatTax.visualize = function(sheet) {
 
   // Chart options
   var DEFAULT_OPTIONS = {
-    margin: {top: 60, right: 60, bottom: 60, left: 60},
+    margin: {top: 60, right: 60, bottom: 90, left: 60},
     initialWidth: 'auto'
   };
   // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
@@ -65,7 +65,7 @@ flatTax.visualize = function(sheet) {
   chart.margin({
     top: 10, // Selected by trial and error
     right: 20, // Same
-    bottom: 40 + yAxisScale(width),
+    bottom: 60 + yAxisScale(width),
     left: 40 + xAxisScale(width)
   }, true); // Do not dispatch the resize event
 
@@ -96,7 +96,7 @@ flatTax.visualize = function(sheet) {
     .attr("class", "x label")
     .attr("text-anchor", "middle")
     .attr("x", width / 2)
-    .attr("y", 30 + yAxisScale(width))
+    .attr("y", 40 + yAxisScale(width))
     .text("Income (2016 Dollars)");
 
   // Y-Axis Label
@@ -127,7 +127,7 @@ flatTax.visualize = function(sheet) {
     chart.margin({
       top: 10,
       right: 20,
-      bottom: 40 + yAxisScale(width),
+      bottom: 60 + yAxisScale(width),
       left: 40 + xAxisScale(width)
     }, true);
     // Get the new values
@@ -142,7 +142,12 @@ flatTax.visualize = function(sheet) {
 
     layers.get('x-axis')
       .attr('transform', 'translate(0,' + height + ')')
-      .call(xAxis);
+      .call(xAxis)
+    .selectAll(".tick text")
+      .attr("y", 0)
+      .attr("x", -4)
+      .style("transform", "rotate(-45deg)")
+      .style("text-anchor", "end");
     layers.get('y-axis')
       .call(yAxis);
 
@@ -150,8 +155,6 @@ flatTax.visualize = function(sheet) {
     var selection = layers.get('content')
       .selectAll('.line')
       .data(data);
-
-    selection.exit().remove();
 
     selection.enter()
       .append('path')
@@ -193,7 +196,7 @@ flatTax.visualize = function(sheet) {
     layers.get('x-axis')
       .select('.x')
       .attr("x", width / 2)
-      .attr("y", 35 + yAxisScale(width));
+      .attr("y", 50 + yAxisScale(width));
 
     // Y-Axis Label
     layers.get('y-axis')

@@ -93,8 +93,13 @@ text {
   opacity: 0;
 }
 
+/* Rotate x-axes */
+/*.x-axis-layer .tick text {
+  transform: rotate(-45deg);
+}*/
+
 /* Hide the axes for the ranking chart */
-.x-axis-layer path, .y-axis-layer path {
+#ranking .x-axis-layer path, .y-axis-layer path {
     visibility: hidden;
 }
 
