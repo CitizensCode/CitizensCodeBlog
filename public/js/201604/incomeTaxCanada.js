@@ -3,6 +3,22 @@
 /* To get jshint off my case */
 /* globals ranking: true, flatTax: true */
 
+incomeTaxCanada.provinceLookup = {
+  "Alberta": "ab",
+  "British Columbia": "bc",
+  "Manitoba": "mb",
+  "New Brunswick": "nb",
+  "Newfoundland and Labrador": "nl",
+  "Northwest Territories": "nt",
+  "Nova Scotia": "ns",
+  "Nunavut": "nu",
+  "Ontario": "on",
+  "Prince Edward Island": "pe",
+  "Quebec": "qc",
+  "Saskatchewan": "sk",
+  "Yukon": "yt"
+};
+
 // The configuration for the Kodoma tooltips
 var ccTheme =
 {
@@ -14,7 +30,8 @@ var ccTheme =
     'color': 'white',
     'border-radius': '4px',
     'font-size': '15px',
-    'box-shadow': 'none'
+    'box-shadow': 'none',
+    'line-height': '1'
   },
   title: {
     'font-size': '20px',

@@ -8,9 +8,9 @@ custom_js:
 - d3kit-1.1.0mod.js
 - kodoma-1.4.3.js
 - underscore-1.8.3.min.js
+- 201604/incomeTaxCanada.js
 - 201604/ranking.js
 - 201604/flatTax.js
-- 201604/incomeTaxCanada.js
 custom_css:
 - d3KitChart.css
 - 201604/incomeTaxCanada.css

@@ -1,5 +1,8 @@
 (function(ranking, undefined){
 
+  /* To get jshint off my case */
+  /* globals incomeTaxCanada: true */
+
 ranking.data = [];
 ranking.processed = null;
 
@@ -28,28 +31,6 @@ ranking.visualize = function(sheet) {
       rawData, {"province" : prov}
     );
     return provObj;
-  });
-
-  ranking.processed = processedData; // Testing
-
-  console.log(processedData);
-
-  // This will be used for the Kodoma tooltips. They need to be in a specific format.
-  var kodomoData = rawData.map(function(data) {
-    return {
-      income: data.income,
-      effectiveincometax: data.effectiveincometax,
-      rankatincome: data.rankatincome,
-      province: data.province,
-      title: data.province,
-      items: [
-        {title: "Income", value: data.income},
-        {title: "Effective Tax", value: data.effectiveincometax},
-        {title: "Rank", value: data.rankatincome}
-      ],
-      distance: 10,
-      theme: 'ccTheme'
-    };
   });
 
   // Chart options
@@ -95,7 +76,7 @@ ranking.visualize = function(sheet) {
   height = chart.getInnerHeight();
 
   // Scales for the data
-  var x = d3.scale.linear()
+  var x = d3.scale.log()
     .range([0, width]);
   var y = d3.scale.linear()
     .range([height, 0]);
@@ -103,7 +84,10 @@ ranking.visualize = function(sheet) {
   var xAxis = d3.svg.axis()
     .scale(x)
     .orient('bottom')
-    .tickFormat(d3.format("$s"));
+    .tickSize(-height * 1.1)
+    .ticks(11, function(d) {
+      return "$" + String(d / 1000);
+    });
   var yAxis = d3.svg.axis()
     .scale(y)
     .orient('left');
@@ -114,8 +98,8 @@ ranking.visualize = function(sheet) {
     .attr("class", "x label")
     .attr("text-anchor", "middle")
     .attr("x", width / 2)
-    .attr("y", 30 + yAxisScale(width))
-    .text("Income (2016 Dollars)");
+    .attr("y", 25 + yAxisScale(width))
+    .text("Income (Thousands, 2016 Dollars)");
 
   // Y-Axis Labels
   layers.get('y-axis')
@@ -141,6 +125,10 @@ ranking.visualize = function(sheet) {
     .x(function(d) { return x(d.income); })
     .y(function(d) { return y(d.rankatincome); });
 
+  var cleanString = function(toClean) {
+    return String(toClean).toLowerCase().replace(/\s+/g, '');
+  };
+
   // The main visualization function. Debounce keeps it from rendering too many times per second during updates.
   var visualize = d3Kit.helper.debounce(function(){
     if(!chart.hasData()) {
@@ -152,7 +140,7 @@ ranking.visualize = function(sheet) {
     width = chart.getInnerWidth();
     height = chart.getInnerHeight();
     chart.margin({
-      top: 10,
+      top: 20,
       right: 20,
       bottom: 40 + yAxisScale(width),
       left: 40 + xAxisScale(width)
@@ -162,65 +150,75 @@ ranking.visualize = function(sheet) {
     height = chart.getInnerHeight();
 
     var data = chart.data();
-    x.domain([0, 500000])
+    x.domain([10000, 500000])
       .range([0, width]);
-    y.domain([0, 13])
+    y.domain([13, 1])
       .range([height, 0]);
 
     layers.get('x-axis')
-      .attr('transform', 'translate(0,' + height + ')')
+      .attr('transform', 'translate(0,' + height * 1.02 + ')')
       .call(xAxis);
     layers.get('y-axis')
       .call(yAxis);
 
     // Draw the lines
     var selection = layers.get('content')
-      .selectAll('.line')
-      .data(data);
+      .selectAll('.province-group')
+        .data(data);
 
-    selection.exit().remove();
-
-    selection.enter()
-      .append('path')
-      .attr('class', 'line')
-      .attr('id', function(d) {
-        // Add a class for formatting each
-        return "ranking-" + String(d.province);
+    // Update everything if it exists
+    selection.select('path')
+      .attr("d", function(d) {
+        return lineGen(d.values);
+      });
+    selection.select('text')
+      .datum(function(d) {
+        return {
+          name: d.province,
+          value: d.values[d.values.length - 1]};
       })
-      .transition()
-      .attr("d", function(d) {
-        return lineGen(d.values);
+      .attr("transform", function(d) {
+        return "translate(" + (width + 3) + "," + y(d.value.rankatincome) + ")";
       });
 
-    selection.transition()
-      .attr("d", function(d) {
-        return lineGen(d.values);
+    // Enter new objects if they don't exist
+    var enterGroup = selection.enter().append("g")
+        .attr("class", "province-group");
+
+    enterGroup.append('path')
+        .attr('class', function(d) {
+          return 'line '  + cleanString(d.province);
+        })
+        .attr('id', function(d) {
+          // Add a class for formatting each
+          return "ranking-" + cleanString(d.province);
+        })
+        .attr("d", function(d) {
+          return lineGen(d.values);
+        });
+
+    enterGroup.append("text")
+      .datum(function(d) {
+        return {
+          name: d.province,
+          value: d.values[d.values.length - 1]};
+      })
+      .attr("text-anchor", "start")
+      .attr("dy", "5")
+      .attr("transform", function(d) {
+        return "translate(" + (width + 3) + "," + y(d.value.rankatincome) + ")";
+      })
+      .text(function(d) {
+        // provinceLookup is in incomeTaxCanada.js
+        var provAbbv = incomeTaxCanada.provinceLookup[d.name];
+        return provAbbv.toUpperCase();
       });
-
-    // Add some invisible points for the tooltips
-    selection = layers.get('content')
-        .selectAll('.tooltip-point')
-        // Use the raw data since it isn't nested. Easier to work with.
-        .data(kodomoData);
-
-    selection.exit().remove();
-
-    selection.enter()
-      .append('circle')
-      .attr('class', 'tooltip-point')
-      .attr("r", 10)
-      .attr("cx", function(d) { return x(d.incomeadjusted); })
-      .attr("cy", function(d) { return y(d.effectiveincometax); })
-      .call(d3.kodama.tooltip());
-
-    selection.attr("cx", function(d) { return x(d.incomeadjusted); })
-      .attr("cy", function(d) { return y(d.effectiveincometax); });
 
     // X-Axis Label
     layers.get('x-axis')
       .select('.x')
       .attr("x", width / 2)
-      .attr("y", 35 + yAxisScale(width));
+      .attr("y", 25 + yAxisScale(width));
 
     // Y-Axis Labels
     layers.get('y-axis')
@@ -234,17 +232,6 @@ ranking.visualize = function(sheet) {
 
   }, 10); // Debounce at 10 milliseconds
 
-  // Line labels
-  // layers.get('content')
-  //  .append("text")
-  //   .attr("dy", "-3")
-  //   .attr("class", "curve-text")
-  //  .append("textPath")
-  //   .attr("class", "flat-2016-label")
-  //   .attr("xlink:href", "#flat-2016")
-  //   .attr("startOffset", "60%")
-  //   .text("Alberta 2016 (New Tax Brackets)");
-
   chart
     .autoResize(true)
     .autoResizeToAspectRatio(1.5)
@@ -253,7 +240,9 @@ ranking.visualize = function(sheet) {
     .data(processedData);
 
   // For reference
+  console.log("Sheet");
   console.log(sheet);
+  console.log("Processed Data");
   console.log(processedData);
 };
 

@@ -41,7 +41,7 @@ text {
     stroke-linecap: round;
 }
 .line:hover {
-  stroke-width: 2;
+  stroke-width: 3;
 }
 .highlighted, .previous {
   stroke: #267129;
@@ -91,4 +91,54 @@ text {
 
 .tooltip-point {
   opacity: 0;
+}
+
+/* Hide the axes for the ranking chart */
+.x-axis-layer path, .y-axis-layer path {
+    visibility: hidden;
+}
+
+#ranking .x-axis-layer .tick line {
+  stroke: #C6C6C6;
+  opacity: .5;
+}
+
+.novascotia {
+  stroke: #b05a28;
+}
+.priceedwardisland {
+  stroke: #b2d085;
+}
+.newbrunswick {
+  stroke: #df2425;
+}
+.newfoundlandandlabrador {
+  stroke: #ef9797;
+}
+.quebec {
+  stroke: #96c0db;
+}
+.ontario {
+  stroke: #ed7f21;
+}
+.manitoba {
+  stroke: #cab1d2;
+}
+.saskatchewan {
+  stroke: #66408d;
+}
+.alberta {
+  stroke: #389f3d;
+}
+.britishcolumbia {
+  stroke: #a948c0;
+}
+.nunavut {
+  stroke: #020202;
+}
+.yukon {
+  stroke: #7c7a7a;
+}
+.northwestterritories {
+  stroke: #2877b3;
 }
