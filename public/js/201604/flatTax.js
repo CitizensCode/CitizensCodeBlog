@@ -231,9 +231,6 @@ flatTax.visualize = function(sheet) {
     .on('data', visualize)
     .data(processedData);
 
-  // For reference
-  console.log(sheet);
-  console.log(processedData);
 };
 
 }(window.flatTax = window.flatTax || {}));
