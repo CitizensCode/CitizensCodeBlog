@@ -40,7 +40,7 @@ text {
     stroke-width: 1.5px;
     stroke-linecap: round;
 }
-.line:hover {
+#ranking .line:hover {
   stroke-width: 3;
 }
 .highlighted, .previous {
@@ -99,7 +99,8 @@ text {
 }*/
 
 /* Hide the axes for the ranking chart */
-#ranking .x-axis-layer path, .y-axis-layer path {
+#ranking .x-axis-layer path,
+#ranking .y-axis-layer path {
     visibility: hidden;
 }
 

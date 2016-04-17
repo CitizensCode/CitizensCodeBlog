@@ -3,14 +3,15 @@ layout: post
 title: "Income Tax"
 custom_js:
 - jquery-2.1.3.min.js
-- tabletop-1.4.3.js
+- tabletop-1.4.3.min.js
 - d3-3.5.16.min.js
-- d3kit-1.1.0mod.js
-- kodoma-1.4.3.js
+- d3kit-1.1.0mod.min.js
+- kodoma-1.4.3.min.js
 - underscore-1.8.3.min.js
-- 201604/incomeTaxCanada.js
 - 201604/ranking.js
 - 201604/flatTax.js
+- 201604/allAdjusted.js
+- 201604/incomeTaxCanada.js
 custom_css:
 - d3KitChart.css
 - 201604/incomeTaxCanada.css
@@ -32,6 +33,11 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacin
 <h3>Provincial + Federal Effective Tax Ranking, 2016</h3>
 <div id="ranking" class="chart"></div>
 
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
+
+<h3>The 2016 Effective Tax Rate by Province</h3>
+<div id="allAdjusted" class="chart"></div>
 
 Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
 

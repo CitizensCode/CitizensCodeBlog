@@ -1,7 +1,7 @@
 (function(incomeTaxCanada, undefined){
 
 /* To get jshint off my case */
-/* globals ranking: true, flatTax: true */
+/* globals ranking: true, flatTax: true, allAdjusted: true */
 
 incomeTaxCanada.provinceLookup = {
   "Alberta": "ab",
@@ -58,6 +58,8 @@ var visualizeData = function(data, tabletop) {
   ranking.visualize(tabletop.sheets("Ranking"));
   // See flattax.js
   flatTax.visualize(tabletop.sheets("FlatTax"));
+  // See allAdjusted.js
+  allAdjusted.visualize(tabletop.sheets("AllAdjusted"));
 };
 
 var init = function() {
@@ -65,15 +67,15 @@ var init = function() {
                    callback: visualizeData,
   // Grab the spreadsheet sheets we want
                    wanted: [
-                     "Ranking",
-                     "FlatTax"],
+                    "Ranking",
+                    "FlatTax",
+                    "AllAdjusted"],
                    parseNumbers: true,
                    prettyColumnNames: false
                  } );
 };
 
-$(document).ready(function() {
-  init();
-});
+// Uses Cash.js instead of jQuery
+$(init());
 
 }(window.incomeTaxCanada = window.incomeTaxCanada || {}));

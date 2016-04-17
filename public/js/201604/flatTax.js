@@ -179,18 +179,49 @@ flatTax.visualize = function(sheet) {
         // Use the raw data since it isn't nested. Easier to work with.
         .data(kodomoData);
 
-    selection.exit().remove();
-
     selection.enter()
       .append('circle')
       .attr('class', 'tooltip-point')
-      .attr("r", 10)
+      .attr('id', function() {
+        return _.uniqueId("flat-");
+      })
+      .attr("r", 6)
+      .attr("stroke", "black")
+      .attr("stroke-width", "1")
+      .attr("fill", "white")
       .attr("cx", function(d) { return x(d.incomeadjusted); })
       .attr("cy", function(d) { return y(d.effectiveincometax); })
       .call(d3.kodama.tooltip());
 
-    selection.attr("cx", function(d) { return x(d.incomeadjusted); })
-      .attr("cy", function(d) { return y(d.effectiveincometax); });
+    selection.attr("cx", function(d) {
+        return x(d.incomeadjusted);
+      })
+      .attr("cy", function(d) {
+        return y(d.effectiveincometax);
+      });
+
+    $('#flattax circle').on('mouseover', function(obj) {
+      // Make the circle show up
+      var currId = "#" + obj.currentTarget.id;
+      $(currId).css("opacity", 0.75);
+
+      // Make the line get thicker
+      var data = obj.currentTarget.__data__;
+      var title = data.title;
+      var year = title.split(" ")[1];
+      var id = "#flat-" + year;
+      $(id).css("stroke-width", 3);
+    });
+    $('#flattax circle').on('mouseout', function(obj) {
+      var currId = "#" + obj.currentTarget.id;
+      $(currId).css("opacity", 0);
+
+      var data = obj.currentTarget.__data__;
+      var title = data.title;
+      var year = title.split(" ")[1];
+      var id = "#flat-" + year;
+      $(id).css("stroke-width", 1.5);
+    });
 
     // X-Axis Label
     layers.get('x-axis')
