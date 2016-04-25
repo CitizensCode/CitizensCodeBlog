@@ -50,6 +50,11 @@ text {
   stroke-width: 3;
 }
 
+.focus text {
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
 .alladjusted-hover {
   stroke-width: 3;
 }
@@ -101,7 +106,7 @@ text {
 }
 
 .tooltip-point {
-  opacity: 0;
+  opacity: 0.75;
 }
 
 /* Rotate x-axes */

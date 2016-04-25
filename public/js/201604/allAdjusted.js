@@ -86,19 +86,6 @@ allAdjusted.visualize = function(sheet) {
   var y = d3.scale.linear()
     .range([height, 0]);
 
-  // Set up the voronoi generator
-  var voronoi = d3.geom.voronoi()
-    .x(function(d) {
-      return x(d.incomeadjusted);
-    })
-    .y(function(d) {
-      return y(d.effectiveincometax);
-    })
-    .clipExtent([
-      [-margins.left, -margins.top],
-      [width + margins.right, height + margins.bottom]
-    ]);
-
   var xAxis = d3.svg.axis()
     .scale(x)
     .orient('bottom')
@@ -177,10 +164,13 @@ allAdjusted.visualize = function(sheet) {
     layers.get('y-axis')
       .call(yAxis);
 
+    console.log(data);
     // Draw the lines
     var selection = layers.get('content')
       .selectAll('.line')
-      .data(data);
+      .data(data, function(d) {
+        return d.province;
+      });
 
     selection.transition()
       .attr("d", function(d) {
@@ -216,6 +206,34 @@ allAdjusted.visualize = function(sheet) {
 
     ///// Add the voronoi layer
 
+    // Set up the voronoi generator
+    var voronoi = d3.geom.voronoi()
+      .x(function(d) {
+        return x(d.incomeadjusted);
+      })
+      .y(function(d) {
+        return y(d.effectiveincometax);
+      })
+      .clipExtent([
+        [-margins.left, -margins.top],
+        [width + margins.right, height + margins.bottom]
+      ]);
+
+    var focus = layers.get('voronoi')
+      .append("g")
+      .attr("transform", "translate(-100,-100)")
+      .attr("class", "focus");
+
+    focus.append("circle")
+      .attr('class', 'tooltip-point')
+      .attr("stroke", "black")
+      .attr("stroke-width", "1")
+      .attr("fill", "white")
+      .attr("r", 6);
+
+    focus.append("text")
+      .attr("y", -10);
+
     // First set up some mouse functions
     var mouseover = function(d) {
       // Make the line turn black
@@ -223,15 +241,14 @@ allAdjusted.visualize = function(sheet) {
         .classed("alladjusted-hover", true);
       d.province.line.parentNode.appendChild(d.province.line);
       // Move the label and text into view and change the label
-      // focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
-      // focus.select("text").text(d.province.name);
+      focus.attr("transform", "translate(" + x(d.incomeadjusted) + "," + y(d.effectiveincometax) + ")");
+      focus.select("text").text(d.province.province);
     };
 
     var mouseout = function(d) {
       d3.select(d.province.line).classed("alladjusted-hover", false);
-      // focus.attr("transform", "translate(-100, -100)");
+      focus.attr("transform", "translate(-100, -100)");
     };
-
 
     var voronoiGroup = layers.get('voronoi')
       .selectAll("path")
