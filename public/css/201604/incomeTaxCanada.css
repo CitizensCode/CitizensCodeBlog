@@ -4,6 +4,10 @@ h3 {
   font-family: 'Anonymous Pro', Arial, sans-serif;
 }
 
+.chart svg {
+  overflow: visible;
+}
+
 text {
   font-family: 'Anonymous Pro', Arial, sans-serif;
   font-size: 15px;
@@ -48,11 +52,6 @@ text {
 
 #ranking .line:hover {
   stroke-width: 3;
-}
-
-.focus text {
-  text-anchor: middle;
-  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
 }
 
 .alladjusted-hover {
@@ -105,8 +104,18 @@ text {
   }
 }
 
-.tooltip-point {
+.tooltip-box {
+}
+.tooltip-box text {
+  text-anchor: middle;
+  text-shadow: 0 1px 2px #fff, 1px 0 2px #fff, 0 -1px 2px #fff, -1px 0 2px #fff;
+}
+.tooltip-circle {
   opacity: 0.75;
+}
+.tooltip-title {
+  font-size: 0.9em;
+  font-weight: bold;
 }
 
 /* Rotate x-axes */

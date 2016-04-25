@@ -164,7 +164,6 @@ allAdjusted.visualize = function(sheet) {
     layers.get('y-axis')
       .call(yAxis);
 
-    console.log(data);
     // Draw the lines
     var selection = layers.get('content')
       .selectAll('.line')
@@ -221,17 +220,26 @@ allAdjusted.visualize = function(sheet) {
 
     var focus = layers.get('voronoi')
       .append("g")
-      .attr("transform", "translate(-100,-100)")
-      .attr("class", "focus");
+      .attr("transform", "translate(-9000,-9000)")
+      .attr("class", "tooltip-box");
 
     focus.append("circle")
-      .attr('class', 'tooltip-point')
+      .attr('class', 'tooltip-circle')
       .attr("stroke", "black")
       .attr("stroke-width", "1")
       .attr("fill", "white")
       .attr("r", 6);
 
     focus.append("text")
+      .attr('class', 'tooltip-title')
+      .attr("y", -40);
+
+    focus.append("text")
+      .attr('class', 'tooltip-valueA')
+      .attr("y", -25);
+
+    focus.append("text")
+      .attr('class', 'tooltip-valueB')
       .attr("y", -10);
 
     // First set up some mouse functions
@@ -242,12 +250,19 @@ allAdjusted.visualize = function(sheet) {
       d.province.line.parentNode.appendChild(d.province.line);
       // Move the label and text into view and change the label
       focus.attr("transform", "translate(" + x(d.incomeadjusted) + "," + y(d.effectiveincometax) + ")");
-      focus.select("text").text(d.province.province);
+
+      // Update the tooltip
+      focus.select(".tooltip-title")
+        .text(d.province.province);
+      focus.select(".tooltip-valueA")
+        .text("Income Tax: " + d.effectiveincometax + "%");
+      focus.select(".tooltip-valueB")
+      .text("Income: $" + d.incomeadjusted);
     };
 
     var mouseout = function(d) {
       d3.select(d.province.line).classed("alladjusted-hover", false);
-      focus.attr("transform", "translate(-100, -100)");
+      focus.attr("transform", "translate(-9000, -9000)");
     };
 
     var voronoiGroup = layers.get('voronoi')
