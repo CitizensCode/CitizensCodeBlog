@@ -17,7 +17,7 @@ flatTax.visualize = function(sheet) {
   processedData[1].values = _.where(rawData, {year: 2016});
 
   // This will be used for the Kodoma tooltips. They need to be in a specific format.
-  var kodomoData = rawData.map(function(data) {
+  var kodamaData = rawData.map(function(data) {
     return {
       incomeadjusted: data.incomeadjusted,
       effectiveincometax: data.effectiveincometax,
@@ -177,7 +177,7 @@ flatTax.visualize = function(sheet) {
     selection = layers.get('content')
         .selectAll('.tooltip-point')
         // Use the raw data since it isn't nested. Easier to work with.
-        .data(kodomoData);
+        .data(kodamaData);
 
     selection.enter()
       .append('circle')

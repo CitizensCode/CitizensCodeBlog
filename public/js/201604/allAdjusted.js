@@ -13,35 +13,27 @@ allAdjusted.visualize = function(sheet) {
   );
 
   var processedData = _.map(provinces, function(prov) {
-    return {"province": prov};
+    return {"province": prov, "values": null};
   });
 
   // This will be use to plot the lines
   processedData = _.map(processedData, function(provObj) {
+    // Filter the raw data to get data only belonging to the province of interest. Assign an array of those objects to the values key.
     var prov = provObj.province;
     provObj.values = _.where(
       rawData, {"province" : prov}
     );
+    // Get rid of any values over 500000 since that's as far as the chart needs to go
     provObj.values = _.filter(provObj.values,
       function(data) {
         return data.incomeadjusted <= 500000;
       });
+    // Values contains an array of objects. Each object contains the value for a point (these were already assigned to them during the data loading process), plus a reference back to the parent object.
+    provObj.values = provObj.values.map(function(value) {
+      value.province = provObj;
+      return value;
+    });
     return provObj;
-  });
-
-  // This will be used for the Kodoma tooltips. They need to be in a specific format.
-  var kodomoData = rawData.map(function(data) {
-    return {
-      incomeadjusted: data.incomeadjusted,
-      effectiveincometax: data.effectiveincometax,
-      title: data.province + " 2016",
-      items: [
-        {title: "Income", value: data.incomeadjusted},
-        {title: "Effective Tax", value: data.effectiveincometax}
-      ],
-      distance: 10,
-      theme: 'ccTheme'
-    };
   });
 
   // Chart options
@@ -57,7 +49,8 @@ allAdjusted.visualize = function(sheet) {
   layers.create(
     ['content',
      'x-axis',
-     'y-axis']
+     'y-axis',
+     'voronoi']
    );
 
   var width = chart.getInnerWidth();
@@ -87,10 +80,24 @@ allAdjusted.visualize = function(sheet) {
   height = chart.getInnerHeight();
 
   // Scales for the data
+  var margins = chart.margin();
   var x = d3.scale.linear()
     .range([0, width]);
   var y = d3.scale.linear()
     .range([height, 0]);
+
+  // Set up the voronoi generator
+  var voronoi = d3.geom.voronoi()
+    .x(function(d) {
+      return x(d.incomeadjusted);
+    })
+    .y(function(d) {
+      return y(d.effectiveincometax);
+    })
+    .clipExtent([
+      [-margins.left, -margins.top],
+      [width + margins.right, height + margins.bottom]
+    ]);
 
   var xAxis = d3.svg.axis()
     .scale(x)
@@ -138,6 +145,8 @@ allAdjusted.visualize = function(sheet) {
       d3Kit.helper.removeAllChildren(layers.get('content'));
     }
 
+    console.log("Visualized Called");
+
     // Grab them in case they've changed
     width = chart.getInnerWidth();
     height = chart.getInnerHeight();
@@ -152,9 +161,9 @@ allAdjusted.visualize = function(sheet) {
     height = chart.getInnerHeight();
 
     var data = chart.data();
-    x.domain([0, 500000])
+    x.domain([0, 500000]) // $500k
       .range([0, width]);
-    y.domain([0, 50])
+    y.domain([0, 50]) // 50% tax
       .range([height, 0]);
 
     layers.get('x-axis')
@@ -173,6 +182,11 @@ allAdjusted.visualize = function(sheet) {
       .selectAll('.line')
       .data(data);
 
+    selection.transition()
+      .attr("d", function(d) {
+        return lineGen(d.values);
+      });
+
     selection.enter()
       .append('path')
       .attr('class', function(d) {
@@ -182,21 +196,11 @@ allAdjusted.visualize = function(sheet) {
         // Add a class for formatting each
         return "all-" + cleanString(d.province);
       })
-      .transition()
       .attr("d", function(d) {
+        // Include itself in its data. Crazy.
+        d.line = this;
         return lineGen(d.values);
       });
-
-    selection.transition()
-      .attr("d", function(d) {
-        return lineGen(d.values);
-      });
-
-    // Add some invisible points for the tooltips
-    selection = layers.get('content')
-        .selectAll('.tooltip-point')
-        // Use the raw data since it isn't nested. Easier to work with.
-        .data(kodomoData);
 
     // X-Axis Label
     layers.get('x-axis')
@@ -210,6 +214,72 @@ allAdjusted.visualize = function(sheet) {
       .attr("y", -40 - xAxisScale(width))
       .attr("x", height / -2 );
 
+    ///// Add the voronoi layer
+
+    // First set up some mouse functions
+    var mouseover = function(d) {
+      // Make the line turn black
+      d3.select(d.province.line)
+        .classed("alladjusted-hover", true);
+      d.province.line.parentNode.appendChild(d.province.line);
+      // Move the label and text into view and change the label
+      // focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
+      // focus.select("text").text(d.province.name);
+    };
+
+    var mouseout = function(d) {
+      d3.select(d.province.line).classed("alladjusted-hover", false);
+      // focus.attr("transform", "translate(-100, -100)");
+    };
+
+
+    var voronoiGroup = layers.get('voronoi')
+      .selectAll("path")
+      .data(voronoi(
+        d3.nest()
+        // Group the data by its x/y coords
+        .key(function(d) {
+          return x(d.incomeadjusted) + "," + y(d.effectiveincometax);
+        })
+        // Return the first value if there's multiple. This is necessary for the voronoi function to work properly
+        .rollup(function(v) {
+          return v[0];
+        })
+        // Flatten the data out so you can feed it into the nest function. This grabs all the xy values from each separate line's array of objects, and merges them into one giant array of objects.
+        .entries(
+          d3.merge(data.map(
+            function(d) {
+              return d.values;
+            }
+          ))
+        )
+        // Turn the result of the above into an array of objects that can be fed to the voronoi generator
+        .map(function(d) {
+          return d.values;
+        })
+      ));
+
+    voronoiGroup.attr("d", function(d) {
+        return "M" + d.join("L") + "Z";
+      })
+      .datum(function(d) {
+        return d.point;
+      });
+
+    voronoiGroup.enter().append("path")
+      // Draw the polygon (invisibly) by joining the points together with a path
+      .attr("d", function(d) {
+        // console.log("Enter");
+        // console.log(d);
+        return "M" + d.join("L") + "Z";
+      })
+      // Assign the polygon the data from the point it surrounds
+      .datum(function(d) {
+        return d.point;
+      })
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout);
+
   }, 10); // Debounce at 10 milliseconds
 
   chart
@@ -219,10 +289,7 @@ allAdjusted.visualize = function(sheet) {
     .on('data', visualize)
     .data(processedData);
 
-  console.log("Sheet");
-  console.log(sheet);
-  console.log("Processed Data");
-  console.log(processedData);
+  allAdjusted.processedData = processedData;
 };
 
 }(window.allAdjusted = window.allAdjusted || {}));

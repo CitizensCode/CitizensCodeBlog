@@ -40,9 +40,20 @@ text {
     stroke-width: 1.5px;
     stroke-linecap: round;
 }
+
+.voronoi-layer path {
+  fill: none;
+  pointer-events: all;
+}
+
 #ranking .line:hover {
   stroke-width: 3;
 }
+
+.alladjusted-hover {
+  stroke-width: 3;
+}
+
 .highlighted, .previous {
   stroke: #267129;
   stroke-width: 3;
