@@ -1,15 +1,15 @@
 (function(flatTax, undefined){
 
+/* To get jshint off my case */
+/* globals d3help: true */
+
 flatTax.visualize = function(sheet) {
 
   // Get the data from the Google sheet
   var rawData = sheet.elements;
 
-  // This will be use to plot the lines
-  var processedData = [
-    {"year": 2005, "values": []},
-    {"year": 2016, "values": []},
-  ];
+  var processedData = d3help.sheetToObj(rawData, "year");
+
   processedData[0].values = _.where(rawData, {year: 2005});
   processedData[0].values = _.filter(processedData[0].values, function(data) {
     return data.incomeadjusted <= 500000;

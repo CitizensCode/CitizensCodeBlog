@@ -1,40 +1,14 @@
 (function(allAdjusted, undefined){
 
+/* To get jshint off my case */
+/* globals d3help: true */
+
 allAdjusted.visualize = function(sheet) {
 
   // Get the data from the Google sheet
   var rawData = sheet.elements;
 
-  // Get the list of provinces
-  var provinces = _.uniq(
-    _.map(rawData, function(each) {
-      return each.province;
-    })
-  );
-
-  var processedData = _.map(provinces, function(prov) {
-    return {"province": prov, "values": null};
-  });
-
-  // This will be use to plot the lines
-  processedData = _.map(processedData, function(provObj) {
-    // Filter the raw data to get data only belonging to the province of interest. Assign an array of those objects to the values key.
-    var prov = provObj.province;
-    provObj.values = _.where(
-      rawData, {"province" : prov}
-    );
-    // Get rid of any values over 500000 since that's as far as the chart needs to go
-    provObj.values = _.filter(provObj.values,
-      function(data) {
-        return data.incomeadjusted <= 500000;
-      });
-    // Values contains an array of objects. Each object contains the value for a point (these were already assigned to them during the data loading process), plus a reference back to the parent object.
-    provObj.values = provObj.values.map(function(value) {
-      value.province = provObj;
-      return value;
-    });
-    return provObj;
-  });
+  var processedData = d3help.sheetToObj(rawData, "province", {key: "incomeadjusted", value: 500000});
 
   // Chart options
   var DEFAULT_OPTIONS = {
@@ -131,8 +105,6 @@ allAdjusted.visualize = function(sheet) {
       // If for some reason the chart doesn't have data, remove all the visual elements
       d3Kit.helper.removeAllChildren(layers.get('content'));
     }
-
-    console.log("Visualized Called");
 
     // Grab them in case they've changed
     width = chart.getInnerWidth();
