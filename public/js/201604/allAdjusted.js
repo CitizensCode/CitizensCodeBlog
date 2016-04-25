@@ -95,10 +95,6 @@ allAdjusted.visualize = function(sheet) {
     .x(function(d) { return x(d.incomeadjusted); })
     .y(function(d) { return y(d.effectiveincometax); });
 
-  var cleanString = function(toClean) {
-    return String(toClean).toLowerCase().replace(/\s+/g, '');
-  };
-
   // The main visualization function. Debounce keeps it from rendering too many times per second during updates.
   var visualize = d3Kit.helper.debounce(function(){
     if(!chart.hasData()) {
@@ -151,14 +147,14 @@ allAdjusted.visualize = function(sheet) {
     selection.enter()
       .append('path')
       .attr('class', function(d) {
-        return 'line '  + cleanString(d.province);
+        return 'line '  + d3help.cleanString(d.province);
       })
       .attr('id', function(d) {
         // Add a class for formatting each
-        return "all-" + cleanString(d.province);
+        return "all-" + d3help.cleanString(d.province);
       })
       .attr("d", function(d) {
-        // Include itself in its data. Crazy.
+        // Include itself in its data. Used for voronoi hover.
         d.line = this;
         return lineGen(d.values);
       });
@@ -190,6 +186,7 @@ allAdjusted.visualize = function(sheet) {
         [width + margins.right, height + margins.bottom]
       ]);
 
+    // This configures the hover tip
     var focus = layers.get('voronoi')
       .append("g")
       .attr("transform", "translate(-9000,-9000)")
@@ -217,15 +214,15 @@ allAdjusted.visualize = function(sheet) {
     // First set up some mouse functions
     var mouseover = function(d) {
       // Make the line turn black
-      d3.select(d.province.line)
-        .classed("alladjusted-hover", true);
-      d.province.line.parentNode.appendChild(d.province.line);
+      d3.select(d.parentObj.line)
+        .classed("line-hover", true);
+      d.parentObj.line.parentNode.appendChild(d.parentObj.line);
       // Move the label and text into view and change the label
       focus.attr("transform", "translate(" + x(d.incomeadjusted) + "," + y(d.effectiveincometax) + ")");
 
       // Update the tooltip
       focus.select(".tooltip-title")
-        .text(d.province.province);
+        .text(d.parentObj.province);
       focus.select(".tooltip-valueA")
         .text("Income Tax: " + d.effectiveincometax + "%");
       focus.select(".tooltip-valueB")
@@ -233,7 +230,7 @@ allAdjusted.visualize = function(sheet) {
     };
 
     var mouseout = function(d) {
-      d3.select(d.province.line).classed("alladjusted-hover", false);
+      d3.select(d.parentObj.line).classed("line-hover", false);
       focus.attr("transform", "translate(-9000, -9000)");
     };
 
@@ -293,7 +290,6 @@ allAdjusted.visualize = function(sheet) {
     .on('data', visualize)
     .data(processedData);
 
-  allAdjusted.processedData = processedData;
 };
 
 }(window.allAdjusted = window.allAdjusted || {}));

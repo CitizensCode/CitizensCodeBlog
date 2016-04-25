@@ -8,28 +8,9 @@ flatTax.visualize = function(sheet) {
   // Get the data from the Google sheet
   var rawData = sheet.elements;
 
-  var processedData = d3help.sheetToObj(rawData, "year");
+  var processedData = d3help.sheetToObj(rawData, "year", {key: "incomeadjusted", value: 500000});
 
-  processedData[0].values = _.where(rawData, {year: 2005});
-  processedData[0].values = _.filter(processedData[0].values, function(data) {
-    return data.incomeadjusted <= 500000;
-  });
-  processedData[1].values = _.where(rawData, {year: 2016});
-
-  // This will be used for the Kodoma tooltips. They need to be in a specific format.
-  var kodamaData = rawData.map(function(data) {
-    return {
-      incomeadjusted: data.incomeadjusted,
-      effectiveincometax: data.effectiveincometax,
-      title: "Alberta " + data.year,
-      items: [
-        {title: "Income", value: data.incomeadjusted},
-        {title: "Effective Tax", value: data.effectiveincometax}
-      ],
-      distance: 10,
-      theme: 'ccTheme'
-    };
-  });
+  console.log(processedData);
 
   // Chart options
   var DEFAULT_OPTIONS = {
@@ -44,7 +25,8 @@ flatTax.visualize = function(sheet) {
   layers.create(
     ['content',
      'x-axis',
-     'y-axis']
+     'y-axis',
+     'voronoi']
    );
 
   var width = chart.getInnerWidth();
@@ -74,6 +56,7 @@ flatTax.visualize = function(sheet) {
   height = chart.getInnerHeight();
 
   // Scales for the data
+  var margins = chart.margin();
   var x = d3.scale.linear()
     .range([0, width]);
   var y = d3.scale.linear()
@@ -135,9 +118,9 @@ flatTax.visualize = function(sheet) {
     height = chart.getInnerHeight();
 
     var data = chart.data();
-    x.domain([0, 500000])
+    x.domain([0, 500000]) // $500k
       .range([0, width]);
-    y.domain([0, 13])
+    y.domain([0, 13]) // 13% tax
       .range([height, 0]);
 
     layers.get('x-axis')
@@ -154,18 +137,8 @@ flatTax.visualize = function(sheet) {
     // Draw the lines
     var selection = layers.get('content')
       .selectAll('.line')
-      .data(data);
-
-    selection.enter()
-      .append('path')
-      .attr('class', 'line')
-      .attr('id', function(d) {
-        // Add a class for formatting each
-        return "flat-" + String(d.year);
-      })
-      .transition()
-      .attr("d", function(d) {
-        return lineGen(d.values);
+      .data(data, function(d) {
+        return d.year;
       });
 
     selection.transition()
@@ -173,55 +146,18 @@ flatTax.visualize = function(sheet) {
         return lineGen(d.values);
       });
 
-    // Add some invisible points for the tooltips
-    selection = layers.get('content')
-        .selectAll('.tooltip-point')
-        // Use the raw data since it isn't nested. Easier to work with.
-        .data(kodamaData);
-
     selection.enter()
-      .append('circle')
-      .attr('class', 'tooltip-point')
-      .attr('id', function() {
-        return _.uniqueId("flat-");
+      .append('path')
+      .attr('class', 'line')
+      .attr('id', function(d) {
+        // Add a class for formatting each
+        return "flat-" + d3help.cleanString(d.year);
       })
-      .attr("r", 6)
-      .attr("stroke", "black")
-      .attr("stroke-width", "1")
-      .attr("fill", "white")
-      .attr("cx", function(d) { return x(d.incomeadjusted); })
-      .attr("cy", function(d) { return y(d.effectiveincometax); })
-      .call(d3.kodama.tooltip());
-
-    selection.attr("cx", function(d) {
-        return x(d.incomeadjusted);
-      })
-      .attr("cy", function(d) {
-        return y(d.effectiveincometax);
+      .attr("d", function(d) {
+        // Include itself in its data. Used for voronoi hover.
+        d.line = this;
+        return lineGen(d.values);
       });
-
-    $('#flattax circle').on('mouseover', function(obj) {
-      // Make the circle show up
-      var currId = "#" + obj.currentTarget.id;
-      $(currId).css("opacity", 0.75);
-
-      // Make the line get thicker
-      var data = obj.currentTarget.__data__;
-      var title = data.title;
-      var year = title.split(" ")[1];
-      var id = "#flat-" + year;
-      $(id).css("stroke-width", 3);
-    });
-    $('#flattax circle').on('mouseout', function(obj) {
-      var currId = "#" + obj.currentTarget.id;
-      $(currId).css("opacity", 0);
-
-      var data = obj.currentTarget.__data__;
-      var title = data.title;
-      var year = title.split(" ")[1];
-      var id = "#flat-" + year;
-      $(id).css("stroke-width", 1.5);
-    });
 
     // X-Axis Label
     layers.get('x-axis')
@@ -234,6 +170,116 @@ flatTax.visualize = function(sheet) {
       .select('.y')
       .attr("y", -40 - xAxisScale(width))
       .attr("x", height / -2 );
+
+    ///// Add the voronoi layer
+
+    // Set up the voronoi generator
+    var voronoi = d3.geom.voronoi()
+      .x(function(d) {
+        return x(d.incomeadjusted);
+      })
+      .y(function(d) {
+        return y(d.effectiveincometax);
+      })
+      .clipExtent([
+        [-margins.left, -margins.top],
+        [width + margins.right, height + margins.bottom]
+      ]);
+
+    // This configures the hover tip
+    var focus = layers.get('voronoi')
+      .append("g")
+      .attr("transform", "translate(-9000,-9000)")
+      .attr("class", "tooltip-box");
+
+    focus.append("circle")
+      .attr('class', 'tooltip-circle')
+      .attr("stroke", "black")
+      .attr("stroke-width", "1")
+      .attr("fill", "white")
+      .attr("r", 6);
+
+    focus.append("text")
+      .attr('class', 'tooltip-title')
+      .attr("y", -40);
+
+    focus.append("text")
+      .attr('class', 'tooltip-valueA')
+      .attr("y", -25);
+
+    focus.append("text")
+      .attr('class', 'tooltip-valueB')
+      .attr("y", -10);
+
+    // First set up some mouse functions
+    var mouseover = function(d) {
+      // Make the line turn black
+      d3.select(d.parentObj.line)
+        .classed("line-hover", true);
+      d.parentObj.line.parentNode.appendChild(d.parentObj.line);
+      // Move the label and text into view and change the label
+      focus.attr("transform", "translate(" + x(d.incomeadjusted) + "," + y(d.effectiveincometax) + ")");
+
+      // Update the tooltip
+      focus.select(".tooltip-title")
+        .text(d.parentObj.year);
+      focus.select(".tooltip-valueA")
+        .text("Income Tax: " + d.effectiveincometax + "%");
+      focus.select(".tooltip-valueB")
+      .text("Income: $" + d.incomeadjusted);
+    };
+
+    var mouseout = function(d) {
+      d3.select(d.parentObj.line).classed("line-hover", false);
+      focus.attr("transform", "translate(-9000, -9000)");
+    };
+
+    var voronoiGroup = layers.get('voronoi')
+      .selectAll("path")
+      .data(voronoi(
+        d3.nest()
+        // Group the data by its x/y coords
+        .key(function(d) {
+          return x(d.incomeadjusted) + "," + y(d.effectiveincometax);
+        })
+        // Return the first value if there's multiple. This is necessary for the voronoi function to work properly
+        .rollup(function(v) {
+          return v[0];
+        })
+        // Flatten the data out so you can feed it into the nest function. This grabs all the xy values from each separate line's array of objects, and merges them into one giant array of objects.
+        .entries(
+          d3.merge(data.map(
+            function(d) {
+              return d.values;
+            }
+          ))
+        )
+        // Turn the result of the above into an array of objects that can be fed to the voronoi generator
+        .map(function(d) {
+          return d.values;
+        })
+      ));
+
+    voronoiGroup.attr("d", function(d) {
+        return "M" + d.join("L") + "Z";
+      })
+      .datum(function(d) {
+        return d.point;
+      });
+
+    voronoiGroup.enter().append("path")
+      // Draw the polygon (invisibly) by joining the points together with a path
+      .attr("d", function(d) {
+        // console.log("Enter");
+        // console.log(d);
+        return "M" + d.join("L") + "Z";
+      })
+      // Assign the polygon the data from the point it surrounds
+      .datum(function(d) {
+        return d.point;
+      })
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout);
 
   }, 10); // Debounce at 10 milliseconds
 
