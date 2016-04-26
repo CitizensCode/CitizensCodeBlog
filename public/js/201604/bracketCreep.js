@@ -211,6 +211,12 @@ bracketCreep.visualize = function(sheet) {
         .attr("d", function() {
           return lineGen(horLineObjB);
         });
+      layers.get('content')
+        .append("text")
+        .attr("class", "creep-label")
+        .attr("x", x(10000))
+        .attr("y", y(7.65))
+        .text("0.8%");
     } else {
       d3.select(".vert-line")
         .transition()
@@ -227,6 +233,10 @@ bracketCreep.visualize = function(sheet) {
         .attr("d", function() {
           return lineGen(horLineObjB);
         });
+      d3.select(".creep-label")
+        .transition()
+        .attr("x", x(10000))
+        .attr("y", y(7.65));
     }
 
     // X-Axis Label
