@@ -6,7 +6,6 @@ custom_js:
 - tabletop-1.4.3.min.js
 - d3-3.5.16.min.js
 - d3kit-1.1.0mod.min.js
-- kodoma-1.4.3.min.js
 - underscore-1.8.3.min.js
 - d3help-0.0.1.js
 - 201604/ranking.js
