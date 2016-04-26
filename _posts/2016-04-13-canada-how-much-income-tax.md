@@ -28,9 +28,6 @@ custom_css:
 
 Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
 
-<h3>Why A Flat Tax Isn't Flat</h3>
-<div id="flattax" class="chart"></div>
-
 Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
 
 <h3>Provincial + Federal Effective Tax Ranking, 2016</h3>
@@ -40,20 +37,6 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacin
 Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
 
 <h3>The 2016 Effective Tax Rate by Province</h3>
-<div id="allAdjusted" class="chart"></div>
-
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
-
-<h3>The 2016 Effective Tax Rate by Province</h3>
-<div id="bracketCreep" class="chart"></div>
-
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
-
-<h3>The 2016 Effective Tax Rate by Province</h3>
-<div id="hiddenTaxes" class="chart"></div>
-
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
-
 <p id="menu">
   How have income taxes in
   <select id="provMenu">
@@ -78,6 +61,21 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacin
   </select> ?
 </p>
 <div id="taxDiff"></div>
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
+
+<h3>The 2016 Effective Tax Rate by Province</h3>
+<div id="bracketCreep" class="chart"></div>
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
+
+<h3>The 2016 Effective Tax Rate by Province</h3>
+<div id="hiddenTaxes" class="chart"></div>
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
+
+<h3>Why A Flat Tax Isn't Flat</h3>
+<div id="flattax" class="chart"></div>
 
 {% if page.custom_js %}
   {% for js_file in page.custom_js %}

@@ -27,8 +27,6 @@ var visualizeData = function(data, tabletop) {
   ranking.visualize(tabletop.sheets("Ranking"));
   // See flattax.js
   flatTax.visualize(tabletop.sheets("FlatTax"));
-  // See allAdjusted.js
-  allAdjusted.visualize(tabletop.sheets("AllAdjusted"));
   // See bracketCreep.js
   bracketCreep.visualize(tabletop.sheets("BracketCreep"));
   // See hiddenTaxes.js
@@ -44,7 +42,6 @@ var init = function() {
                    wanted: [
                     "Ranking",
                     "FlatTax",
-                    "AllAdjusted",
                     "BracketCreep",
                     "HiddenTaxes",
                     "TaxDiff"],

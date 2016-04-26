@@ -192,7 +192,9 @@ taxDiff.visualize = function(sheet) {
     // Draw the foreground lines
     var fgSelection = layers.get('fg-content')
       .selectAll('.line')
-      .data(highlightData);
+      .data(highlightData, function(d) {
+        return d.provyear;
+      });
 
     fgSelection.transition()
       .attr('class', function(d) {
@@ -203,11 +205,14 @@ taxDiff.visualize = function(sheet) {
         }
       })
       .attr("d", function(d) {
+        d.line = this;
         return lineGen(d.values);
       });
 
     fgSelection.enter()
       .append('path')
+      .transition()
+      .duration(500)
       .attr('class', function(d) {
         if (d.provyear.indexOf("2016") > -1) {
           return "line highlighted " + d3help.cleanString(d.values[0].province);
@@ -221,7 +226,11 @@ taxDiff.visualize = function(sheet) {
         return lineGen(d.values);
       });
 
-    fgSelection.exit().remove();
+    fgSelection.exit()
+    .transition()
+    .duration(500)
+    .style('opacity', 0)
+    .remove();
 
     // X-Axis Label
     layers.get('x-axis')
@@ -312,7 +321,7 @@ taxDiff.visualize = function(sheet) {
         })
         // Flatten the data out so you can feed it into the nest function. This grabs all the xy values from each separate line's array of objects, and merges them into one giant array of objects.
         .entries(
-          d3.merge(backgroundData.map(
+          d3.merge(highlightData.map(
             function(d) {
               return d.values;
             }
