@@ -1,24 +1,35 @@
-(function(bracketCreep, undefined){
+(function(hiddenTaxes, undefined){
 
 /* To get jshint off my case */
 /* globals d3help: true */
 
-bracketCreep.visualize = function(sheet) {
+hiddenTaxes.visualize = function(sheet) {
 
   // Get the data from the Google sheet
   var rawData = sheet.elements;
 
-  var maxX = 300000;
+  var maxX = 500000;
 
   var processedData = d3help.sheetToObj(rawData, "province", {key: "incomeadjusted", value: maxX});
 
-  // A very specific sorting of the lines so that PEI is drawn last
+  // A very specific sorting of the lines so that the provincs of interest are plotted last
   var sortArr = [];
-  sortArr[0] = _.where(processedData, {province: "New Brunswick 2005"})[0];
-  sortArr[1] = _.where(processedData, {province: "New Brunswick 2014"})[0];
-  sortArr[2] = _.where(processedData, {province: "Prince Edward Island 2005"})[0];
-  sortArr[3] = _.where(processedData, {province: "Prince Edward Island 2014"})[0];
-  processedData = sortArr;
+  var provArr = ["Quebec", "Ontario", "British Columbia"];
+
+  _.each(provArr, function(prov, index, list) {
+    var checkName = function(obj) {
+      return obj.province === prov;
+    };
+    var i = _.findIndex(processedData, checkName);
+    if (i > -1) {
+      var item = processedData.splice(i, 1)[0];
+      sortArr.unshift(item);
+    }
+  });
+  // Add the rest to the beginning
+  processedData = processedData.concat(sortArr);
+
+  console.log(processedData);
 
   // Chart options
   var DEFAULT_OPTIONS = {
@@ -26,7 +37,7 @@ bracketCreep.visualize = function(sheet) {
     initialWidth: 'auto'
   };
   // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
-  var chart = new d3Kit.Skeleton('#bracketCreep', DEFAULT_OPTIONS);
+  var chart = new d3Kit.Skeleton('#hiddenTaxes', DEFAULT_OPTIONS);
 
   // Create some layers to organize the visualization
   var layers = chart.getLayerOrganizer();
@@ -128,7 +139,7 @@ bracketCreep.visualize = function(sheet) {
     var data = chart.data();
     x.domain([0, maxX]) // $500k
       .range([0, width]);
-    y.domain([0, 17]) // 17% tax
+    y.domain([0, 25]) // 17% tax
       .range([height, 0]);
 
     layers.get('x-axis')
@@ -156,86 +167,24 @@ bracketCreep.visualize = function(sheet) {
 
     selection.enter()
       .append('path')
-      .attr('class', 'line')
+      .attr('class', function(d) {
+        // Return a province colour class if the province is one of interest, and a grey one if not
+        var ind = provArr.indexOf(d.province);
+        if (ind >= 0) {
+          return "line " + d3help.cleanString(d.province);
+        } else {
+          return "line bgprov";
+        }
+      })
       .attr('id', function(d) {
         // Add a class for formatting each
-        return "creep-" + d3help.cleanString(d.province);
+        return "hidden-" + d3help.cleanString(d.province);
       })
       .attr("d", function(d) {
         // Include itself in its data. Used for voronoi hover.
         d.line = this;
         return lineGen(d.values);
       });
-
-    var vertLineObj = [
-      {"incomeadjusted": 37602,
-       "effectiveincometax": 7.5},
-      {"incomeadjusted": 37602,
-       "effectiveincometax": 8.2}
-     ];
-    var horLineObjA = [
-      {"incomeadjusted": 0,
-       "effectiveincometax": 7.5},
-      {"incomeadjusted": 37602,
-       "effectiveincometax": 7.5}
-     ];
-    var horLineObjB = [
-      {"incomeadjusted": 0,
-       "effectiveincometax": 8.2},
-      {"incomeadjusted": 37602,
-       "effectiveincometax": 8.2}
-     ];
-
-    var lineDrawn = d3.select(".vert-line")[0][0];
-    // This draws the lines showing the bracket creep.
-    if (_.isNull(lineDrawn)) {
-      layers.get('content')
-        .append("path")
-        .attr("class", "vert-line")
-        .attr("d", function() {
-          return lineGen(vertLineObj);
-        });
-      layers.get('content')
-        .append("path")
-        .attr("class", "hor-line-a")
-        .attr("stroke-dasharray", "5,5")
-        .attr("d", function() {
-          return lineGen(horLineObjA);
-        });
-      layers.get('content')
-        .append("path")
-        .attr("class", "hor-line-b")
-        .attr("stroke-dasharray", "5,5")
-        .attr("d", function() {
-          return lineGen(horLineObjB);
-        });
-      layers.get('content')
-        .append("text")
-        .attr("class", "creep-label")
-        .attr("x", x(10000))
-        .attr("y", y(7.65))
-        .text("0.8%");
-    } else {
-      d3.select(".vert-line")
-        .transition()
-        .attr("d", function() {
-          return lineGen(vertLineObj);
-        });
-      d3.select(".hor-line-a")
-        .transition()
-        .attr("d", function() {
-          return lineGen(horLineObjA);
-        });
-      d3.select(".hor-line-b")
-        .transition()
-        .attr("d", function() {
-          return lineGen(horLineObjB);
-        });
-      d3.select(".creep-label")
-        .transition()
-        .attr("x", x(10000))
-        .attr("y", y(7.65));
-    }
 
     // X-Axis Label
     layers.get('x-axis')
@@ -365,30 +314,30 @@ bracketCreep.visualize = function(sheet) {
     .attr("dy", "-3")
     .attr("class", "curve-text")
    .append("textPath")
-    .attr("class", "creep-newbrunswick2014-label")
-    .attr("xlink:href", "#creep-newbrunswick2014")
-    .attr("startOffset", "85%")
-    .text("NB 2005/2014");
+    .attr("class", "hidden-quebec-label")
+    .attr("xlink:href", "#hidden-quebec")
+    .attr("startOffset", "90%")
+    .text("Quebec");
+
+  layers.get('content')
+   .append("text")
+    .attr("dy", "13")
+    .attr("class", "curve-text")
+   .append("textPath")
+    .attr("class", "hidden-ontario-label")
+    .attr("xlink:href", "#hidden-ontario")
+    .attr("startOffset", "90%")
+    .text("Ontario");
 
   layers.get('content')
    .append("text")
     .attr("dy", "-3")
     .attr("class", "curve-text")
    .append("textPath")
-    .attr("class", "creep-princeedwardisland2014-label")
-    .attr("xlink:href", "#creep-princeedwardisland2014")
-    .attr("startOffset", "50%")
-    .text("PEI 2014");
-
-  layers.get('content')
-   .append("text")
-    .attr("dy", "14")
-    .attr("class", "curve-text")
-   .append("textPath")
-    .attr("class", "creep-princeedwardisland2005-label")
-    .attr("xlink:href", "#creep-princeedwardisland2005")
-    .attr("startOffset", "89%")
-    .text("PEI 2005");
+    .attr("class", "hidden-britishcolumbia-label")
+    .attr("xlink:href", "#hidden-britishcolumbia")
+    .attr("startOffset", "80%")
+    .text("British Columbia");
 
   chart
     .autoResize(true)
@@ -399,4 +348,4 @@ bracketCreep.visualize = function(sheet) {
 
 };
 
-}(window.bracketCreep = window.bracketCreep || {}));
+}(window.hiddenTaxes = window.hiddenTaxes || {}));

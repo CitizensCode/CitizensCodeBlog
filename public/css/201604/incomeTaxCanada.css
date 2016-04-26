@@ -92,11 +92,11 @@ text {
 
 .vert-line {
   stroke: black;
-  stroke-width: 2;
+  stroke-width: 1;
 }
 .hor-line-a, .hor-line-b {
   stroke: black;
-  stroke-width: 2;
+  stroke-width: 1;
 }
 
 
@@ -162,6 +162,10 @@ text {
   opacity: .5;
 }
 
+.bgprov {
+  stroke: #C6C6C6;
+  opacity: 0.25;
+}
 .novascotia {
   stroke: #b05a28;
 }

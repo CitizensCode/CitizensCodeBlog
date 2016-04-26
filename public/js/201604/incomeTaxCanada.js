@@ -1,7 +1,7 @@
 (function(incomeTaxCanada, undefined){
 
 /* To get jshint off my case */
-/* globals ranking: true, flatTax: true, allAdjusted: true, bracketCreep: true */
+/* globals ranking: true, flatTax: true, allAdjusted: true, bracketCreep: true, hiddenTaxes: true */
 
 incomeTaxCanada.provinceLookup = {
   "Alberta": "ab",
@@ -31,6 +31,8 @@ var visualizeData = function(data, tabletop) {
   allAdjusted.visualize(tabletop.sheets("AllAdjusted"));
   // See bracketCreep.js
   bracketCreep.visualize(tabletop.sheets("BracketCreep"));
+  // See hiddenTaxes.js
+  hiddenTaxes.visualize(tabletop.sheets("HiddenTaxes"));
 };
 
 var init = function() {
@@ -41,7 +43,7 @@ var init = function() {
                     "Ranking",
                     "FlatTax",
                     "AllAdjusted",
-                    "BracketCreep"],
+                    "BracketCreep","HiddenTaxes"],
                    parseNumbers: true,
                    prettyColumnNames: false
                  } );
