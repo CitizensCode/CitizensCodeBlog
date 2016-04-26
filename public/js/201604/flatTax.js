@@ -190,25 +190,25 @@ flatTax.visualize = function(sheet) {
     var focus = layers.get('voronoi')
       .append("g")
       .attr("transform", "translate(-9000,-9000)")
-      .attr("class", "tooltip-box");
+      .attr("class", "tooltip tt-box");
 
     focus.append("circle")
-      .attr('class', 'tooltip-circle')
+      .attr('class', 'tooltip tt-circle')
       .attr("stroke", "black")
       .attr("stroke-width", "1")
       .attr("fill", "white")
       .attr("r", 6);
 
     focus.append("text")
-      .attr('class', 'tooltip-title')
+      .attr('class', 'tooltip tt-title')
       .attr("y", -40);
 
     focus.append("text")
-      .attr('class', 'tooltip-valueA')
+      .attr('class', 'tooltip tt-valueA')
       .attr("y", -25);
 
     focus.append("text")
-      .attr('class', 'tooltip-valueB')
+      .attr('class', 'tooltip tt-valueB')
       .attr("y", -10);
 
     // First set up some mouse functions
@@ -221,11 +221,11 @@ flatTax.visualize = function(sheet) {
       focus.attr("transform", "translate(" + x(d.incomeadjusted) + "," + y(d.effectiveincometax) + ")");
 
       // Update the tooltip
-      focus.select(".tooltip-title")
+      focus.select(".tt-title")
         .text(d.parentObj.year);
-      focus.select(".tooltip-valueA")
+      focus.select(".tt-valueA")
         .text("Income Tax: " + d.effectiveincometax + "%");
-      focus.select(".tooltip-valueB")
+      focus.select(".tt-valueB")
       .text("Income: $" + d.incomeadjusted);
     };
 
