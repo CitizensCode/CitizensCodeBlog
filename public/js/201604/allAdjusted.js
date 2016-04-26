@@ -16,7 +16,8 @@ allAdjusted.visualize = function(sheet) {
     initialWidth: 'auto'
   };
   // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
-  var chart = new d3Kit.Skeleton('#allAdjusted', DEFAULT_OPTIONS);
+  var chartId = '#allAdjusted';
+  var chart = new d3Kit.Skeleton(chartId, DEFAULT_OPTIONS);
 
   // Create some layers to organize the visualization
   var layers = chart.getLayerOrganizer();
@@ -190,25 +191,22 @@ allAdjusted.visualize = function(sheet) {
     var focus = layers.get('voronoi')
       .append("g")
       .attr("transform", "translate(-9000,-9000)")
-      .attr("class", "tooltip-box");
+      .attr("class", "tt-box");
 
     focus.append("circle")
-      .attr('class', 'tooltip-circle')
-      .attr("stroke", "black")
-      .attr("stroke-width", "1")
-      .attr("fill", "white")
+      .attr('class', 'tooltip tt-circle')
       .attr("r", 6);
 
     focus.append("text")
-      .attr('class', 'tooltip-title')
+      .attr('class', 'tooltip tt-title')
       .attr("y", -40);
 
     focus.append("text")
-      .attr('class', 'tooltip-valueA')
+      .attr('class', 'tooltip tt-valueA')
       .attr("y", -25);
 
     focus.append("text")
-      .attr('class', 'tooltip-valueB')
+      .attr('class', 'tooltip tt-valueB')
       .attr("y", -10);
 
     // First set up some mouse functions
@@ -216,16 +214,17 @@ allAdjusted.visualize = function(sheet) {
       // Make the line turn black
       d3.select(d.parentObj.line)
         .classed("line-hover", true);
+      // Append a line over top of all the other lines
       d.parentObj.line.parentNode.appendChild(d.parentObj.line);
       // Move the label and text into view and change the label
       focus.attr("transform", "translate(" + x(d.incomeadjusted) + "," + y(d.effectiveincometax) + ")");
 
       // Update the tooltip
-      focus.select(".tooltip-title")
+      focus.select(".tt-title")
         .text(d.parentObj.province);
-      focus.select(".tooltip-valueA")
+      focus.select(".tt-valueA")
         .text("Income Tax: " + d.effectiveincometax + "%");
-      focus.select(".tooltip-valueB")
+      focus.select(".tt-valueB")
       .text("Income: $" + d.incomeadjusted);
     };
 
