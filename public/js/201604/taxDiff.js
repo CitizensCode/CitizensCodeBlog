@@ -25,7 +25,8 @@ taxDiff.visualize = function(sheet) {
   // Create some layers to organize the visualization
   var layers = chart.getLayerOrganizer();
   layers.create(
-    ['content',
+    ['bg-content', // Background content
+     'fg-content', // Foreground content
      'x-axis',
      'y-axis',
      'voronoi']
@@ -103,7 +104,8 @@ taxDiff.visualize = function(sheet) {
   var visualize = d3Kit.helper.debounce(function(){
     if(!chart.hasData()) {
       // If for some reason the chart doesn't have data, remove all the visual elements
-      d3Kit.helper.removeAllChildren(layers.get('content'));
+      d3Kit.helper.removeAllChildren(layers.get('bg-content'));
+      d3Kit.helper.removeAllChildren(layers.get('fg-content'));
     }
 
     // Grab them in case they've changed
@@ -131,6 +133,7 @@ taxDiff.visualize = function(sheet) {
       // Get the values that match the province selected
       return obj.provyear.indexOf(provMenuVal) > -1;
     });
+
     highlightData = _.filter(highlightData, function(obj) {
       // Get the values that match the year selected, and those for the current year
       var currBool = obj.provyear.indexOf("2016") > -1;
@@ -140,7 +143,7 @@ taxDiff.visualize = function(sheet) {
     console.log("Highlighted");
     console.log(highlightData);
 
-    var data = _.filter(allData, function(obj) {
+    var backgroundData = _.filter(allData, function(obj) {
       return obj.provyear.indexOf("2016") > -1;
     });
 
@@ -161,10 +164,10 @@ taxDiff.visualize = function(sheet) {
     layers.get('y-axis')
       .call(yAxis);
 
-    // Draw the lines
-    var selection = layers.get('content')
+    // Draw the background lines
+    var selection = layers.get('bg-content')
       .selectAll('.line')
-      .data(data, function(d) {
+      .data(backgroundData, function(d) {
         return d.provyear;
       });
 
@@ -185,6 +188,40 @@ taxDiff.visualize = function(sheet) {
         d.line = this;
         return lineGen(d.values);
       });
+
+    // Draw the foreground lines
+    var fgSelection = layers.get('fg-content')
+      .selectAll('.line')
+      .data(highlightData);
+
+    fgSelection.transition()
+      .attr('class', function(d) {
+        if (d.provyear.indexOf("2016") > -1) {
+          return "line highlighted " + d3help.cleanString(d.values[0].province);
+        } else {
+          return "line previous " + d3help.cleanString(d.values[0].province);
+        }
+      })
+      .attr("d", function(d) {
+        return lineGen(d.values);
+      });
+
+    fgSelection.enter()
+      .append('path')
+      .attr('class', function(d) {
+        if (d.provyear.indexOf("2016") > -1) {
+          return "line highlighted " + d3help.cleanString(d.values[0].province);
+        } else {
+          return "line previous " + d3help.cleanString(d.values[0].province);
+        }
+      })
+      .attr("d", function(d) {
+        // Include itself in its data. Used for voronoi hover.
+        d.line = this;
+        return lineGen(d.values);
+      });
+
+    fgSelection.exit().remove();
 
     // X-Axis Label
     layers.get('x-axis')
@@ -275,7 +312,7 @@ taxDiff.visualize = function(sheet) {
         })
         // Flatten the data out so you can feed it into the nest function. This grabs all the xy values from each separate line's array of objects, and merges them into one giant array of objects.
         .entries(
-          d3.merge(data.map(
+          d3.merge(backgroundData.map(
             function(d) {
               return d.values;
             }

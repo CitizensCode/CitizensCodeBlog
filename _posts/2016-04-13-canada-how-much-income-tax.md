@@ -67,14 +67,13 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacin
     <option value="nu">Nunavut</option>
     <option value="on">Ontario</option>
     <option value="pe">Prince Edward Island</option>
-    <option value="qc">Québec</option>
+    <option value="qc">Quebec</option>
     <option value="sk">Saskatchewan</option>
     <option value="yt">Yukon</option>
   </select><br>
   changed since
   <select id="yearMenu">
     <option value="2015">2015</option>
-    <option value="2014">2014</option>
     <option value="2005" selected="selected">2005</option>
   </select> ?
 </p>

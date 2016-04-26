@@ -54,16 +54,12 @@ text {
   stroke-width: 4;
 }
 
-.highlighted, .previous {
-  stroke: #267129;
-  stroke-width: 3;
-  stroke-dasharray: 5,5;
+.highlighted {
+  stroke-width: 2;
 }
 .previous {
-  stroke: red;
-}
-.highlighted {
-  stroke: #267129;
+  stroke-width: 2;
+  stroke-dasharray: 5,5;
 }
 .bgline {
     stroke: rgba(103, 103, 103, 0.28);
@@ -176,7 +172,7 @@ text {
   stroke: #df2425;
 }
 .newfoundlandandlabrador {
-  stroke: #ef9797;
+  stroke: #FF8585;
 }
 .quebec {
   stroke: #96c0db;
