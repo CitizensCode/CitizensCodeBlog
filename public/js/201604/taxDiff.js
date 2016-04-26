@@ -1,33 +1,18 @@
-(function(hiddenTaxes, undefined){
+(function(taxDiff, undefined){
 
 /* To get jshint off my case */
 /* globals d3help: true */
 
-hiddenTaxes.visualize = function(sheet) {
+taxDiff.visualize = function(sheet) {
 
   // Get the data from the Google sheet
   var rawData = sheet.elements;
 
   var maxX = 500000;
 
-  var processedData = d3help.sheetToObj(rawData, "province", {key: "incomeadjusted", value: maxX});
+  var processedData = d3help.sheetToObj(rawData, "provyear", {key: "incomeadjusted", value: maxX});
 
-  // A very specific sorting of the lines so that the provincs of interest are plotted last
-  var sortArr = [];
-  var provArr = ["Quebec", "Ontario", "British Columbia"];
-
-  _.each(provArr, function(prov, index, list) {
-    var checkName = function(obj) {
-      return obj.province === prov;
-    };
-    var i = _.findIndex(processedData, checkName);
-    if (i > -1) {
-      var item = processedData.splice(i, 1)[0];
-      sortArr.unshift(item);
-    }
-  });
-  // Add the rest to the beginning
-  processedData = processedData.concat(sortArr);
+  console.log(processedData);
 
   // Chart options
   var DEFAULT_OPTIONS = {
@@ -35,7 +20,7 @@ hiddenTaxes.visualize = function(sheet) {
     initialWidth: 'auto'
   };
   // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
-  var chart = new d3Kit.Skeleton('#hiddenTaxes', DEFAULT_OPTIONS);
+  var chart = new d3Kit.Skeleton('#taxDiff', DEFAULT_OPTIONS);
 
   // Create some layers to organize the visualization
   var layers = chart.getLayerOrganizer();
@@ -134,10 +119,35 @@ hiddenTaxes.visualize = function(sheet) {
     width = chart.getInnerWidth();
     height = chart.getInnerHeight();
 
-    var data = chart.data();
+    // Get the values selected in the menu
+    var provMenuVal = $("#provMenu option:selected").text();
+    var yearMenuVal = $("#yearMenu option:selected").text();
+
+    var allData = chart.data();
+    console.log(allData);
+
+    // Get the data that is selected by the menu. Filter by the year first and then the province
+    var highlightData = _.filter(allData, function(obj) {
+      // Get the values that match the province selected
+      return obj.provyear.indexOf(provMenuVal) > -1;
+    });
+    highlightData = _.filter(highlightData, function(obj) {
+      // Get the values that match the year selected, and those for the current year
+      var currBool = obj.provyear.indexOf("2016") > -1;
+      var menuBool = obj.provyear.indexOf(yearMenuVal) > -1;
+      return currBool || menuBool;
+    });
+    console.log("Highlighted");
+    console.log(highlightData);
+
+    var data = _.filter(allData, function(obj) {
+      return obj.provyear.indexOf("2016") > -1;
+    });
+
+
     x.domain([0, maxX]) // $500k
       .range([0, width]);
-    y.domain([0, 25]) // 17% tax
+    y.domain([0, 52]) // 52% tax
       .range([height, 0]);
 
     layers.get('x-axis')
@@ -155,7 +165,7 @@ hiddenTaxes.visualize = function(sheet) {
     var selection = layers.get('content')
       .selectAll('.line')
       .data(data, function(d) {
-        return d.province;
+        return d.provyear;
       });
 
     selection.transition()
@@ -165,18 +175,10 @@ hiddenTaxes.visualize = function(sheet) {
 
     selection.enter()
       .append('path')
-      .attr('class', function(d) {
-        // Return a province colour class if the province is one of interest, and a grey one if not
-        var ind = provArr.indexOf(d.province);
-        if (ind >= 0) {
-          return "line " + d3help.cleanString(d.province);
-        } else {
-          return "line bgprov";
-        }
-      })
+      .attr('class', 'line bgprov')
       .attr('id', function(d) {
         // Add a class for formatting each
-        return "hidden-" + d3help.cleanString(d.province);
+        return "diff-" + d3help.cleanString(d.provyear);
       })
       .attr("d", function(d) {
         // Include itself in its data. Used for voronoi hover.
@@ -247,7 +249,7 @@ hiddenTaxes.visualize = function(sheet) {
 
       // Update the tooltip
       focus.select(".tt-title")
-        .text(d.parentObj.province);
+        .text(d.parentObj.provyear);
       focus.select(".tt-valueA")
         .text("Income Tax: " + d.effectiveincometax + "%");
       focus.select(".tt-valueB")
@@ -306,36 +308,7 @@ hiddenTaxes.visualize = function(sheet) {
 
   }, 10); // Debounce at 10 milliseconds
 
-  // Line labels
-  layers.get('content')
-   .append("text")
-    .attr("dy", "-3")
-    .attr("class", "curve-text")
-   .append("textPath")
-    .attr("class", "hidden-quebec-label")
-    .attr("xlink:href", "#hidden-quebec")
-    .attr("startOffset", "90%")
-    .text("Quebec");
-
-  layers.get('content')
-   .append("text")
-    .attr("dy", "13")
-    .attr("class", "curve-text")
-   .append("textPath")
-    .attr("class", "hidden-ontario-label")
-    .attr("xlink:href", "#hidden-ontario")
-    .attr("startOffset", "90%")
-    .text("Ontario");
-
-  layers.get('content')
-   .append("text")
-    .attr("dy", "-3")
-    .attr("class", "curve-text")
-   .append("textPath")
-    .attr("class", "hidden-britishcolumbia-label")
-    .attr("xlink:href", "#hidden-britishcolumbia")
-    .attr("startOffset", "83%")
-    .text("British Columbia");
+  d3.select("#provMenu").on("change", visualize); d3.select("#yearMenu").on("change", visualize);
 
   chart
     .autoResize(true)
@@ -346,4 +319,4 @@ hiddenTaxes.visualize = function(sheet) {
 
 };
 
-}(window.hiddenTaxes = window.hiddenTaxes || {}));
+}(window.taxDiff = window.taxDiff || {}));

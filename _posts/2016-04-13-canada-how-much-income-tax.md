@@ -13,6 +13,7 @@ custom_js:
 - 201604/allAdjusted.js
 - 201604/bracketCreep.js
 - 201604/hiddenTaxes.js
+- 201604/taxDiff.js
 - 201604/incomeTaxCanada.js
 custom_css:
 - d3KitChart.css
@@ -52,6 +53,32 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacin
 <div id="hiddenTaxes" class="chart"></div>
 
 Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
+
+<p id="menu">
+  How have income taxes in
+  <select id="provMenu">
+    <option value="ab">Alberta</option>
+    <option value="bc">British Columbia</option>
+    <option value="mb">Manitoba</option>
+    <option value="nb">New Brunswick</option>
+    <option value="nl">Newfoundland and Labrador</option>
+    <option value="nt">Northwest Territories</option>
+    <option value="ns">Nova Scotia</option>
+    <option value="nu">Nunavut</option>
+    <option value="on">Ontario</option>
+    <option value="pe">Prince Edward Island</option>
+    <option value="qc">Québec</option>
+    <option value="sk">Saskatchewan</option>
+    <option value="yt">Yukon</option>
+  </select><br>
+  changed since
+  <select id="yearMenu">
+    <option value="2015">2015</option>
+    <option value="2014">2014</option>
+    <option value="2005" selected="selected">2005</option>
+  </select> ?
+</p>
+<div id="taxDiff"></div>
 
 {% if page.custom_js %}
   {% for js_file in page.custom_js %}
