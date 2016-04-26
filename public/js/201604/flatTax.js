@@ -10,8 +10,6 @@ flatTax.visualize = function(sheet) {
 
   var processedData = d3help.sheetToObj(rawData, "year", {key: "incomeadjusted", value: 500000});
 
-  console.log(processedData);
-
   // Chart options
   var DEFAULT_OPTIONS = {
     margin: {top: 60, right: 60, bottom: 90, left: 60},
@@ -270,8 +268,6 @@ flatTax.visualize = function(sheet) {
     voronoiGroup.enter().append("path")
       // Draw the polygon (invisibly) by joining the points together with a path
       .attr("d", function(d) {
-        // console.log("Enter");
-        // console.log(d);
         return "M" + d.join("L") + "Z";
       })
       // Assign the polygon the data from the point it surrounds

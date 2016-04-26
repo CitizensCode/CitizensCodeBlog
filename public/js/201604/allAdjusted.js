@@ -16,8 +16,7 @@ allAdjusted.visualize = function(sheet) {
     initialWidth: 'auto'
   };
   // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
-  var chartId = '#allAdjusted';
-  var chart = new d3Kit.Skeleton(chartId, DEFAULT_OPTIONS);
+  var chart = new d3Kit.Skeleton('#allAdjusted', DEFAULT_OPTIONS);
 
   // Create some layers to organize the visualization
   var layers = chart.getLayerOrganizer();

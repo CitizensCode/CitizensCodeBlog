@@ -50,10 +50,6 @@ text {
   pointer-events: all;
 }
 
-#ranking .line:hover {
-  stroke-width: 3;
-}
-
 .line-hover {
   stroke-width: 4;
 }

@@ -1,26 +1,26 @@
 (function(d3help, undefined){
 
-  d3help.sheetToObj = function(rawData, keyName, filterData) {
+  d3help.sheetToObj = function(rawData, groupName, filterData) {
     // Get the unique list of keys
     var keys = _.uniq(
       _.map(rawData, function(each) {
-        return each[keyName];
+        return each[groupName];
       })
     );
 
     // Initialize an array of objects, where each object has a key and an unpopulated value
     var processedData = _.map(keys, function(value) {
       var obj = {};
-      obj[keyName] = value;
+      obj[groupName] = value;
       obj.values = null;
       return obj;
     });
 
     _.map(processedData, function(obj) {
       // Filter the raw data to get data only belonging to the object key. Assign an array of those objects to the values key.
-      var name = obj[keyName];
+      var name = obj[groupName];
       var whereSearch = {};
-      whereSearch[keyName] = name;
+      whereSearch[groupName] = name;
       obj.values = _.where(
         rawData, whereSearch
       );

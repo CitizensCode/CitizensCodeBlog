@@ -1,35 +1,16 @@
 (function(ranking, undefined){
 
   /* To get jshint off my case */
-  /* globals incomeTaxCanada: true */
-
-ranking.data = [];
-ranking.processed = null;
+  /* globals incomeTaxCanada: true, d3help: true */
 
 ranking.visualize = function(sheet) {
 
   // Get the data from the Google sheet
   var rawData = sheet.elements;
 
-  // Get the list of provinces
-  var provinces = _.uniq(
-    _.map(rawData, function(each) {
-      return each.province;
-    })
-  );
+  var processedData = d3help.sheetToObj(rawData, "province", {key: "income", value: 500000});
 
-  var processedData = _.map(provinces, function(prov) {
-    return {"province": prov};
-  });
-
-  // Used to plot the lines
-  processedData = _.map(processedData, function(provObj) {
-    var prov = provObj.province;
-    provObj.values = _.where(
-      rawData, {"province" : prov}
-    );
-    return provObj;
-  });
+  console.log(processedData);
 
   // Chart options
   var DEFAULT_OPTIONS = {
@@ -44,7 +25,8 @@ ranking.visualize = function(sheet) {
   layers.create(
     ['content',
      'x-axis',
-     'y-axis']
+     'y-axis',
+     'voronoi']
    );
 
   var width = chart.getInnerWidth();
@@ -74,6 +56,7 @@ ranking.visualize = function(sheet) {
   height = chart.getInnerHeight();
 
   // Scales for the data
+  var margins = chart.margin();
   var x = d3.scale.log()
     .range([0, width]);
   var y = d3.scale.linear()
@@ -124,10 +107,6 @@ ranking.visualize = function(sheet) {
     .x(function(d) { return x(d.income); })
     .y(function(d) { return y(d.rankatincome); });
 
-  var cleanString = function(toClean) {
-    return String(toClean).toLowerCase().replace(/\s+/g, '');
-  };
-
   // The main visualization function. Debounce keeps it from rendering too many times per second during updates.
   var visualize = d3Kit.helper.debounce(function(){
     if(!chart.hasData()) {
@@ -149,9 +128,9 @@ ranking.visualize = function(sheet) {
     height = chart.getInnerHeight();
 
     var data = chart.data();
-    x.domain([10000, 500000])
+    x.domain([10000, 500000]) // $10k - $500k
       .range([0, width]);
-    y.domain([13, 1])
+    y.domain([13, 1]) // # Rank 1-13
       .range([height, 0]);
 
     layers.get('x-axis')
@@ -168,13 +147,16 @@ ranking.visualize = function(sheet) {
     // Draw the lines
     var selection = layers.get('content')
       .selectAll('.province-group')
-        .data(data);
+        .data(data, function(d) {
+          return d.province;
+        });
 
-    // Update everything if it exists
+    // Update anything that already exists to make it responsive
     selection.select('path')
       .attr("d", function(d) {
         return lineGen(d.values);
       });
+
     selection.select('text')
       .datum(function(d) {
         return {
@@ -185,19 +167,20 @@ ranking.visualize = function(sheet) {
         return "translate(" + (width + 3) + "," + y(d.value.rankatincome) + ")";
       });
 
-    // Enter new objects if they don't exist
+    // Enter new objects if they don't exist. Groups are used to group the line and the associated province initials
     var enterGroup = selection.enter().append("g")
         .attr("class", "province-group");
 
     enterGroup.append('path')
         .attr('class', function(d) {
-          return 'line '  + cleanString(d.province);
+          return 'line '  + d3help.cleanString(d.province);
         })
         .attr('id', function(d) {
           // Add a class for formatting each
-          return "ranking-" + cleanString(d.province);
+          return "ranking-" + d3help.cleanString(d.province);
         })
         .attr("d", function(d) {
+          d.line = this;
           return lineGen(d.values);
         });
 
@@ -233,6 +216,114 @@ ranking.visualize = function(sheet) {
       .select('.least')
       .attr("y", -40 - xAxisScale(width))
       .attr("x", height * -0.9 );
+
+    ///// Add the voronoi layer
+
+    // Set up the voronoi generator
+    var voronoi = d3.geom.voronoi()
+      .x(function(d) {
+        return x(d.income);
+      })
+      .y(function(d) {
+        return y(d.rankatincome);
+      })
+      .clipExtent([
+        [-margins.left, -margins.top],
+        [width + margins.right, height + margins.bottom]
+      ]);
+
+    // This configures the hover tip
+    var focus = layers.get('voronoi')
+      .append("g")
+      .attr("transform", "translate(-9000,-9000)")
+      .attr("class", "tt-box");
+
+    focus.append("circle")
+      .attr('class', 'tooltip tt-circle')
+      .attr("r", 6);
+
+    focus.append("text")
+      .attr('class', 'tooltip tt-title')
+      .attr("y", -40);
+
+    focus.append("text")
+      .attr('class', 'tooltip tt-valueA')
+      .attr("y", -25);
+
+    focus.append("text")
+      .attr('class', 'tooltip tt-valueB')
+      .attr("y", -10);
+
+    // First set up some mouse functions
+    var mouseover = function(d) {
+      // Make the line turn black
+      d3.select(d.parentObj.line)
+        .classed("line-hover", true);
+      // Append a line over top of all the other lines
+      d.parentObj.line.parentNode.appendChild(d.parentObj.line);
+      // Move the label and text into view and change the label
+      focus.attr("transform", "translate(" + x(d.income) + "," + y(d.rankatincome) + ")");
+
+      // Update the tooltip
+      focus.select(".tt-title")
+        .text(d.parentObj.province);
+      focus.select(".tt-valueA")
+        .text("Income Tax: " + d.effectiveincometax + "%");
+      focus.select(".tt-valueB")
+      .text("Income: $" + d.income);
+    };
+
+    var mouseout = function(d) {
+      d3.select(d.parentObj.line).classed("line-hover", false);
+      focus.attr("transform", "translate(-9000, -9000)");
+    };
+
+    var voronoiGroup = layers.get('voronoi')
+      .selectAll("path")
+      .data(voronoi(
+        d3.nest()
+        // Group the data by its x/y coords
+        .key(function(d) {
+          return x(d.income) + "," + y(d.rankatincome);
+        })
+        // Return the first value if there's multiple. This is necessary for the voronoi function to work properly
+        .rollup(function(v) {
+          return v[0];
+        })
+        // Flatten the data out so you can feed it into the nest function. This grabs all the xy values from each separate line's array of objects, and merges them into one giant array of objects.
+        .entries(
+          d3.merge(data.map(
+            function(d) {
+              return d.values;
+            }
+          ))
+        )
+        // Turn the result of the above into an array of objects that can be fed to the voronoi generator
+        .map(function(d) {
+          return d.values;
+        })
+      ));
+
+    voronoiGroup.attr("d", function(d) {
+        return "M" + d.join("L") + "Z";
+      })
+      .datum(function(d) {
+        return d.point;
+      });
+
+    voronoiGroup.enter().append("path")
+      // Draw the polygon (invisibly) by joining the points together with a path
+      .attr("d", function(d) {
+        // console.log("Enter");
+        // console.log(d);
+        return "M" + d.join("L") + "Z";
+      })
+      // Assign the polygon the data from the point it surrounds
+      .datum(function(d) {
+        return d.point;
+      })
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout);
 
   }, 10); // Debounce at 10 milliseconds
 
