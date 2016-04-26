@@ -11,6 +11,7 @@ custom_js:
 - 201604/ranking.js
 - 201604/flatTax.js
 - 201604/allAdjusted.js
+- 201604/bracketCreep.js
 - 201604/incomeTaxCanada.js
 custom_css:
 - d3KitChart.css
@@ -38,6 +39,11 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacin
 
 <h3>The 2016 Effective Tax Rate by Province</h3>
 <div id="allAdjusted" class="chart"></div>
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
+
+<h3>The 2016 Effective Tax Rate by Province</h3>
+<div id="bracketCreep" class="chart"></div>
 
 Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper.
 

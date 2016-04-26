@@ -76,6 +76,30 @@ text {
   stroke: #acb524;
 }
 
+#creep-newbrunswick2014 {
+  stroke: #de1c18;
+}
+#creep-newbrunswick2005 {
+  stroke: #e7641e;
+}
+
+#creep-princeedwardisland2014 {
+  stroke: #50ad78;
+}
+#creep-princeedwardisland2005 {
+  stroke: #a9ca77;
+}
+
+.vert-line {
+  stroke: black;
+  stroke-width: 2;
+}
+.hor-line-a, .hor-line-b {
+  stroke: black;
+  stroke-width: 2;
+}
+
+
 @media (max-width: 800px) {
   .chart text  {
     font-size: 0.7em;
