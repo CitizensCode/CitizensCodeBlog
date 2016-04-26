@@ -12,8 +12,6 @@ taxDiff.visualize = function(sheet) {
 
   var processedData = d3help.sheetToObj(rawData, "provyear", {key: "incomeadjusted", value: maxX});
 
-  console.log(processedData);
-
   // Chart options
   var DEFAULT_OPTIONS = {
     margin: {top: 60, right: 60, bottom: 90, left: 60},
@@ -126,7 +124,6 @@ taxDiff.visualize = function(sheet) {
     var yearMenuVal = $("#yearMenu option:selected").text();
 
     var allData = chart.data();
-    console.log(allData);
 
     // Get the data that is selected by the menu. Filter by the year first and then the province
     var highlightData = _.filter(allData, function(obj) {
@@ -140,8 +137,6 @@ taxDiff.visualize = function(sheet) {
       var menuBool = obj.provyear.indexOf(yearMenuVal) > -1;
       return currBool || menuBool;
     });
-    console.log("Highlighted");
-    console.log(highlightData);
 
     var backgroundData = _.filter(allData, function(obj) {
       return obj.provyear.indexOf("2016") > -1;
@@ -191,32 +186,39 @@ taxDiff.visualize = function(sheet) {
 
     // Draw the foreground lines
     var fgSelection = layers.get('fg-content')
-      .selectAll('.line')
+      .selectAll('.province-group')
       .data(highlightData, function(d) {
         return d.provyear;
       });
 
-    fgSelection.transition()
-      .attr('class', function(d) {
-        if (d.provyear.indexOf("2016") > -1) {
-          return "line highlighted " + d3help.cleanString(d.values[0].province);
-        } else {
-          return "line previous " + d3help.cleanString(d.values[0].province);
-        }
-      })
+    // Update anything that already exists to make it responsive
+    fgSelection.select('path')
       .attr("d", function(d) {
         d.line = this;
         return lineGen(d.values);
       });
 
-    fgSelection.enter()
-      .append('path')
-      .transition()
-      .duration(500)
+    fgSelection.select('text')
+      .datum(function(d) {
+        return {
+          name: d.values[0].year,
+          value: d.values[d.values.length - 1]
+        };
+      })
+      .attr("transform", function(d) {
+        return "translate(" + width + "," + y(d.value.effectiveincometax) + ")";
+      });
+
+    var enterGroup = fgSelection.enter()
+      .append("g")
+      .attr("class", "province-group");
+
+    enterGroup.append('path')
       .attr('class', function(d) {
         if (d.provyear.indexOf("2016") > -1) {
           return "line highlighted " + d3help.cleanString(d.values[0].province);
-        } else {
+        }
+        else {
           return "line previous " + d3help.cleanString(d.values[0].province);
         }
       })
@@ -224,6 +226,39 @@ taxDiff.visualize = function(sheet) {
         // Include itself in its data. Used for voronoi hover.
         d.line = this;
         return lineGen(d.values);
+      });
+
+    enterGroup.append("text")
+      .datum(function(d) {
+        return {
+          name: d.values[0].year,
+          value: d.values[d.values.length - 1]
+        };
+      })
+      .attr("text-anchor", "end")
+      .attr("dy", function(d) {
+        if (d.value.province === "Newfoundland and Labrador") {
+          if (d.name === 2016) {
+            return "16";
+          }
+          else {
+            return "-5";
+          }
+        }
+        else {
+          if (d.name === 2016) {
+            return "-5";
+          }
+          else {
+            return "16";
+          }
+        }
+      })
+      .attr("transform", function(d) {
+        return "translate(" + width + "," + y(d.value.effectiveincometax) + ")";
+      })
+      .text(function(d) {
+        return d.name;
       });
 
     fgSelection.exit()

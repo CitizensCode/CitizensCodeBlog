@@ -10,7 +10,6 @@ custom_js:
 - d3help-0.0.1.js
 - 201604/ranking.js
 - 201604/flatTax.js
-- 201604/allAdjusted.js
 - 201604/bracketCreep.js
 - 201604/hiddenTaxes.js
 - 201604/taxDiff.js
