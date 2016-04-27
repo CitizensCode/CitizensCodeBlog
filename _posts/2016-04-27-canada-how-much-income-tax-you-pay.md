@@ -98,7 +98,9 @@ __
 <strong>Some Notes on Data Sources and Methodology</strong>
 
 <p>Tax bracket and credit data are not stored in a single document that shows their changes over time; they are stored in 30 years of PDFs across two government websites (<a href="http://www.cra-arc.gc.ca/formspubs/t1gnrl/menu-eng.html">1</a>) (<a href="http://www.revenuquebec.ca/en/sepf/formulaires/tp/tp-1/">2</a>). To produce these charts, I downloaded the federal, provincial and territorial tax-return forms for the last 10 years (<a href="https://github.com/CitizensCode/CanadianIncomeTaxes/blob/master/IncomeTaxDownloader.ipynb">code here</a>). I then compiled that tax bracket and tax credit information into <a href="https://github.com/CitizensCode/CanadianIncomeTaxes/blob/master/web/data/incomeTax.json">a giant JSON object</a>, cross-referencing with documents from <a href="http://www.kpmg.com/ca/en/services/tax/pages/tax-rates.aspx">KPMG</a>, <a href="http://www.ey.com/CA/en/Services/Tax/Tax-Calculators-2015-Personal-Tax">Ernst & Young</a>, and the <a href="http://www.taxpayer.com/news-releases/bc--ctf-releases-new-year-s-tax-changes-for-2016">Canadian Tax Payers Federation</a> to validate the data. Once this information was recorded, I wrote a program (<a href="https://github.com/CitizensCode/CanadianIncomeTaxes/blob/master/Canadian%20Tax%20Analysis.ipynb">code here</a>) that calculated what percentage tax was paid by every earner from $0 to $500,000 income.</p>
-
+<p>
+The federal government's method for adjusting for CPI is described <a href="http://www.fin.gc.ca/n05/05-087-eng.asp">here</a>, though their definition isn't quite correct. Instead of multiplying the previous-years value by the "A divided by B" they mention, it is simply the value of A divided by B. The source of the CPI values is <a href="http://www.statcan.gc.ca/tables-tableaux/sum-som/l01/cst01/cpis01a-eng.htm">here</a>.
+</p>
 </div>
 
 {% if page.custom_js %}
