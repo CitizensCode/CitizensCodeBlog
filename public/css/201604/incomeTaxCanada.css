@@ -104,6 +104,9 @@ text {
   stroke-width: 1;
 }
 
+.chart .y.label, .chart .x.label {
+    font-size: 1em;
+}
 
 @media (max-width: 800px) {
   .chart text  {
