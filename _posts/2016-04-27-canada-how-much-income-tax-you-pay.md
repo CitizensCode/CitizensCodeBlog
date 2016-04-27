@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How Much Tax You Pay: An Attempt at Understanding the Canadian Tax System"
+title: "How Much Tax You Pay: An Attempt at Understanding the Canadian Income Tax System"
 custom_js:
 - jquery-2.1.3.min.js
 - tabletop-1.4.3.min.js
@@ -36,7 +36,7 @@ The tax calculations for this include federal and provincial income tax, Employm
 <br><br>
 To keep things simple, I visualized what tax rates look like for a single person with no dependents, earning their income through the work they do as opposed to interest on investments. This, of course, is an approximation, but it's good enough for comparison purposes.
 <br><br>
-When you combine all of these things together, you get the 'effective tax rate' at every income for each province. All those taxes combined forum a unique curve that represents how much income tax a resident of each province pays. Below, you can see how these curves have changed since 2005, and since last year. In general, there have been tax decreases for people earning up to about $200,000 in most provinces, and increases for those earning more than that, with some exceptions.
+When you combine all of these things together, you get the 'effective tax rate' at every income for each province. All those taxes combined form a unique curve that represents how much income tax a resident of each province pays. Below, you can see how these curves have changed since 2005, and since last year. In general, there have been tax decreases for people earning up to about $200,000 in most provinces, and increases for those earning more than that, with some exceptions.
 
 <h3>Comparing the Effective Tax Rates Over Time</h3>
 <p id="menu">
