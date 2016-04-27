@@ -19,6 +19,9 @@ custom_css:
 - 201604/incomeTaxCanada.css
 ---
 
+<meta property="og:image"
+    content="http://i.imgur.com/Z1gkPv0.png" />
+
 {% if page.custom_css %}
   {% for css_file in page.custom_css %}
   <link rel="stylesheet" href='/public/css/{{ css_file }}'></script>
