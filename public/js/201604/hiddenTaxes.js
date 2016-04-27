@@ -108,7 +108,7 @@ hiddenTaxes.visualize = function(sheet) {
     .attr("x", height / -2 )
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
-    .text("Effective Income Tax");
+    .text("Effective Income Tax (Prov Only)");
 
   var lineGen = d3.svg.line()
     .x(function(d) { return x(d.incomeadjusted); })
