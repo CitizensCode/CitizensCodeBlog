@@ -1,14 +1,16 @@
-(function(flatTax, undefined){
+(function(taxDiff, undefined){
 
 /* To get jshint off my case */
 /* globals d3help: true */
 
-flatTax.visualize = function(sheet) {
+taxDiff.visualize = function(sheet) {
 
   // Get the data from the Google sheet
   var rawData = sheet.elements;
 
-  var processedData = d3help.sheetToObj(rawData, "year", {key: "incomeadjusted", value: 500000});
+  var maxX = 500000;
+
+  var processedData = d3help.sheetToObj(rawData, "provyear", {key: "incomeadjusted", value: maxX});
 
   // Chart options
   var DEFAULT_OPTIONS = {
@@ -16,12 +18,13 @@ flatTax.visualize = function(sheet) {
     initialWidth: 'auto'
   };
   // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
-  var chart = new d3Kit.Skeleton('#flattax', DEFAULT_OPTIONS);
+  var chart = new d3Kit.Skeleton('#taxDiff', DEFAULT_OPTIONS);
 
   // Create some layers to organize the visualization
   var layers = chart.getLayerOrganizer();
   layers.create(
-    ['content',
+    ['bg-content', // Background content
+     'fg-content', // Foreground content
      'x-axis',
      'y-axis',
      'voronoi']
@@ -89,7 +92,7 @@ flatTax.visualize = function(sheet) {
     .attr("x", height / -2 )
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
-    .text("Effective Income Tax (Prov Only)");
+    .text("Effective Income Tax (Fed + Prov)");
 
   var lineGen = d3.svg.line()
     .x(function(d) { return x(d.incomeadjusted); })
@@ -99,7 +102,8 @@ flatTax.visualize = function(sheet) {
   var visualize = d3Kit.helper.debounce(function(){
     if(!chart.hasData()) {
       // If for some reason the chart doesn't have data, remove all the visual elements
-      d3Kit.helper.removeAllChildren(layers.get('content'));
+      d3Kit.helper.removeAllChildren(layers.get('bg-content'));
+      d3Kit.helper.removeAllChildren(layers.get('fg-content'));
     }
 
     // Grab them in case they've changed
@@ -115,10 +119,33 @@ flatTax.visualize = function(sheet) {
     width = chart.getInnerWidth();
     height = chart.getInnerHeight();
 
-    var data = chart.data();
-    x.domain([0, 500000]) // $500k
+    // Get the values selected in the menu
+    var provMenuVal = $("#provMenu option:selected").text();
+    var yearMenuVal = $("#yearMenu option:selected").text();
+
+    var allData = chart.data();
+
+    // Get the data that is selected by the menu. Filter by the year first and then the province
+    var highlightData = _.filter(allData, function(obj) {
+      // Get the values that match the province selected
+      return obj.provyear.indexOf(provMenuVal) > -1;
+    });
+
+    highlightData = _.filter(highlightData, function(obj) {
+      // Get the values that match the year selected, and those for the current year
+      var currBool = obj.provyear.indexOf("2016") > -1;
+      var menuBool = obj.provyear.indexOf(yearMenuVal) > -1;
+      return currBool || menuBool;
+    });
+
+    var backgroundData = _.filter(allData, function(obj) {
+      return obj.provyear.indexOf("2016") > -1;
+    });
+
+
+    x.domain([0, maxX]) // $500k
       .range([0, width]);
-    y.domain([0, 13]) // 13% tax
+    y.domain([0, 52]) // 52% tax
       .range([height, 0]);
 
     layers.get('x-axis')
@@ -132,11 +159,11 @@ flatTax.visualize = function(sheet) {
     layers.get('y-axis')
       .call(yAxis);
 
-    // Draw the lines
-    var selection = layers.get('content')
+    // Draw the background lines
+    var selection = layers.get('bg-content')
       .selectAll('.line')
-      .data(data, function(d) {
-        return d.year;
+      .data(backgroundData, function(d) {
+        return d.provyear;
       });
 
     selection.transition()
@@ -146,16 +173,99 @@ flatTax.visualize = function(sheet) {
 
     selection.enter()
       .append('path')
-      .attr('class', 'line')
+      .attr('class', 'line bgprov')
       .attr('id', function(d) {
         // Add a class for formatting each
-        return "flat-" + d3help.cleanString(d.year);
+        return "diff-" + d3help.cleanString(d.provyear);
       })
       .attr("d", function(d) {
         // Include itself in its data. Used for voronoi hover.
         d.line = this;
         return lineGen(d.values);
       });
+
+    // Draw the foreground lines
+    var fgSelection = layers.get('fg-content')
+      .selectAll('.province-group')
+      .data(highlightData, function(d) {
+        return d.provyear;
+      });
+
+    // Update anything that already exists to make it responsive
+    fgSelection.select('path')
+      .attr("d", function(d) {
+        d.line = this;
+        return lineGen(d.values);
+      });
+
+    fgSelection.select('text')
+      .datum(function(d) {
+        return {
+          name: d.values[0].year,
+          value: d.values[d.values.length - 1]
+        };
+      })
+      .attr("transform", function(d) {
+        return "translate(" + width + "," + y(d.value.effectiveincometax) + ")";
+      });
+
+    var enterGroup = fgSelection.enter()
+      .append("g")
+      .attr("class", "province-group");
+
+    enterGroup.append('path')
+      .attr('class', function(d) {
+        if (d.provyear.indexOf("2016") > -1) {
+          return "line highlighted " + d3help.cleanString(d.values[0].province);
+        }
+        else {
+          return "line previous " + d3help.cleanString(d.values[0].province);
+        }
+      })
+      .attr("d", function(d) {
+        // Include itself in its data. Used for voronoi hover.
+        d.line = this;
+        return lineGen(d.values);
+      });
+
+    enterGroup.append("text")
+      .datum(function(d) {
+        return {
+          name: d.values[0].year,
+          value: d.values[d.values.length - 1]
+        };
+      })
+      .attr("text-anchor", "end")
+      .attr("dy", function(d) {
+        if (d.value.province === "Newfoundland and Labrador") {
+          if (d.name === 2016) {
+            return "16";
+          }
+          else {
+            return "-5";
+          }
+        }
+        else {
+          if (d.name === 2016) {
+            return "-5";
+          }
+          else {
+            return "16";
+          }
+        }
+      })
+      .attr("transform", function(d) {
+        return "translate(" + width + "," + y(d.value.effectiveincometax) + ")";
+      })
+      .text(function(d) {
+        return d.name;
+      });
+
+    fgSelection.exit()
+    .transition()
+    .duration(500)
+    .style('opacity', 0)
+    .remove();
 
     // X-Axis Label
     layers.get('x-axis')
@@ -220,7 +330,7 @@ flatTax.visualize = function(sheet) {
 
       // Update the tooltip
       focus.select(".tt-title")
-        .text(d.parentObj.year);
+        .text(d.parentObj.provyear);
       focus.select(".tt-valueA")
         .text("Income Tax: " + d.effectiveincometax + "%");
       focus.select(".tt-valueB")
@@ -246,7 +356,7 @@ flatTax.visualize = function(sheet) {
         })
         // Flatten the data out so you can feed it into the nest function. This grabs all the xy values from each separate line's array of objects, and merges them into one giant array of objects.
         .entries(
-          d3.merge(data.map(
+          d3.merge(highlightData.map(
             function(d) {
               return d.values;
             }
@@ -279,26 +389,7 @@ flatTax.visualize = function(sheet) {
 
   }, 10); // Debounce at 10 milliseconds
 
-  // Line labels
-  layers.get('content')
-   .append("text")
-    .attr("dy", "-3")
-    .attr("class", "curve-text")
-   .append("textPath")
-    .attr("class", "flat-2016-label")
-    .attr("xlink:href", "#flat-2016")
-    .attr("startOffset", "60%")
-    .text("Alberta 2016 (New Tax Brackets)");
-
-  layers.get('content')
-   .append("text")
-    .attr("dy", "-3")
-    .attr("class", "curve-text")
-   .append("textPath")
-    .attr("class", "flat-2005-label")
-    .attr("xlink:href", "#flat-2005")
-    .attr("startOffset", "60%")
-    .text("Alberta 2005 (Flat 10% Tax)");
+  d3.select("#provMenu").on("change", visualize); d3.select("#yearMenu").on("change", visualize);
 
   chart
     .autoResize(true)
@@ -309,4 +400,4 @@ flatTax.visualize = function(sheet) {
 
 };
 
-}(window.flatTax = window.flatTax || {}));
+}(window.taxDiff = window.taxDiff || {}));

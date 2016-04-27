@@ -1,4 +1,4 @@
-h3 {
+.post h3 {
   margin-left: 5%;
   text-align: center;
   font-family: 'Anonymous Pro', Arial, sans-serif;
@@ -22,13 +22,14 @@ text {
   border: none;
   background-color: white;
   background-color: rgba(103, 103, 103, 0.09);
-}
-#menu, #menu select {
-    font-size: 40px;
+  font-size: 1em;
 }
 
-.label {
-  font-size: 1em;
+.note {
+  font-size: 0.6em;
+  margin-bottom: 15px;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
 .axis path, .axis line {
@@ -37,6 +38,14 @@ text {
   stroke-width: .5px;
   stroke-linejoin: round;
   shape-rendering: crispEdges;
+}
+#creep-princeedwardisland2005,
+#creep-princeedwardisland2014 {
+  stroke-width: 3px;
+}
+#creep-newbrunswick2005,
+#creep-newbrunswick2014 {
+  opacity: 0.4;
 }
 .line {
     fill: none;
@@ -54,16 +63,12 @@ text {
   stroke-width: 4;
 }
 
-.highlighted, .previous {
-  stroke: #267129;
-  stroke-width: 3;
-  stroke-dasharray: 5,5;
+.highlighted {
+  stroke-width: 2;
 }
 .previous {
-  stroke: red;
-}
-.highlighted {
-  stroke: #267129;
+  stroke-width: 2;
+  stroke-dasharray: 5,5;
 }
 .bgline {
     stroke: rgba(103, 103, 103, 0.28);
@@ -87,18 +92,21 @@ text {
   stroke: #50ad78;
 }
 #creep-princeedwardisland2005 {
-  stroke: #a9ca77;
+  stroke: #778266;
 }
 
 .vert-line {
   stroke: black;
-  stroke-width: 2;
+  stroke-width: 1;
 }
 .hor-line-a, .hor-line-b {
   stroke: black;
-  stroke-width: 2;
+  stroke-width: 1;
 }
 
+.chart .y.label, .chart .x.label {
+    font-size: 1em;
+}
 
 @media (max-width: 800px) {
   .chart text  {
@@ -162,6 +170,10 @@ text {
   opacity: .5;
 }
 
+.bgprov {
+  stroke: #C6C6C6;
+  opacity: 0.25;
+}
 .novascotia {
   stroke: #b05a28;
 }
@@ -172,7 +184,7 @@ text {
   stroke: #df2425;
 }
 .newfoundlandandlabrador {
-  stroke: #ef9797;
+  stroke: #FF8585;
 }
 .quebec {
   stroke: #96c0db;

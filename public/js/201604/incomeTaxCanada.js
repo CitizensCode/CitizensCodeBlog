@@ -1,7 +1,7 @@
 (function(incomeTaxCanada, undefined){
 
 /* To get jshint off my case */
-/* globals ranking: true, flatTax: true, allAdjusted: true, bracketCreep: true */
+/* globals ranking: true, flatTax: true, allAdjusted: true, bracketCreep: true, hiddenTaxes: true, taxDiff: true */
 
 incomeTaxCanada.provinceLookup = {
   "Alberta": "ab",
@@ -22,32 +22,65 @@ incomeTaxCanada.provinceLookup = {
 var spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EFBsT2vTy_93-tnTHvjcYrZrw6ZqLb9Pfoi8M_FjQ4Y/pubhtml';
 
 // This takes each set of data and passes it to the appropriate functions to be visualized
-var visualizeData = function(data, tabletop) {
+var rankingCb = function(data, tabletop) {
   // See ranking.js
   ranking.visualize(tabletop.sheets("Ranking"));
+};
+var flatTaxCb = function(data, tabletop) {
   // See flattax.js
   flatTax.visualize(tabletop.sheets("FlatTax"));
-  // See allAdjusted.js
-  allAdjusted.visualize(tabletop.sheets("AllAdjusted"));
+};
+var bracketCreepCb = function(data, tabletop) {
   // See bracketCreep.js
   bracketCreep.visualize(tabletop.sheets("BracketCreep"));
+};
+var hiddenTaxesCb = function(data, tabletop) {
+  // See hiddenTaxes.js
+  hiddenTaxes.visualize(tabletop.sheets("HiddenTaxes"));
+};
+var taxDiffCb = function(data, tabletop) {
+  // See taxDiff.js
+  taxDiff.visualize(tabletop.sheets("TaxDiff"));
 };
 
 var init = function() {
   Tabletop.init( { key: spreadsheetUrl,
-                   callback: visualizeData,
-  // Grab the spreadsheet sheets we want
+                   callback: rankingCb,
                    wanted: [
-                    "Ranking",
-                    "FlatTax",
-                    "AllAdjusted",
+                    "Ranking"],
+                   parseNumbers: true,
+                   prettyColumnNames: false
+                 } );
+  Tabletop.init( { key: spreadsheetUrl,
+                   callback: flatTaxCb,
+                   wanted: [
+                    "FlatTax"],
+                   parseNumbers: true,
+                   prettyColumnNames: false
+                 } );
+  Tabletop.init( { key: spreadsheetUrl,
+                   callback: bracketCreepCb,
+                   wanted: [
                     "BracketCreep"],
+                   parseNumbers: true,
+                   prettyColumnNames: false
+                 } );
+  Tabletop.init( { key: spreadsheetUrl,
+                   callback: hiddenTaxesCb,
+                   wanted: [
+                    "HiddenTaxes"],
+                   parseNumbers: true,
+                   prettyColumnNames: false
+                 } );
+  Tabletop.init( { key: spreadsheetUrl,
+                   callback: taxDiffCb,
+                   wanted: [
+                    "TaxDiff"],
                    parseNumbers: true,
                    prettyColumnNames: false
                  } );
 };
 
-// Uses Cash.js instead of jQuery
 $(init());
 
 }(window.incomeTaxCanada = window.incomeTaxCanada || {}));

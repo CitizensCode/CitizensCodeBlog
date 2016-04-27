@@ -1,14 +1,33 @@
-(function(flatTax, undefined){
+(function(hiddenTaxes, undefined){
 
 /* To get jshint off my case */
 /* globals d3help: true */
 
-flatTax.visualize = function(sheet) {
+hiddenTaxes.visualize = function(sheet) {
 
   // Get the data from the Google sheet
   var rawData = sheet.elements;
 
-  var processedData = d3help.sheetToObj(rawData, "year", {key: "incomeadjusted", value: 500000});
+  var maxX = 500000;
+
+  var processedData = d3help.sheetToObj(rawData, "province", {key: "incomeadjusted", value: maxX});
+
+  // A very specific sorting of the lines so that the provincs of interest are plotted last
+  var sortArr = [];
+  var provArr = ["Quebec", "Ontario", "British Columbia"];
+
+  _.each(provArr, function(prov, index, list) {
+    var checkName = function(obj) {
+      return obj.province === prov;
+    };
+    var i = _.findIndex(processedData, checkName);
+    if (i > -1) {
+      var item = processedData.splice(i, 1)[0];
+      sortArr.unshift(item);
+    }
+  });
+  // Add the rest to the beginning
+  processedData = processedData.concat(sortArr);
 
   // Chart options
   var DEFAULT_OPTIONS = {
@@ -16,7 +35,7 @@ flatTax.visualize = function(sheet) {
     initialWidth: 'auto'
   };
   // Set up the d3Kit chart skeleton. We add more properties to it later once we've defined some other functions.
-  var chart = new d3Kit.Skeleton('#flattax', DEFAULT_OPTIONS);
+  var chart = new d3Kit.Skeleton('#hiddenTaxes', DEFAULT_OPTIONS);
 
   // Create some layers to organize the visualization
   var layers = chart.getLayerOrganizer();
@@ -116,9 +135,9 @@ flatTax.visualize = function(sheet) {
     height = chart.getInnerHeight();
 
     var data = chart.data();
-    x.domain([0, 500000]) // $500k
+    x.domain([0, maxX]) // $500k
       .range([0, width]);
-    y.domain([0, 13]) // 13% tax
+    y.domain([0, 25]) // 17% tax
       .range([height, 0]);
 
     layers.get('x-axis')
@@ -136,7 +155,7 @@ flatTax.visualize = function(sheet) {
     var selection = layers.get('content')
       .selectAll('.line')
       .data(data, function(d) {
-        return d.year;
+        return d.province;
       });
 
     selection.transition()
@@ -146,10 +165,18 @@ flatTax.visualize = function(sheet) {
 
     selection.enter()
       .append('path')
-      .attr('class', 'line')
+      .attr('class', function(d) {
+        // Return a province colour class if the province is one of interest, and a grey one if not
+        var ind = provArr.indexOf(d.province);
+        if (ind >= 0) {
+          return "line " + d3help.cleanString(d.province);
+        } else {
+          return "line bgprov";
+        }
+      })
       .attr('id', function(d) {
         // Add a class for formatting each
-        return "flat-" + d3help.cleanString(d.year);
+        return "hidden-" + d3help.cleanString(d.province);
       })
       .attr("d", function(d) {
         // Include itself in its data. Used for voronoi hover.
@@ -220,7 +247,7 @@ flatTax.visualize = function(sheet) {
 
       // Update the tooltip
       focus.select(".tt-title")
-        .text(d.parentObj.year);
+        .text(d.parentObj.province);
       focus.select(".tt-valueA")
         .text("Income Tax: " + d.effectiveincometax + "%");
       focus.select(".tt-valueB")
@@ -285,20 +312,30 @@ flatTax.visualize = function(sheet) {
     .attr("dy", "-3")
     .attr("class", "curve-text")
    .append("textPath")
-    .attr("class", "flat-2016-label")
-    .attr("xlink:href", "#flat-2016")
-    .attr("startOffset", "60%")
-    .text("Alberta 2016 (New Tax Brackets)");
+    .attr("class", "hidden-quebec-label")
+    .attr("xlink:href", "#hidden-quebec")
+    .attr("startOffset", "90%")
+    .text("Quebec");
+
+  layers.get('content')
+   .append("text")
+    .attr("dy", "13")
+    .attr("class", "curve-text")
+   .append("textPath")
+    .attr("class", "hidden-ontario-label")
+    .attr("xlink:href", "#hidden-ontario")
+    .attr("startOffset", "90%")
+    .text("Ontario");
 
   layers.get('content')
    .append("text")
     .attr("dy", "-3")
     .attr("class", "curve-text")
    .append("textPath")
-    .attr("class", "flat-2005-label")
-    .attr("xlink:href", "#flat-2005")
-    .attr("startOffset", "60%")
-    .text("Alberta 2005 (Flat 10% Tax)");
+    .attr("class", "hidden-britishcolumbia-label")
+    .attr("xlink:href", "#hidden-britishcolumbia")
+    .attr("startOffset", "83%")
+    .text("British Columbia");
 
   chart
     .autoResize(true)
@@ -309,4 +346,4 @@ flatTax.visualize = function(sheet) {
 
 };
 
-}(window.flatTax = window.flatTax || {}));
+}(window.hiddenTaxes = window.hiddenTaxes || {}));

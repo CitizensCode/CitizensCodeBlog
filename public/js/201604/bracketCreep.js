@@ -12,8 +12,6 @@ bracketCreep.visualize = function(sheet) {
 
   var processedData = d3help.sheetToObj(rawData, "province", {key: "incomeadjusted", value: maxX});
 
-  console.log(processedData);
-
   // A very specific sorting of the lines so that PEI is drawn last
   var sortArr = [];
   sortArr[0] = _.where(processedData, {province: "New Brunswick 2005"})[0];
@@ -101,7 +99,7 @@ bracketCreep.visualize = function(sheet) {
     .attr("x", height / -2 )
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
-    .text("Effective Income Tax");
+    .text("Effective Income Tax (Prov Only)");
 
   var lineGen = d3.svg.line()
     .x(function(d) { return x(d.incomeadjusted); })
@@ -296,7 +294,6 @@ bracketCreep.visualize = function(sheet) {
       // Make the line turn black
       d3.select(d.parentObj.line)
         .classed("line-hover", true);
-      d.parentObj.line.parentNode.appendChild(d.parentObj.line);
       // Move the label and text into view and change the label
       focus.attr("transform", "translate(" + x(d.incomeadjusted) + "," + y(d.effectiveincometax) + ")");
 
