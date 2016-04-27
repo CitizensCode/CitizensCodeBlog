@@ -87,7 +87,7 @@ ranking.visualize = function(sheet) {
     .attr("class", "y label most")
     .attr("text-anchor", "middle")
     .attr("y", -40 - xAxisScale(width))
-    .attr("x", height * 0.1 )
+    .attr("x", height * -0.07 )
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
     .text("Most Tax");
@@ -130,6 +130,9 @@ ranking.visualize = function(sheet) {
       .range([0, width]);
     y.domain([13, 1]) // # Rank 1-13
       .range([height, 0]);
+
+    // Re-scale the x-axis
+    xAxis.tickSize(-height * 1.02);
 
     layers.get('x-axis')
       .attr('transform', 'translate(0,' + height * 1.02 + ')')
@@ -209,7 +212,7 @@ ranking.visualize = function(sheet) {
     layers.get('y-axis')
       .select('.most')
       .attr("y", -40 - xAxisScale(width))
-      .attr("x", height * -0.1 );
+      .attr("x", height * -0.07 );
     layers.get('y-axis')
       .select('.least')
       .attr("y", -40 - xAxisScale(width))

@@ -294,7 +294,6 @@ bracketCreep.visualize = function(sheet) {
       // Make the line turn black
       d3.select(d.parentObj.line)
         .classed("line-hover", true);
-      d.parentObj.line.parentNode.appendChild(d.parentObj.line);
       // Move the label and text into view and change the label
       focus.attr("transform", "translate(" + x(d.incomeadjusted) + "," + y(d.effectiveincometax) + ")");
 
