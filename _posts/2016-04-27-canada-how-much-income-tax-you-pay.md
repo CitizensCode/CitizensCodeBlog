@@ -35,7 +35,7 @@ Simple question, right? As it turns out, it's not an easy question to answer at 
 <h3>Canadian Provincial + Federal Effective Tax Ranking, 2016</h3>
 <div id="ranking" class="chart"></div><br>
 
-The tax calculations for this include federal and provincial income tax, Employment Insurance, the Canadian & Québec Pension Plans, provincial health fees, surtaxes (that is, a tax on how much tax you pay), Québec's Parental Insurance Plan, the basic exemption, as well as special adjustments to the Federal tax rate for Québec tax payers (they pay 83.5% the federal tax as the rest of the provinces and territories). All dollars have been inflation adjusted to 2016 dollars using the same formula used by the federal government to adjust their tax brackets.
+The tax calculations for this include federal and provincial income tax, Employment Insurance, the Canadian & Québec Pension Plans, provincial health fees, surtaxes (that is, a tax on how much tax you pay), Québec's Parental Insurance Plan, the basic exemption, as well as special adjustments to the Federal tax rate for Québec tax payers (they pay 83.5% of the federal tax that other provinces and territories pay). All dollars have been inflation adjusted to 2016 dollars using the same formula used by the federal government to adjust their tax brackets.
 <br><br>
 To keep things simple, I visualized what tax rates look like for a single person with no dependents, earning their income through the work they do as opposed to interest on investments. This, of course, is an approximation, but it's good enough for comparison purposes.
 <br><br>
@@ -78,7 +78,7 @@ Taxes can also be increased without passing any legislation. Between 2005 and 20
 <br><br>
 For example, while the lowest tax bracket in New Brunswick was $32,730 in 2005, it was $39,973 in 2015 because it was adjusted along with inflation each year. PEI, however, almost never changes their brackets, with the lowest bracket only changing from $30,754 in 2005 to $31,984 in 2015 - well below the rate of inflation.
 <br><br>
-The result of this can be seen in this next chart, where the orange lines represent NB's effective tax rates in 2005 and 2015 - which almost perfectly overlap - while PEI's show a large gap between the two years. This tax increase will continue to grow each year unless this policy changes.
+The result of this can be seen in this next chart, where the orange lines represent NB's effective tax rates in 2005 and 2014 - which almost perfectly overlap - while PEI's show a large gap between the two years. This tax increase will continue to grow each year unless this policy changes.
 
 <h3>How to Increase Taxes Without Increasing Them: Bracket Creep</h3>
 <div id="bracketCreep" class="chart"></div><br>
