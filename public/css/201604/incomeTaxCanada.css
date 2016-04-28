@@ -108,6 +108,23 @@ text {
     font-size: 1em;
 }
 
+/* Hide the axes for the ranking chart */
+#ranking .x-axis-layer path,
+#ranking .y-axis-layer path {
+    visibility: hidden;
+}
+
+#ranking .x-axis-layer .tick line {
+  stroke: #C6C6C6;
+  opacity: .5;
+}
+
+#ranking .y-axis-layer .most,
+#ranking .y-axis-layer .least {
+  font-size: 0.8em;
+  fill: #8C8C8C;
+}
+
 @media (max-width: 800px) {
   .chart text  {
     font-size: 0.7em;
@@ -117,6 +134,13 @@ text {
   }
   .flat-2016-label {
     font-size: 0.9em;
+  }
+  #ranking .y-axis-layer .ranking {
+    font-size: 0.8em;
+  }
+  #ranking .y-axis-layer .most,
+  #ranking .y-axis-layer .least {
+    font-size: 0.6em;
   }
 }
 
@@ -158,23 +182,6 @@ text {
 /*.x-axis-layer .tick text {
   transform: rotate(-45deg);
 }*/
-
-/* Hide the axes for the ranking chart */
-#ranking .x-axis-layer path,
-#ranking .y-axis-layer path {
-    visibility: hidden;
-}
-
-#ranking .x-axis-layer .tick line {
-  stroke: #C6C6C6;
-  opacity: .5;
-}
-
-#ranking .y-axis-layer .most,
-#ranking .y-axis-layer .least {
-  font-size: 0.8em;
-  fill: #8C8C8C;
-}
 
 .bgprov {
   stroke: #C6C6C6;
