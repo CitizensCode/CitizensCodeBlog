@@ -100,6 +100,15 @@ ranking.visualize = function(sheet) {
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
     .text("Least Tax");
+  layers.get('y-axis')
+    .append("text")
+    .attr("class", "y label ranking")
+    .attr("text-anchor", "middle")
+    .attr("y", -60 - xAxisScale(width))
+    .attr("x", height / -2)
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text("Provincial Ranking");
 
   var lineGen = d3.svg.line()
     .x(function(d) { return x(d.income); })
@@ -216,7 +225,11 @@ ranking.visualize = function(sheet) {
     layers.get('y-axis')
       .select('.least')
       .attr("y", -40 - xAxisScale(width))
-      .attr("x", height * -0.9 );
+      .attr("x", height * -0.92 );
+    layers.get('y-axis')
+      .select('.ranking')
+      .attr("y", -40 - xAxisScale(width))
+      .attr("x", height / -2);
 
     ///// Add the voronoi layer
 

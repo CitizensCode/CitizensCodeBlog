@@ -170,6 +170,12 @@ text {
   opacity: .5;
 }
 
+#ranking .y-axis-layer .most,
+#ranking .y-axis-layer .least {
+  font-size: 0.8em;
+  fill: #8C8C8C;
+}
+
 .bgprov {
   stroke: #C6C6C6;
   opacity: 0.25;
