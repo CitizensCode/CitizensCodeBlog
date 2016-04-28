@@ -22,6 +22,7 @@ custom_css:
 
 <meta property="og:image"
     content="http://i.imgur.com/Z1gkPv0.png" />
+<link rel="image_src" content="http://i.imgur.com/Z1gkPv0.png">
 
 {% if page.custom_css %}
   {% for css_file in page.custom_css %}
