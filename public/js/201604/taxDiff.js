@@ -411,9 +411,6 @@ taxDiff.visualize = function(sheet) {
         $('#provMenu').val(region);
         visualize();
       }
-    })
-    .catch(function(ex) {
-      console.log('Parsing Failed', ex);
     });
 
 };
