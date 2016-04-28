@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How Much Tax You Pay: An Attempt at Understanding the Canadian Income Tax System"
+title: "How Much Income Tax Canadians Pay: A Provincial Comparison"
 custom_js:
 - jquery-2.1.3.min.js
 - tabletop-1.4.3.min.js
@@ -8,6 +8,7 @@ custom_js:
 - d3kit-1.1.0mod.min.js
 - underscore-1.8.3.min.js
 - d3help-0.0.1.js
+- fetch-1.0.0.min.js
 - 201604/ranking.js
 - 201604/flatTax.js
 - 201604/bracketCreep.js

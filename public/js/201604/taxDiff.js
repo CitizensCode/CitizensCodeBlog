@@ -1,7 +1,7 @@
 (function(taxDiff, undefined){
 
 /* To get jshint off my case */
-/* globals d3help: true */
+/* globals d3help: true, incomeTaxCanada: true */
 
 taxDiff.visualize = function(sheet) {
 
@@ -397,6 +397,24 @@ taxDiff.visualize = function(sheet) {
     .on('resize', visualize)
     .on('data', visualize)
     .data(processedData);
+
+  fetch('http://ip-api.com/json/')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      var country = json.country;
+      var region = json.region.toLowerCase();
+      var provs = _.values(incomeTaxCanada.provinceLookup);
+      if (country === 'Canada' &&
+        provs.indexOf(region) > -1) {
+        $('#provMenu').val(region);
+        visualize();
+      }
+    })
+    .catch(function(ex) {
+      console.log('Parsing Failed', ex);
+    });
 
 };
 
