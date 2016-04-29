@@ -85,7 +85,7 @@ $(init());
 
 var checkSize = _.debounce(function() {
   var windowSize = window.screen.availWidth;
-  if (windowSize < 500) {
+  if (windowSize < 480) {
     $(".sizewarning").css("display", "block");
   } else {
     $(".sizewarning").css("display", "none");
@@ -94,5 +94,6 @@ var checkSize = _.debounce(function() {
 
 checkSize();
 $(window).resize(checkSize);
+window.addEventListener('orientationchange', checkSize);
 
 }(window.incomeTaxCanada = window.incomeTaxCanada || {}));

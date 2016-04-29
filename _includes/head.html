@@ -12,12 +12,6 @@
       content="{{ page.title }}" />
   <link rel="image_src" content="{{ page.shareImage }}">
 
-  {% if page.custom_css %}
-    {% for css_file in page.custom_css %}
-    <link rel="stylesheet" href='/public/css/{{ css_file }}'>
-    {% endfor %}
-  {% endif %}
-
   <title>
     {% if page.title == "Home" %}
       {{ site.title }} &middot; {{ site.author.name }}
