@@ -21,11 +21,7 @@ custom_css:
 - 201604/incomeTaxCanada.css
 ---
 
-{% if page.custom_css %}
-  {% for css_file in page.custom_css %}
-  <link rel="stylesheet" href='/public/css/{{ css_file }}'>
-  {% endfor %}
-{% endif %}
+<span class="sizewarning">Hey there, try turning your phone sideways. I did my best to make the charts below work for small screens, but not this small!</span>
 
 Who pays the least income tax in Canada, and how has that changed over time?
 
@@ -105,6 +101,12 @@ __
 The federal government's method for adjusting for CPI is described <a href="http://www.fin.gc.ca/n05/05-087-eng.asp">here</a>, though their definition isn't quite correct. Instead of multiplying the previous-years value by the "A divided by B" they mention, it is simply the value of A divided by B. The source of the CPI values is <a href="http://www.statcan.gc.ca/tables-tableaux/sum-som/l01/cst01/cpis01a-eng.htm">here</a>.
 </p>
 </div>
+
+{% if page.custom_css %}
+  {% for css_file in page.custom_css %}
+  <link rel="stylesheet" href='/public/css/{{ css_file }}'>
+  {% endfor %}
+{% endif %}
 
 {% if page.custom_js %}
   {% for js_file in page.custom_js %}

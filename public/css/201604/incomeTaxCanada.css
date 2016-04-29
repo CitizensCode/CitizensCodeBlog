@@ -1,3 +1,10 @@
+.sizewarning {
+  display:none;
+  color: #F17A49;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
 .post h3 {
   margin-left: 5%;
   text-align: center;

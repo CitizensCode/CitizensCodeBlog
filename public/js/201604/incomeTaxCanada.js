@@ -83,4 +83,17 @@ var init = function() {
 
 $(init());
 
+var checkSize = _.debounce(function() {
+  var windowSize = window.screen.availWidth;
+  console.log(windowSize);
+  if (windowSize < 500) {
+    $(".sizewarning").css("display", "block");
+  } else {
+    $(".sizewarning").css("display", "none");
+  }
+}, 250);
+
+checkSize();
+$(window).resize(checkSize);
+
 }(window.incomeTaxCanada = window.incomeTaxCanada || {}));
