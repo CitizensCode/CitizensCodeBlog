@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "How Much Income Tax Canadians Pay: A Provincial Comparison"
+shareImage: http://i.imgur.com/Z1gkPv0.png
 custom_js:
 - jquery-2.1.3.min.js
 - tabletop-1.4.3.min.js
@@ -19,10 +20,6 @@ custom_css:
 - d3KitChart.css
 - 201604/incomeTaxCanada.css
 ---
-
-<meta property="og:image"
-    content="http://i.imgur.com/Z1gkPv0.png" />
-<link rel="image_src" content="http://i.imgur.com/Z1gkPv0.png">
 
 {% if page.custom_css %}
   {% for css_file in page.custom_css %}
