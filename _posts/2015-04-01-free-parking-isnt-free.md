@@ -31,3 +31,5 @@ The plain fact is that you can’t design something you don’t truly understand
 __
 
 _Ryan Brideau, Gracen Johnson and Connor Jay_
+<br>
+{% include twitter_plug.html %}<br>

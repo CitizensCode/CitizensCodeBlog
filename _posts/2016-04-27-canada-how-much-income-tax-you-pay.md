@@ -98,7 +98,8 @@ The tax system is complicated. While the use of hidden taxes and inflation to ra
 __
 <br>
 <em>Ryan Brideau</em>
-<br><br>
+<br>
+{% include twitter_plug.html %}<br>
 <div class="note" style="margin-left:0">
 <strong>Some Notes on Data Sources and Methodology</strong>
 

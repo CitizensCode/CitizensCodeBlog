@@ -60,3 +60,5 @@ There are other logistics involved beyond what's been covered here, such as mana
 __
 
 _Ryan Brideau_
+<br>
+{% include twitter_plug.html %}<br>
