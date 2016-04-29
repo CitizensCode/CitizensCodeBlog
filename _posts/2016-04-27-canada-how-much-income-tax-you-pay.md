@@ -29,16 +29,16 @@ custom_css:
 
 Who pays the least income tax in Canada, and how has that changed over time?
 
-This simple question turns out not to have an easy answer. The combination of hidden income taxes, some province's reluctance to change their brackets with inflation, and "curvy flat taxes" results in an income tax horse race. Where you'd pay the least tax is completely dependent on how much you earn.
+This simple question turns out not to have an easy answer. The combination of hidden income taxes, some province's reluctance to change their brackets with inflation, and "curvy flat taxes" results in an income tax horse race. Where you'd pay the least amount is completely dependent on how much you earn.
 
 <h3>Canadian Provincial + Federal Effective Tax Ranking, 2016</h3>
 <div id="ranking" class="chart"></div><br>
 
-The tax calculations for this include federal and provincial income tax, Employment Insurance, the Canadian & Québec Pension Plans, provincial health fees, surtaxes (that is, a tax on how much tax you pay), Québec's Parental Insurance Plan, the basic exemption, as well as special adjustments to the Federal tax rate for Québec tax payers (they pay 83.5% of the federal tax that other provinces and territories pay). All dollars have been inflation adjusted to 2016 dollars using the same formula used by the federal government to adjust their tax brackets.
+The calculations for this include federal and provincial income tax, Employment Insurance, the Canadian & Québec Pension Plans, provincial health fees, surtaxes (that is, a tax on how much tax you pay), Québec's Parental Insurance Plan, the basic exemption, as well as special adjustments to the Federal tax rate for Québec (they pay 83.5% of the federal income tax that other provinces and territories pay). All dollars have been inflation adjusted to 2016 dollars using the same formula used by the federal government to adjust their tax brackets.
 <br><br>
-To keep things simple, I visualized what tax rates look like for a single person with no dependents, earning their income through the work they do as opposed to interest on investments. This, of course, is an approximation, but it's good enough for comparison purposes.
+To keep things simple, I visualized what these tax rates look like for a single person with no dependents, earning their income through the work they do as opposed to interest on investments. This, of course, is an approximation, but it's good enough for comparison purposes.
 <br><br>
-When you combine all of these things together, you get the 'effective tax rate' at every income for each province. All those taxes combined form a unique curve that represents how much income tax a resident of each province pays. Below, you can see how these curves have changed since 2005, and since last year. In general, there have been tax decreases for people earning up to about $200,000 in most provinces, and increases for those earning more than that, with some exceptions.
+When you combine all of these things together, you get the 'effective tax rate' at every income for each province. All those taxes combined form a unique curve that represents how much income tax a resident of each province pays. Below, you can see how these curves have changed since 2005, and since last year. In general, there have been decreases for people earning up to about $200,000 in most provinces, and increases for those earning more than that, with some exceptions.
 
 <h3>Comparing the Effective Tax Rates Over Time</h3>
 <p id="menu">
@@ -66,7 +66,7 @@ When you combine all of these things together, you get the 'effective tax rate' 
 <div id="taxDiff" class="chart"></div>
 <div class="note">Note: This chart does not include the changes to Newfoundland and Labrador's income tax announced in mid-April 2016 that come into affect mid-year.</div><br>
 
-Instead of raising the income tax, many provinces create new taxes such as health fees, parental insurance fees and surtaxes. The result is a lumpy tax curve - especially noticeable in Ontario - that is indicative of a much more complicated tax system. Note that Quebec is an outlier in the chart below because they pay a reduced federal rate, giving them the ability to collect more tax as a province.
+Instead of raising the income tax, many provinces create new taxes such as health fees, parental insurance fees and surtaxes. The result is a lumpy tax curve - especially noticeable in Ontario - that is indicative of a much more complicated system. Note that Québec is an outlier in the chart below because they pay a reduced federal rate, giving them the ability to collect more tax as a province.
 
 <h3>Hidden Income Taxes</h3>
 <div id="hiddenTaxes" class="chart"></div><br>
@@ -82,15 +82,15 @@ The result of this can be seen in this next chart, where the orange lines repres
 <h3>How to Increase Taxes Without Increasing Them: Bracket Creep</h3>
 <div id="bracketCreep" class="chart"></div><br>
 
-Sometimes, taxes don't behave the way you might think. For example, until 2015, Alberta had a single tax rate for all people: 10%. Intuitively, you may think this would result in a horizontal line where everyone pays the same rate. In reality, it's as as curved as any other!
-
+Sometimes, taxes don't behave the way you might think. For example, until 2015, Alberta had a single income tax rate for all people: 10%. Intuitively, you may think this would result in a horizontal line where everyone pays the same rate. In reality, it's as as curved as any other!
+<br><br>
+The reason is the basic personal amount: the first part of your income on which you don't pay tax. In Alberta, this amount is $18,451 for 2016, so if you earn $20,000, you only pay tax on $1,549 dollars. This means you pay $155 tax on your $20,000 income, or 0.8% - far from the 10% rate.
+<br>
 <h3>Why A Flat Tax Isn't Flat</h3>
 <div id="flattax" class="chart"></div>
 <div class="note">Note: The gap between the lines is not a plotting error. Alberta adjusted the amount of income people do not need to pay tax on by more than inflation. As a result, everyone's rate declined by about 0.1%.</div><br>
 
-The reason is the basic personal amount: the first part of your income on which you don't pay tax. In Alberta, this amount is $18,451 for 2016, so if you earn $20,000, you only pay tax on $1,549 dollars. This means you pay $155 tax on your $20,000 income, or 0.8% - far from the 10% rate.
-<br><br>
-The tax system is complicated. While the use of hidden taxes and inflation to raise taxes may be politically beneficial, it makes the system even harder to understand. My hope is that this piece helps to clarify the way that the income tax system works, and makes it easier for that average citizen to make sense of what can be an overwhelming topic.
+The income tax system is complicated. While the use of hidden taxes and inflation to raise taxes may be politically beneficial, it makes the system even harder to understand. My hope is that this piece helps to clarify the way that the income tax system works, and makes it easier for that average citizen to make sense of what can be an overwhelming topic.
 <br>
 __
 <br>
