@@ -4,7 +4,6 @@ title: "How Much Income Tax Canadians Pay: A Provincial Comparison"
 shareImage: http://i.imgur.com/Z1gkPv0.png
 custom_js:
 - jquery-2.1.3.min.js
-- jquery.mobile-1.4.5.min.js
 - tabletop-1.4.3.min.js
 - d3-3.5.16.min.js
 - d3kit-1.1.0mod.min.js
