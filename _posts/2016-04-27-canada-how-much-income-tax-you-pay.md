@@ -32,7 +32,7 @@ custom_css:
 
 Who pays the least income tax in Canada, and how has that changed over time?
 
-Simple question, right? As it turns out, it's not an easy question to answer at all. The combination of hidden income taxes, some province's reluctance to change their brackets with inflation, and "curvy flat taxes" results in an income tax horse race. Where you'd pay the least tax is completely dependent on how much you earn.
+This simple question turns out not to have an easy answer. The combination of hidden income taxes, some province's reluctance to change their brackets with inflation, and "curvy flat taxes" results in an income tax horse race. Where you'd pay the least tax is completely dependent on how much you earn.
 
 <h3>Canadian Provincial + Federal Effective Tax Ranking, 2016</h3>
 <div id="ranking" class="chart"></div><br>
