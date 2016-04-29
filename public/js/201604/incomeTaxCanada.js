@@ -94,6 +94,6 @@ var checkSize = _.debounce(function() {
 
 checkSize();
 $(window).resize(checkSize);
-window.addEventListener('orientationchange', checkSize);
+$(window).on('orientationchange', checkSize);
 
 }(window.incomeTaxCanada = window.incomeTaxCanada || {}));
