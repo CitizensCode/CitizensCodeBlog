@@ -85,7 +85,6 @@ $(init());
 
 var checkSize = _.debounce(function() {
   var windowSize = window.screen.availWidth;
-  console.log(windowSize);
   if (windowSize < 500) {
     $(".sizewarning").css("display", "block");
   } else {
