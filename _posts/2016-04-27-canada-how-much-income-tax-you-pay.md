@@ -26,7 +26,7 @@ custom_css:
 
 {% if page.custom_css %}
   {% for css_file in page.custom_css %}
-  <link rel="stylesheet" href='/public/css/{{ css_file }}'></script>
+  <link rel="stylesheet" href='/public/css/{{ css_file }}'></link>
   {% endfor %}
 {% endif %}
 
