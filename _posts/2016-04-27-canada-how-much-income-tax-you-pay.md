@@ -21,7 +21,7 @@ custom_css:
 - 201604/incomeTaxCanada.css
 ---
 
-<span class="sizewarning">Hey there, try turning your phone sideways. I did my best to make the charts below work for small screens, but not this small!</span>
+<span class="sizewarning">Hey there, try turning your screen sideways. I did my best to make the charts below work for small screens, but not this small!</span>
 
 Who pays the least income tax in Canada, and how has that changed over time?
 
