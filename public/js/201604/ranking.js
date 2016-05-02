@@ -9,7 +9,7 @@ ranking.visualize = function(sheet) {
   var rawData = sheet.elements;
 
   var processedData = d3help.sheetToObj(rawData, "province", {key: "income", value: 500000});
-
+ 
   // Chart options
   var DEFAULT_OPTIONS = {
     margin: {top: 60, right: 60, bottom: 90, left: 60},
