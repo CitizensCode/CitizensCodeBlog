@@ -90,9 +90,10 @@ The income tax system is complicated. While the use of hidden taxes and inflatio
 <br>
 __
 <br>
-<em>Ryan Brideau</em>
+<em><a href="http://twitter.com/Brideau">Ryan Brideau</a></em>
 <br>
 {% include twitter_plug.html %}<br>
+
 <div class="note" style="margin-left:0">
 <strong>Some Notes on Data Sources and Methodology</strong>
 
