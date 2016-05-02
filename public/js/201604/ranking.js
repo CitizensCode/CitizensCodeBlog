@@ -200,6 +200,10 @@ ranking.visualize = function(sheet) {
           name: d.province,
           value: d.values[d.values.length - 1]};
       })
+      .attr('class', function(d) {
+        console.log(d);
+        return d3help.cleanString(d.name) + "-text";
+      })
       .attr("text-anchor", "start")
       .attr("dy", "5")
       .attr("transform", function(d) {

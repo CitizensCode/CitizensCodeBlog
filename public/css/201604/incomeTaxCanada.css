@@ -233,3 +233,43 @@ text {
 .northwestterritories {
   stroke: #2877b3;
 }
+
+.novascotia-text {
+  fill: #b05a28;
+}
+.priceedwardisland-text {
+  fill: #b2d085;
+}
+.newbrunswick-text {
+  fill: #df2425;
+}
+.newfoundlandandlabrador-text {
+  fill: #FF8585;
+}
+.quebec-text {
+  fill: #96c0db;
+}
+.ontario-text {
+  fill: #ed7f21;
+}
+.manitoba-text {
+  fill: #cab1d2;
+}
+.saskatchewan-text {
+  fill: #66408d;
+}
+.alberta-text {
+  fill: #389f3d;
+}
+.britishcolumbia-text {
+  fill: #a948c0;
+}
+.nunavut-text {
+  fill: #020202;
+}
+.yukon-text {
+  fill: #7c7a7a;
+}
+.northwestterritories-text {
+  fill: #2877b3;
+}
