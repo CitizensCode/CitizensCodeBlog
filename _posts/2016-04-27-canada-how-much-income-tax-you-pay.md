@@ -30,7 +30,7 @@ This simple question turns out not to have an easy answer. The combination of hi
 <h3>Canadian Provincial + Federal Effective Tax Ranking, 2016</h3>
 <div id="ranking" class="chart"></div><br>
 
-The calculations for this include federal and provincial income tax, Employment Insurance, the Canadian & Québec Pension Plans, provincial health fees, surtaxes (that is, a tax on how much tax you pay), Québec's Parental Insurance Plan, the basic exemption, as well as special adjustments to the Federal tax rate for Québec (they pay 83.5% of the federal income tax that other provinces and territories pay). All dollars have been inflation adjusted to 2016 dollars using the same formula used by the federal government to adjust their tax brackets.
+The calculations for this include federal and provincial income tax, Employment Insurance, the Canadian & Québec Pension Plans, BC's Medical Services Plan, Ontario's Health Premium, Québec's Health Services Fund, surtaxes (that is, a tax on how much tax you pay), Québec's Parental Insurance Plan, the basic exemption, as well as special adjustments to the Federal tax rate for Québec (they pay 83.5% of the federal income tax that other provinces and territories pay). All dollars have been inflation adjusted to 2016 dollars using the same formula used by the federal government to adjust their tax brackets.
 <br><br>
 To keep things simple, I visualized what these tax rates look like for a single person with no dependents, earning their income through the work they do as opposed to interest on investments. This, of course, is an approximation, but it's good enough for comparison purposes.
 <br><br>
