@@ -19,7 +19,7 @@ incomeTaxCanada.provinceLookup = {
   "Yukon": "yt"
 };
 
-var spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EFBsT2vTy_93-tnTHvjcYrZrw6ZqLb9Pfoi8M_FjQ4Y/pubhtml';
+var spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTvevNYydBf6bHJXsM-dZ3cREiQLE-_4k5GNB5jiLpSKNFQiShhI6F14Yc2HeEdktPnuJTnJPCGhjU4/pubhtml';
 
 // This takes each set of data and passes it to the appropriate functions to be visualized
 var rankingCb = function(data, tabletop) {
